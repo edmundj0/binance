@@ -86,9 +86,9 @@ export default function BtcChart() {
 
         getCandles()
 
-        candleSeries.setData(
-            [{ time: '2018-10-19', open: 180.34, high: 180.99, low: 178.57, close: 179.85 }]
-        );
+        // candleSeries.setData(
+        //     [{ time: '2018-10-19', open: 180.34, high: 180.99, low: 178.57, close: 179.85 }]
+        // );
 
         const binanceSocket = new WebSocket("wss://stream.binance.us:9443/ws/btcusd@kline_3m")
         binanceSocket.onmessage = function (event) {
