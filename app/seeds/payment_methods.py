@@ -36,8 +36,8 @@ def seed_paymentMethods():
 # it will reset the primary keys for you as well.
 def undo_paymentMethods():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.payment_methods RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute("DELETE FROM users")
+        db.session.execute("DELETE FROM payment_methods")
 
     db.session.commit()
