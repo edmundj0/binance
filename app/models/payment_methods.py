@@ -11,5 +11,9 @@ class PaymentMethod(db.Model):
     type = db.Column(db.String(255))
     account_number = db.Column(db.String(255), nullable=False)
     routing_number = db.Column(db.String(255), nullable=False)
+    note = db.Column(db.String(255))
+    created_at = db.Column(db.DateTime, default = db.func.now())
+    updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
     user = db.relationship('User', back_populates='paymentMethods_user', foreign_keys=[user_id])
+    # transactions_paymentMethod = db.relationship('Transaction', primaryjoin='PaymentMethod.id == Transaction.paymentMethod_id', back_populates='paymentMethod')
