@@ -36,8 +36,8 @@ def seed_transactions():
 # it will reset the primary keys for you as well.
 def undo_transactions():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.transactions RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute("DELETE FROM users")
+        db.session.execute("DELETE FROM transactions")
 
     db.session.commit()

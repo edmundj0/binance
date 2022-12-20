@@ -30,8 +30,8 @@ def seed_watchlistCoins():
 # it will reset the primary keys for you as well.
 def undo_watchlistCoins():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.watchlist_coins RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute("DELETE FROM users")
+        db.session.execute("DELETE FROM watchlist_coins")
 
     db.session.commit()
