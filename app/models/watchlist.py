@@ -11,3 +11,7 @@ class Watchlist(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
+
+    user = db.relationship('User', back_populates='watchlists_user', foreign_keys=[user_id])
+    watchlist_coin = db.relationship('WatchlistCoin', back_populates='watchlist', cascade='all, delete')
+    

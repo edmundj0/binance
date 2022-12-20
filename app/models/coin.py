@@ -11,3 +11,6 @@ class Coin(db.Model):
     name = db.Column(db.String(255), nullable=False)
     symbol = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
+
+    transactions_coin = db.relationship('Transaction', primaryjoin='Coin.id == Transaction.coin_id', back_populates='coin', cascade='all, delete')
+    watchlist_coin = db.relationship('WatchlistCoin', back_populates='coin', cascade='all, delete')

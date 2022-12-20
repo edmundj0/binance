@@ -11,3 +11,7 @@ class Portfolio(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     account_type = db.Column(db.String(255), nullable=False)
     buying_power = db.Column(db.Float)
+
+    user = db.relationship('User', back_populates='portfolios_user', foreign_keys=[user_id])
+    transactions_portfolio = db.relationship('Transaction', primaryjoin='Portfolio.id == Transaction.portfolio_id', back_populates='portfolio', cascade='all,delete')
+    

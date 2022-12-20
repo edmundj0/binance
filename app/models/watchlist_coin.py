@@ -9,3 +9,6 @@ class WatchlistCoin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     watchlist_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('watchlists.id')))
     coin_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('coins.id')))
+
+    watchlist = db.relationship('Watchlist', back_populates='watchlist_coin', foreign_keys=[watchlist_id])
+    coin = db.relationship('Coin', back_populates='watchlist_coin', foreign_keys=[coin_id])

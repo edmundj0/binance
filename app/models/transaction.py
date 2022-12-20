@@ -14,3 +14,7 @@ class Transaction(db.Model):
     quantity = db.Column(db.Float, nullable=False)
     avg_price = db.Column(db.Float, nullable=False)
     status = db.Column(db.Boolean, nullable=False, default=False)
+
+    user = db.relationship('User', back_populates='transactions_user', foreign_keys=[user_id])
+    portfolio = db.relationship('Portfolio', back_populates='transactions_portfolio', foreign_keys=[portfolio_id])
+    coin = db.relationship('Coin', back_populates='transactions_coin', foreign_keys=[coin_id])

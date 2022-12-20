@@ -18,6 +18,11 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, default = db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
+    portfolios_user = db.relationship('Portfolio', primaryjoin='User.id == Portfolio.user_id', back_populates='user', cascade='all, delete')
+    watchlists_user = db.relationship('Watchlist', primaryjoin='User.id == Watchlist.user_id', back_populates='user', cascade='all, delete')
+    transactions_user = db.relationship('Transaction', primaryjoin='User.id == Transaction.user_id', back_populates='user', cascade='all, delete')
+    articles_user = db.relationship('Article', primaryjoin='User.id' == 'Article.user_id', back_populates='user', cascade='all, delete')
+
     @property
     def password(self):
         return self.hashed_password
