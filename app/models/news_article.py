@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
-class Article(db.Model):
-    __tablename__ = 'articles'
+class NewsArticle(db.Model):
+    __tablename__ = 'news_articles'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
@@ -13,4 +13,4 @@ class Article(db.Model):
     article_link = db.Column(db.String(1000), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
 
-    user = db.relationship('User', back_populates='articles_user', foreign_keys=[user_id])
+    user = db.relationship('User', back_populates='newsArticles_user', foreign_keys=[user_id])

@@ -1,8 +1,8 @@
 """create tables
 
-Revision ID: 21e1c5272f09
+Revision ID: f82f24c44585
 Revises: 
-Create Date: 2022-12-19 19:51:18.936705
+Create Date: 2022-12-19 23:17:18.290214
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '21e1c5272f09'
+revision = 'f82f24c44585'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -38,13 +38,20 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
-    op.create_table('articles',
+    op.create_table('news_articles',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('coin', sa.String(length=255), nullable=True),
     sa.Column('title', sa.String(length=255), nullable=False),
     sa.Column('article_link', sa.String(length=1000), nullable=False),
     sa.Column('description', sa.String(length=1000), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('payment_methods',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('type', sa.String(length=255), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -94,7 +101,8 @@ def downgrade():
     op.drop_table('transactions')
     op.drop_table('watchlists')
     op.drop_table('portfolios')
-    op.drop_table('articles')
+    op.drop_table('payment_methods')
+    op.drop_table('news_articles')
     op.drop_table('users')
     op.drop_table('coins')
     # ### end Alembic commands ###
