@@ -102,14 +102,14 @@ def upgrade():
     )
     # ### end Alembic commands ###
     if environment == "production":
-        op.execute(f"ALTER TABLE groups SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE coins SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE expenses SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE friends SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE user_groups SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE expense_comments SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE user_groups SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE expense_comments SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE news_articles SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE payment_methods SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE portfolios SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE watchlists SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE transactions SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE watchlist_coins SET SCHEMA {SCHEMA};")
 
 
 def downgrade():
