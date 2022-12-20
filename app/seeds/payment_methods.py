@@ -1,18 +1,30 @@
-from app.models import db, User, environment, SCHEMA
+from app.models import db, PaymentMethod, environment, SCHEMA
 
 
 # Adds a demo user, you can add other users here if you want
-def seed_users():
-    demo = User(
-        username='Demo', email='demo@aa.io', password='password', first_name='Demo', last_name='Lition')
-    marnie = User(
-        username='marnie', email='marnie@aa.io', password='password', first_name='Marnie', last_name='Mo')
-    bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password', first_name='Bobbie', last_name='Chen')
+def seed_paymentMethods():
+    method0 = PaymentMethod(
+        user_id=1,
+        type='checking',
+        account_number="0000000001",
+        routing_number="00000002"
+    )
+    method1 = PaymentMethod(
+        user_id=1,
+        type='savings',
+        account_number="500000000",
+        routing_number="500000001"
+        )
+    method2 = PaymentMethod(
+        user_id=2,
+        type='savings',
+        account_number="500000000",
+        routing_number="500000001"
+        )
 
-    db.session.add(demo)
-    db.session.add(marnie)
-    db.session.add(bobbie)
+    db.session.add(method0)
+    db.session.add(method1)
+    db.session.add(method2)
     db.session.commit()
 
 
@@ -22,7 +34,7 @@ def seed_users():
 # incrementing primary key, CASCADE deletes any dependent entities.  With
 # sqlite3 in development you need to instead use DELETE to remove all data and
 # it will reset the primary keys for you as well.
-def undo_users():
+def undo_paymentMethods():
     if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
     else:
