@@ -1,16 +1,19 @@
 """create tables
 
-Revision ID: 3ba86cd20152
-Revises: 
-Create Date: 2022-12-19 23:50:01.510495
+Revision ID: 88996241ee07
+Revises:
+Create Date: 2022-12-20 10:58:40.651824
 
 """
 from alembic import op
 import sqlalchemy as sa
 
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-revision = '3ba86cd20152'
+revision = '88996241ee07'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -54,6 +57,9 @@ def upgrade():
     sa.Column('type', sa.String(length=255), nullable=True),
     sa.Column('account_number', sa.String(length=255), nullable=False),
     sa.Column('routing_number', sa.String(length=255), nullable=False),
+    sa.Column('note', sa.String(length=255), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -77,13 +83,13 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('portfolio_id', sa.Integer(), nullable=False),
     sa.Column('coin_id', sa.Integer(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('quantity', sa.Float(), nullable=False),
     sa.Column('avg_price', sa.Float(), nullable=False),
-    sa.Column('status', sa.Boolean(), nullable=False),
+    sa.Column('status', sa.Boolean(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.ForeignKeyConstraint(['coin_id'], ['coins.id'], ),
     sa.ForeignKeyConstraint(['portfolio_id'], ['portfolios.id'], ),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('watchlist_coins',
@@ -95,6 +101,15 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
+    if environment == "production":
+        op.execute(f"ALTER TABLE groups SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE expenses SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE friends SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE user_groups SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE expense_comments SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE user_groups SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE expense_comments SET SCHEMA {SCHEMA};")
 
 
 def downgrade():

@@ -20,7 +20,7 @@ class User(db.Model, UserMixin):
 
     portfolios_user = db.relationship('Portfolio', primaryjoin='User.id == Portfolio.user_id', back_populates='user', cascade='all, delete')
     watchlists_user = db.relationship('Watchlist', primaryjoin='User.id == Watchlist.user_id', back_populates='user', cascade='all, delete')
-    transactions_user = db.relationship('Transaction', primaryjoin='User.id == Transaction.user_id', back_populates='user', cascade='all, delete')
+    # transactions_user = db.relationship('Transaction', primaryjoin='User.id == Transaction.user_id', back_populates='user', cascade='all, delete')
     newsArticles_user = db.relationship('NewsArticle', primaryjoin='User.id == NewsArticle.user_id', back_populates='user', cascade='all, delete')
     paymentMethods_user = db.relationship('PaymentMethod', primaryjoin='User.id == PaymentMethod.user_id', back_populates='user', cascade='all, delete')
 
