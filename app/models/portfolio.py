@@ -14,4 +14,11 @@ class Portfolio(db.Model):
 
     user = db.relationship('User', back_populates='portfolios_user', foreign_keys=[user_id])
     transactions_portfolio = db.relationship('Transaction', primaryjoin='Portfolio.id == Transaction.portfolio_id', back_populates='portfolio', cascade='all,delete')
-    
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "account_type": self.account_type,
+            "buying_power": self.buying_power
+        }

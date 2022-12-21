@@ -1,8 +1,8 @@
 """create tables
 
-Revision ID: 88996241ee07
+Revision ID: d3a57d4654e5
 Revises:
-Create Date: 2022-12-20 10:58:40.651824
+Create Date: 2022-12-20 17:22:35.349774
 
 """
 from alembic import op
@@ -13,7 +13,7 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-revision = '88996241ee07'
+revision = 'd3a57d4654e5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -74,6 +74,8 @@ def upgrade():
     op.create_table('watchlists',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=255), nullable=False),
+    sa.Column('description', sa.String(length=255), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
