@@ -37,6 +37,9 @@ def all_portfolios_of_user():
 @portfolio_routes.route('/<int:portfolio_id>')
 @login_required
 def get_one_portfolio(portfolio_id):
+    """
+    Get portfolio details and transactions of a given portfolio id
+    """
 
     id_of_user = current_user.id
 
