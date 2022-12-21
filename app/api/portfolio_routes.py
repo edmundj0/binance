@@ -37,6 +37,9 @@ def all_portfolios_of_user():
 @portfolio_routes.route('/<int:portfolio_id>')
 @login_required
 def get_one_portfolio(portfolio_id):
+    """
+    Get portfolio details and transactions of a given portfolio id
+    """
 
     id_of_user = current_user.id
 
@@ -117,7 +120,7 @@ def update_portfolio(portfolio_id):
         return {"errors": "Portfolio (account) not found"}, 404
 
     if not id_of_user == portfolio.user_id:
-        return {"errors": "Not authorized to edit this portfolio (account)"}
+        return {"errors": "Not authorized to edit this portfolio (account)"}, 401
 
     if portfolio and form.validate_on_submit():
         portfolio.account_type = form.data["account_type"] or portfolio.account_type
