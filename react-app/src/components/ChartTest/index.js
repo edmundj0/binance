@@ -47,7 +47,12 @@ export default function BtcChart() {
             },
             timeScale: {
                 borderColor: 'rgba(197, 203, 206, 0.8)',
+                timeVisible: true,
+                fixRightEdge: true,
+                fixLeftEdge: true
             },
+            // handleScroll: false,
+            // handleScale: false,
         });
 
         let candleSeries = chart.addCandlestickSeries({

@@ -10,6 +10,7 @@ class Portfolio(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     account_type = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(255))
     buying_power = db.Column(db.Float)
 
     user = db.relationship('User', back_populates='portfolios_user', foreign_keys=[user_id])
@@ -20,5 +21,6 @@ class Portfolio(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "account_type": self.account_type,
-            "buying_power": self.buying_power
+            "buying_power": self.buying_power,
+            "name": self.name
         }
