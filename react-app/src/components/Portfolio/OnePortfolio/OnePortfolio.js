@@ -56,7 +56,8 @@ export default function OnePortfolio() {
                 {Object.values(portfolioTransactions).map((transaction) => {
                     return (
                         <div key={`/transactions/${transaction.id}`}>
-                            <div></div>
+                            <div>{transaction.Coin.symbol}</div>
+                            <div>{transaction.action}</div>
                         </div>
                     )
                 })}

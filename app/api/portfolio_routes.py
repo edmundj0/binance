@@ -44,7 +44,7 @@ def get_one_portfolio(portfolio_id):
 
     id_of_user = current_user.id
 
-    portfolio = Portfolio.query.options(joinedload(Portfolio.transactions_portfolio)).filter(Portfolio.id == portfolio_id).first()
+    portfolio = Portfolio.query.options(joinedload(Portfolio.transactions_portfolio).options(joinedload(Transaction.coin))).filter(Portfolio.id == portfolio_id).first()
 
     if(not portfolio):
         return {"errors": "Portfolio (account) not found"}, 404
@@ -64,6 +64,13 @@ def get_one_portfolio(portfolio_id):
             "avg_price": transaction.avg_price,
             "status": transaction.status,
             "created_at": transaction.created_at,
+            "action": transaction.action,
+            "Coin": {
+                "id": transaction.coin.id,
+                "name": transaction.coin.name,
+                "symbol": transaction.coin.symbol,
+                "description": transaction.coin.description
+            }
         }
 
 
