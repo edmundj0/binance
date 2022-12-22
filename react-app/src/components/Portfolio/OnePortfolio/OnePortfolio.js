@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { NavLink, useHistory, useParams } from "react-router-dom";
 import { deletePortfolio, getOnePortfolio } from "../../../store/portfolio";
 import EditPortfolioModal from "../EditPortfolioModal";
 
@@ -56,8 +56,8 @@ export default function OnePortfolio() {
                 {Object.values(portfolioTransactions).map((transaction) => {
                     return (
                         <div key={`/transactions/${transaction.id}`}>
-                            <div>{transaction.Coin.symbol}</div>
-                            <div>{transaction.action}</div>
+                            <NavLink to="/dashboard">{transaction.Coin.symbol}</NavLink>
+                            <div>Action: {transaction.action} Quantity: {transaction.quantity}, Avg Price: {transaction.avg_price}</div>
                         </div>
                     )
                 })}

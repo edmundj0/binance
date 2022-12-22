@@ -14,3 +14,12 @@ class Coin(db.Model):
 
     transactions_coin = db.relationship('Transaction', primaryjoin='Coin.id == Transaction.coin_id', back_populates='coin', cascade='all, delete')
     watchlist_coin = db.relationship('WatchlistCoin', back_populates='coin', cascade='all, delete')
+
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "symbol": self.symbol,
+            "description": self.description
+        }
