@@ -151,13 +151,13 @@ def delete_portfolio(portfolio_id):
     id_of_user = current_user.id
 
     if not portfolio:
-        return {"errors": "Portfolio (account) not found"}, 404
+        return {"errors": ["Portfolio (account) not found"]}, 404
 
     if not id_of_user == portfolio.user_id:
-        return {"errors": "Not authorized to delete this portfolio (account)"}
+        return {"errors": ["Not authorized to delete this portfolio (account)"]}, 401
 
     if portfolio.transactions_portfolio:
-        return {"errors": "Can not delete portfolio (account) after making purchases or having transactions"}
+        return {"errors": ["Can not delete portfolio (account) after making purchases or having transactions"]}, 403
 
 
     db.session.delete(portfolio)

@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { NavLink } from "react-router-dom"
 import { getAllPortfolios } from "../../store/portfolio"
 import CreatePortfolioModal from "../Portfolio/CreatePortfolioModal"
 
@@ -21,9 +22,10 @@ export default function Dashboard() {
                 {Object.values(allPortfolios).map((portfolio) => {
                     return (
                         <div key={`portfolio ${portfolio.id}`}>
-                            <div>
-                                {portfolio.name}
-                            </div>
+                            <NavLink to={`/portfolios/${portfolio.id}`} key={`portfolios ${portfolio.id}`} style={{textDecoration: 'none'}}>
+                            <div>{portfolio.name}</div>
+                            <div>{portfolio.buying_power}</div>
+                            </NavLink>
                         </div>
                     )
                 })}

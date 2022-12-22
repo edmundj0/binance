@@ -10,6 +10,7 @@ import User from './components/User';
 import { authenticate } from './store/session';
 import BtcChart from './components/ChartTest';
 import Dashboard from './components/Dashboard';
+import OnePortfolio from './components/Portfolio/OnePortfolio/OnePortfolio';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -46,6 +47,9 @@ function App() {
           <h1>My Dashboard</h1>
           <Dashboard />
           {/* <BtcChart /> */}
+        </ProtectedRoute>
+        <ProtectedRoute path="/portfolios/:portfolioId" exact={true}>
+          <OnePortfolio />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
