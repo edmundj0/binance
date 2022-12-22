@@ -7,16 +7,19 @@ def seed_portfolios():
         user_id=1,
         account_type='investing',
         buying_power=100000,
+        name="portfolio0"
     )
     portfolio1 = Portfolio(
         user_id=1,
         account_type='ira',
         buying_power=0,
+        name="portfolio1"
         )
     portfolio2 = Portfolio(
         user_id=2,
         account_type='investing',
-        buying_power=500000
+        buying_power=500000,
+        name="portfolio2"
         )
 
     db.session.add(portfolio0)

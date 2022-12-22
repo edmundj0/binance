@@ -26,7 +26,8 @@ def all_portfolios_of_user():
             "id": portfolio.id,
             "user_id": portfolio.user_id,
             "account_type": portfolio.account_type,
-            "buying_power": portfolio.buying_power
+            "buying_power": portfolio.buying_power,
+            "name": portfolio.name
         }
 
     return {
@@ -71,6 +72,7 @@ def get_one_portfolio(portfolio_id):
         "user_id": portfolio.user_id,
         "account_type": portfolio.account_type,
         "buying_power": portfolio.buying_power,
+        "name": portfolio.name,
         "Transactions": [transactions_portfolio_to_dict(transaction) for transaction in portfolio.transactions_portfolio]
     }
 
@@ -91,8 +93,9 @@ def create_portfolio():
         user_id = id_of_user
         account_type = form.data["account_type"]
         buying_power = form.data["buying_power"]
+        name = form.data["name"]
 
-        new_portfolio = Portfolio(user_id=user_id, account_type=account_type, buying_power=buying_power)
+        new_portfolio = Portfolio(user_id=user_id, account_type=account_type, buying_power=buying_power, name=name)
 
         db.session.add(new_portfolio)
         db.session.commit()
@@ -124,6 +127,7 @@ def update_portfolio(portfolio_id):
 
     if portfolio and form.validate_on_submit():
         portfolio.account_type = form.data["account_type"] or portfolio.account_type
+        portfolio.name = form.data["name"]
 
         if form.data["buying_power"] == 0:
             portfolio.buying_power = 0
