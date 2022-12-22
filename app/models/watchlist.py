@@ -16,3 +16,14 @@ class Watchlist(db.Model):
 
     user = db.relationship('User', back_populates='watchlists_user', foreign_keys=[user_id])
     watchlist_coin = db.relationship('WatchlistCoin', back_populates='watchlist', cascade='all, delete')
+
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "name": self.name,
+            "description": self.description,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
+        }

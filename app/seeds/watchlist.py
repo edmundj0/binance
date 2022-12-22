@@ -4,7 +4,9 @@ from app.models import db, Watchlist, environment, SCHEMA
 # Adds a demo user, you can add other users here if you want
 def seed_watchlists():
     watchlist0 = Watchlist(
-        user_id = 1
+        user_id = 1,
+        name="watchlist0",
+        description="my first watchlist"
     )
     watchlist1 = Watchlist(
         user_id=1

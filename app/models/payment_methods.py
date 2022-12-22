@@ -17,3 +17,16 @@ class PaymentMethod(db.Model):
 
     user = db.relationship('User', back_populates='paymentMethods_user', foreign_keys=[user_id])
     # transactions_paymentMethod = db.relationship('Transaction', primaryjoin='PaymentMethod.id == Transaction.paymentMethod_id', back_populates='paymentMethod')
+
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "type": self.type,
+            "account_number": self.account_number,
+            "routing_number": self.routing_number,
+            "note": self.note,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
+        }

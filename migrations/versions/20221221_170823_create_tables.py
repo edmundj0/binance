@@ -1,8 +1,8 @@
 """create tables
 
-Revision ID: d3a57d4654e5
+Revision ID: d8de3d24ce81
 Revises:
-Create Date: 2022-12-20 17:22:35.349774
+Create Date: 2022-12-21 17:08:23.852884
 
 """
 from alembic import op
@@ -13,7 +13,7 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-revision = 'd3a57d4654e5'
+revision = 'd8de3d24ce81'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -67,6 +67,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('account_type', sa.String(length=255), nullable=False),
+    sa.Column('name', sa.String(length=255), nullable=True),
     sa.Column('buying_power', sa.Float(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
