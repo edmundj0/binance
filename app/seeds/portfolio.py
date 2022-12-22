@@ -5,19 +5,19 @@ from app.models import db, Portfolio, environment, SCHEMA
 def seed_portfolios():
     portfolio0 = Portfolio(
         user_id=1,
-        account_type='investing',
+        account_type='Investing',
         buying_power=100000,
         name="portfolio0"
     )
     portfolio1 = Portfolio(
         user_id=1,
-        account_type='ira',
+        account_type='Ira',
         buying_power=0,
         name="portfolio1"
         )
     portfolio2 = Portfolio(
         user_id=2,
-        account_type='investing',
+        account_type='Investing',
         buying_power=500000,
         name="portfolio2"
         )

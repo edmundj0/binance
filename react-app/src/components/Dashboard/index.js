@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getAllPortfolios } from "../../store/portfolio"
+import CreatePortfolioModal from "../Portfolio/CreatePortfolioModal"
 
 export default function Dashboard() {
     const dispatch = useDispatch()
@@ -16,6 +17,7 @@ export default function Dashboard() {
     return (
         <div>
             <div>All Portfolios (Accounts)
+                <CreatePortfolioModal />
                 {Object.values(allPortfolios).map((portfolio) => {
                     return (
                         <div key={`portfolio ${portfolio.id}`}>
