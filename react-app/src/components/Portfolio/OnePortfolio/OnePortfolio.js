@@ -13,6 +13,7 @@ export default function OnePortfolio() {
     const thisPortfolio = useSelector(state => state.portfolios.onePortfolio)
 
 
+
     useEffect(() => {
         dispatch(getOnePortfolio(portfolioId))
     }, [dispatch, portfolioId])
@@ -20,6 +21,8 @@ export default function OnePortfolio() {
     if (!thisPortfolio.id){
         return null
     }
+
+    const portfolioTransactions = thisPortfolio.Transactions
 
     const deleteThisPortfolio = async (e) => {
         let deletingPortfolio = await dispatch(deletePortfolio(portfolioId))
@@ -47,6 +50,16 @@ export default function OnePortfolio() {
                 </div>
                 <button onClick={() => dispatch(deleteThisPortfolio)}>Delete Portfolio</button>
                 <span>*cannot delete portfolios with existing transactions</span>
+            </div>
+            <div>
+                <h3>Transactions</h3>
+                {Object.values(portfolioTransactions).map((transaction) => {
+                    return (
+                        <div key={`/transactions/${transaction.id}`}>
+                            <div></div>
+                        </div>
+                    )
+                })}
             </div>
         </div>
 

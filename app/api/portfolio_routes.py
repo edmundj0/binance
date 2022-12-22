@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, User, Portfolio
+from app.models import db, User, Portfolio, Transaction
 from sqlalchemy.orm import joinedload
 from app.forms import PortfolioForm, UpdatePortfolioForm
 from .auth_routes import validation_errors_to_error_messages
@@ -164,3 +164,22 @@ def delete_portfolio(portfolio_id):
     db.session.commit()
 
     return {"message": "Portfolio (account) successfully deleted"}
+
+
+# @portfolio_routes.route("/<int:portfolio_id>/transactions")
+# @login_required
+# def all_portfolio_transactions(portfolio_id):
+#     """
+#     Query for all transactions of current portfolio
+#     """
+#     portfolio = Portfolio.query.options(joinedload(Portfolio.transactions_portfolio)).filter(Portfolio.id == portfolio_id).first()
+#     id_of_user = current_user.id
+
+#     return {
+#         "id": portfolio.id,
+#         "account_type": portfolio.account_type,
+#         "buying_power": portfolio.buying_power,
+#         "name": portfolio.name,
+#         "user_id": portfolio.user_id,
+#         "Transactions": [transaction.to_dict() for transaction in ]
+#     }

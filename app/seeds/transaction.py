@@ -7,24 +7,35 @@ def seed_transactions():
         portfolio_id=1,
         coin_id=1,
         quantity=2,
-        avg_price=16500.32
+        avg_price=16500.32,
+        action="buy"
     )
     transaction1 = Transaction(
         portfolio_id=1,
         coin_id=2,
         quantity=12,
-        avg_price=1230.01
+        avg_price=1230.01,
+        action="buy"
         )
     transaction2 = Transaction(
         portfolio_id=3,
         coin_id=2,
         quantity=2.5,
-        avg_price=1215.30
+        avg_price=1215.30,
+        action="buy"
         )
+    transaction3 = Transaction(
+        portfolio_id=1,
+        coin_id=2,
+        quantity=2,
+        avg_price=1230.01,
+        action="sell"
+    )
 
     db.session.add(transaction0)
     db.session.add(transaction1)
     db.session.add(transaction2)
+    db.session.add(transaction3)
     db.session.commit()
 
 

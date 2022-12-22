@@ -15,6 +15,7 @@ class Transaction(db.Model):
     quantity = db.Column(db.Float, nullable=False)
     avg_price = db.Column(db.Float, nullable=False)
     status = db.Column(db.Boolean, default=False)
+    action = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default = db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
@@ -22,3 +23,15 @@ class Transaction(db.Model):
     portfolio = db.relationship('Portfolio', back_populates='transactions_portfolio', foreign_keys=[portfolio_id])
     coin = db.relationship('Coin', back_populates='transactions_coin', foreign_keys=[coin_id])
     # paymentMethod = db.relationship('PaymentMethod', back_populates='transactions_paymentMethod', foreign_keys=[paymentMethod_id])
+
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "portfolio_id": self.portfolio_id,
+            "coin_id": self.coin_id,
+            "quantity": self.quantity,
+            "avg_price": self.avg_price,
+            "status": self.status,
+            "created_at": self.created_at
+        }
