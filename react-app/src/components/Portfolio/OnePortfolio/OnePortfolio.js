@@ -23,6 +23,15 @@ export default function OnePortfolio() {
     }
 
     const portfolioTransactions = thisPortfolio.Transactions
+    // console.log(portfolioTransactions, 'portfolioTransactions')
+    // let portfolioHoldingsArr = []
+    // for(let transaction of portfolioTransactions){
+    //     if (!portfolioHoldingsArr.includes(transaction.coin_id) && transaction.action === "buy"){
+    //         portfolioHoldingsArr.push({
+
+    //         })
+    //     }
+    // }
 
     const deleteThisPortfolio = async (e) => {
         let deletingPortfolio = await dispatch(deletePortfolio(portfolioId))
@@ -56,7 +65,7 @@ export default function OnePortfolio() {
                 {Object.values(portfolioTransactions).map((transaction) => {
                     return (
                         <div key={`/transactions/${transaction.id}`}>
-                            <NavLink to="/dashboard">{transaction.Coin.symbol}</NavLink>
+                            <NavLink to={`/coins/${transaction.Coin.id}`}>{transaction.Coin.symbol}</NavLink>
                             <div>Action: {transaction.action} Quantity: {transaction.quantity}, Avg Price: {transaction.avg_price}</div>
                         </div>
                     )

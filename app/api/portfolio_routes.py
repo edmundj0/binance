@@ -173,6 +173,48 @@ def delete_portfolio(portfolio_id):
     return {"message": "Portfolio (account) successfully deleted"}
 
 
+@portfolio_routes.route("/<int:portfolio_id>/assets")
+@login_required
+def all_assets_of_portfolio(portfolio_id):
+    """
+    Get aggregate assets in a portfolio
+    """
+
+    id_of_user = current_user.id
+    portfolio = Portfolio.query.options(joinedload(Portfolio.transactions_portfolio).options(joinedload(Transaction.coin))).filter(Portfolio.id == portfolio_id).first()
+
+    if(not portfolio):
+        return {"errors": "Portfolio (account) not found"}, 404
+
+    if not id_of_user == portfolio.user_id:
+        return {"errors": "Not authorized to view this portfolio (account)"}, 401
+
+    assetsDict = {}
+    for transaction in portfolio.transactions_portfolio:
+        if transaction.action == "buy" and not transaction.coin_id in assetsDict:
+            assetsDict[transaction.coin_id] = {"quantity": transaction.quantity, "avg_price": transaction.avg_price, "symbol": transaction.coin.symbol, "name": transaction.coin.name, "total_money_paid": transaction.avg_price * transaction.quantity, "total_money_received": 0, "coin_id": transaction.coin_id}
+        elif transaction.action == "buy" and transaction.coin_id in assetsDict:
+            existingAsset = assetsDict[transaction.coin_id]
+            # existingAsset["avg_price"] = ((existingAsset["avg_price"] * existingAsset["quantity"] + (transaction.avg_price * transaction.quantity)) / (transaction.quantity + existingAsset["quantity"]))
+            existingAsset["total_money_paid"] += (transaction.avg_price * transaction.quantity)
+            existingAsset["avg_price"] = (existingAsset["total_money_paid"] - existingAsset["total_money_received"]) / (existingAsset["quantity"] + transaction.quantity)
+            existingAsset["quantity"] += transaction.quantity
+        elif transaction.action == "sell" and not transaction.coin_id in assetsDict:
+            assetsDict[transaction.coin_id] = {"quantity": transaction.quantity * -1, "avg_price": transaction.avg_price, "symbol": transaction.coin.symbol, "name": transaction.coin.name, "total_money_paid": 0, "total_money_received": transaction.avg_price * transaction.quantity, "coin_id": transaction.coin_id}
+        elif transaction.action == "sell" and transaction.coin_id in assetsDict:
+            existingAsset = assetsDict[transaction.coin_id]
+            existingAsset["total_money_received"] += (transaction.avg_price * transaction.quantity)
+            existingAsset["avg_price"] = (existingAsset["total_money_paid"] - existingAsset["total_money_received"]) / (existingAsset["quantity"] + transaction.quantity)
+
+        # elif transaction.action == "buy" and any(transaction.coin_id in d for d in assetsLst):
+        #     # assetsLst[transaction.coin_id]["quantity"] += transaction.quantity
+        #     print(assetsDict.get(transaction.coin_id), 'plzzzz')
+
+    print(assetsDict.items())
+    return {"Assets": [item for item in assetsDict.values()]}
+
+
+
 # @portfolio_routes.route("/<int:portfolio_id>/transactions")
 # @login_required
 # def all_portfolio_transactions(portfolio_id):
