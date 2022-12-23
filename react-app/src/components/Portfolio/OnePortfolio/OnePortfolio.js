@@ -12,6 +12,7 @@ export default function OnePortfolio() {
     const [errors, setErrors] = useState([])
 
     const thisPortfolio = useSelector(state => state.portfolios.onePortfolio)
+    console.log(thisPortfolio, 'thisportfolio')
 
 
 
@@ -20,19 +21,21 @@ export default function OnePortfolio() {
     }, [dispatch, portfolioId])
 
     useEffect(() => {
-        fetch(`/api/portfolios/${portfolioId}/assets`)
-        .then((response) => {
-            if (response.ok){
-                return response.json()
-            }
-            throw response
-        })
-        .then((data) => {
-            setAssets(data.Assets)
-        })
-    }, [dispatch, portfolioId])
+        if (thisPortfolio.id) {
+            fetch(`/api/portfolios/${thisPortfolio.id}/assets`)
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    throw response
+                })
+                .then((data) => {
+                    setAssets(data.Assets)
+                })
+        }
+    }, [dispatch, thisPortfolio])
 
-    if (!thisPortfolio.id){
+    if (!thisPortfolio.id) {
         return null
     }
 
@@ -69,7 +72,7 @@ export default function OnePortfolio() {
             </div>
             <div>
                 <h3>Account Holdings</h3>
-                {Object.values(assets).map((asset) => {
+                {assets && Object.values(assets).map((asset) => {
                     return (
                         <div key={`/assets/${asset.name}`}>
                             <div>{asset.name} ({asset.symbol})</div>
@@ -80,7 +83,7 @@ export default function OnePortfolio() {
             </div>
             <div>
                 <h3>Transactions</h3>
-                {Object.values(portfolioTransactions).map((transaction) => {
+                {portfolioTransactions && Object.values(portfolioTransactions).map((transaction) => {
                     return (
                         <div key={`/transactions/${transaction.id}`}>
                             <NavLink to={`/coins/${transaction.Coin.id}`}>{transaction.Coin.symbol}</NavLink>
