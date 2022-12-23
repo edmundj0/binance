@@ -8,6 +8,7 @@ export default function OnePortfolio() {
     const dispatch = useDispatch()
     const { portfolioId } = useParams();
     const history = useHistory()
+    const [assets, setAssets] = useState([])
     const [errors, setErrors] = useState([])
 
     const thisPortfolio = useSelector(state => state.portfolios.onePortfolio)
@@ -18,20 +19,26 @@ export default function OnePortfolio() {
         dispatch(getOnePortfolio(portfolioId))
     }, [dispatch, portfolioId])
 
+    useEffect(() => {
+        fetch(`/api/portfolios/${portfolioId}/assets`)
+        .then((response) => {
+            if (response.ok){
+                return response.json()
+            }
+            throw response
+        })
+        .then((data) => {
+            setAssets(data.Assets)
+        })
+    }, [dispatch, portfolioId])
+
     if (!thisPortfolio.id){
         return null
     }
 
     const portfolioTransactions = thisPortfolio.Transactions
-    // console.log(portfolioTransactions, 'portfolioTransactions')
-    // let portfolioHoldingsArr = []
-    // for(let transaction of portfolioTransactions){
-    //     if (!portfolioHoldingsArr.includes(transaction.coin_id) && transaction.action === "buy"){
-    //         portfolioHoldingsArr.push({
 
-    //         })
-    //     }
-    // }
+    console.log(assets, 'asset')
 
     const deleteThisPortfolio = async (e) => {
         let deletingPortfolio = await dispatch(deletePortfolio(portfolioId))
@@ -59,6 +66,17 @@ export default function OnePortfolio() {
                 </div>
                 <button onClick={() => dispatch(deleteThisPortfolio)}>Delete Portfolio</button>
                 <span>*cannot delete portfolios with existing transactions</span>
+            </div>
+            <div>
+                <h3>Account Holdings</h3>
+                {Object.values(assets).map((asset) => {
+                    return (
+                        <div key={`/assets/${asset.name}`}>
+                            <div>{asset.name} ({asset.symbol})</div>
+                            <div>Quantity: {asset.quantity} Avg Cost:{asset.avg_price}</div>
+                        </div>
+                    )
+                })}
             </div>
             <div>
                 <h3>Transactions</h3>

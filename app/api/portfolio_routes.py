@@ -204,8 +204,8 @@ def all_assets_of_portfolio(portfolio_id):
         elif transaction.action == "sell" and transaction.coin_id in assetsDict:
             existingAsset = assetsDict[transaction.coin_id]
             existingAsset["total_money_received"] += (transaction.avg_price * transaction.quantity)
-            existingAsset["avg_price"] = (existingAsset["total_money_paid"] - existingAsset["total_money_received"]) / (existingAsset["quantity"] + transaction.quantity)
-
+            existingAsset["avg_price"] = (existingAsset["total_money_paid"] - existingAsset["total_money_received"]) / (existingAsset["quantity"] - transaction.quantity)
+            existingAsset["quantity"] -= transaction.quantity
         # elif transaction.action == "buy" and any(transaction.coin_id in d for d in assetsLst):
         #     # assetsLst[transaction.coin_id]["quantity"] += transaction.quantity
         #     print(assetsDict.get(transaction.coin_id), 'plzzzz')
