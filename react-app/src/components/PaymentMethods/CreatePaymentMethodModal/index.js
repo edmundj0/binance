@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Modal } from "../../../context/Modal"
+import CreatePaymentMethod from "./CreatePaymentMethodModal"
 
 
 
@@ -13,7 +14,7 @@ export default function CreatePaymentMethodModal(){
         <button onClick={()=>setShowModal(true)}>Add New Payment Method</button>
         {showModal && (
             <Modal onClose={()=>setShowModal(false)}>
-                <EditPortfolio setShowModal={setShowModal} />
+                <CreatePaymentMethod setShowModal={setShowModal} />
             </Modal>
         )}
         </>

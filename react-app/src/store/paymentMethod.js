@@ -1,12 +1,26 @@
+const GET_ALL_PAYMENT_METHODS = "/payment-methods/GET_ALL_PAYMENT_METHODS"
 const CREATE_NEW_PAYMENT_METHOD = "/payment-methods/CREATE_NEW"
 
 //action creators
+const loadAllPaymentMethods = (allPaymentMethods) => ({
+    type: GET_ALL_PAYMENT_METHODS,
+    allPaymentMethods
+})
+
 const postPaymentMethod = (newPaymentMethod) => ({
     type: CREATE_NEW_PAYMENT_METHOD,
     newPaymentMethod
 })
 
 //thunks
+export const getAllPaymentMethods = () => async (dispatch) => {
+    const response = await fetch('/api/payment-methods/current')
+    if (response.ok) {
+        const res = await response.json()
+        dispatch(loadAllPaymentMethods(res))
+    }
+}
+
 export const createNewPaymentMethod = (info) => async (dispatch) => {
     const response = await fetch('/api/payment-methods', {
         method: 'POST',
@@ -40,6 +54,16 @@ const paymentMethodsReducer = (state = initialState, action) => {
                 allPaymentMethods: {...state.allPaymentMethods}
             }
             newState.onePaymentMethod = action.newPaymentMethod
+            return newState
+        case GET_ALL_PAYMENT_METHODS:
+            newState = {
+                ...state,
+                onePaymentMethod: {...state.onePaymentMethod},
+                allPaymentMethods: {...state.allPaymentMethods}
+            }
+            action.allPaymentMethods["Payment Methods"].forEach(method => {
+                newState.allPaymentMethods[method.id] = method
+            })
             return newState
         default:
             return state

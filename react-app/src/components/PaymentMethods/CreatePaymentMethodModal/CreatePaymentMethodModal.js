@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewPortfolio, getAllPortfolios } from "../../../store/portfolio";
+import { createNewPaymentMethod, getAllPaymentMethods } from "../../../store/paymentMethod";
 
 
 export default function CreatePaymentMethod({ setShowModal }) {
@@ -9,6 +9,7 @@ export default function CreatePaymentMethod({ setShowModal }) {
     const [accountNumber, setAccountNumber] = useState("")
     const [routingNumber, setRoutingNumber] = useState("")
     const [note, setNote] = useState("")
+    const [errors, setErrors] = useState([])
 
     let currentUser = useSelector(state => state.session.user)
 
@@ -22,29 +23,29 @@ export default function CreatePaymentMethod({ setShowModal }) {
     const onSubmit = async (e) => {
         e.preventDefault()
 
-        if (accountType === 0 || accountType === "Select Payment Type") {
+        if (type === 0 || type === "Select Payment Type") {
             setErrors(["Please select a payment type"])
         }
         else {
 
-            let newPortfolio = await dispatch(createNewPaymentMethod(info))
+            let newPaymentMethod = await dispatch(createNewPaymentMethod(info))
 
-            if (newPortfolio.errors) {
-                await setErrors(newPortfolio.errors)
+            if (newPaymentMethod.errors) {
+                await setErrors(newPaymentMethod.errors)
             }
             else {
                 setShowModal(false)
             }
         }
 
-        dispatch(getAllPortfolios())
+        dispatch(getAllPaymentMethods())
     }
 
 
 
     return (
-        <div className="modal-expense-entire">
-            <div className="modal-expense-header">Create New Portfolio</div>
+        <div>
+            <div>Add New Payment Method</div>
             <div>
                 {errors && (
                     <ul>
@@ -53,29 +54,44 @@ export default function CreatePaymentMethod({ setShowModal }) {
                     </ul>
                 )}
             </div>
-            <form onSubmit={onSubmit} className="expense-form">
+            <form onSubmit={onSubmit}>
 
-                <div className="form-input">Name</div>
-                <input required
-                    type="text"
-                    onChange={(e) => setName(e.target.value)}
-                    value={name}
-                    placeholder="Name of Portfolio"></input>
-
-                <div className="form-input">Account Type</div>
+                <div className="form-input">Choose a payment type</div>
                 <select required
                     type="text"
-                    onChange={(e) => setAccountType(e.target.value)}
-                    value={accountType}>
+                    onChange={(e) => setType(e.target.value)}
+                    value={type}
+                    placeholder="Payment Type">
 
-                    <option style={{ color: "gray" }}>Select Account Type</option>
-                    <option>Investing</option>
-                    <option>Margin</option>
-                    <option>Ira</option>
+                    <option style={{color: "gray"}}>Select Payment Type</option>
+                    <option>Personal Checking</option>
+                    <option>Personal Savings</option>
                 </select>
 
+                <div className="form-input">Account Number</div>
+                <input required
+                    type="text"
+                    onChange={(e) => setAccountNumber(e.target.value)}
+                    value={accountNumber}
+                    placeholder="Account Number"></input>
+
+                <div className="form-input">Routing Number</div>
+                <input required
+                    type="text"
+                    onChange={(e) => setRoutingNumber(e.target.value)}
+                    value={routingNumber}
+                    placeholder="Routing Number"></input>
+
+                <div className="form-input">Note</div>
+                <input required
+                    type="textarea"
+                    onChange={(e) => setNote(e.target.value)}
+                    value={note}
+                    placeholder="Note"></input>
+
+
                 <div></div>
-                <button type="submit" className="form-submit-button">Create New Portfolio (Account)</button>
+                <button type="submit" className="form-submit-button">Add Payment Method</button>
             </form>
         </div>
     )
