@@ -12,12 +12,21 @@ def note_len_check(form, field):
     if len(note) > 50:
         raise ValidationError("Note must be less than 50 characters")
 
+def numbers_only_check(form, field):
+    number = field.data
+    allowed = '0123456789'
+    for char in number:
+        if char not in allowed:
+            raise ValidationError("Account and Routing number must only contain numbers (0-9)")
+
 class PaymentMethodForm(FlaskForm):
     type = StringField("Type", validators=[DataRequired()])
-    account_number = StringField("Account Number", validators=[DataRequired(), account_number_len_check])
-    routing_number = StringField("Routing Number", validators=[DataRequired(), account_number_len_check])
+    account_number = StringField("Account Number", validators=[DataRequired(), account_number_len_check, numbers_only_check])
+    routing_number = StringField("Routing Number", validators=[DataRequired(), account_number_len_check, numbers_only_check])
     note = StringField("Note", validators=[DataRequired(), note_len_check])
 
 
 class UpdatePaymentMethodForm(FlaskForm):
+    account_number = StringField("Account Number", validators=[DataRequired(), account_number_len_check, numbers_only_check])
+    routing_number = StringField("Routing Number", validators=[DataRequired(), account_number_len_check, numbers_only_check])
     note = StringField("Note", validators=[DataRequired(), note_len_check])

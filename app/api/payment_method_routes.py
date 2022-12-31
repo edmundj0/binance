@@ -89,6 +89,8 @@ def update_payment_method(payment_method_id):
         return {"errors": "Not authorized to edit this payment method"}, 401
 
     if form.validate_on_submit():
+        payment_method.account_number = form.data["account_number"]
+        payment_method.routing_number = form.data["routing_number"]
         payment_method.note = form.data["note"]
 
         db.session.commit()
