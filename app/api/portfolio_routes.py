@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, User, Portfolio
+from app.models import db, User, Portfolio, Transaction
 from sqlalchemy.orm import joinedload
 from app.forms import PortfolioForm, UpdatePortfolioForm
 from .auth_routes import validation_errors_to_error_messages
@@ -44,7 +44,7 @@ def get_one_portfolio(portfolio_id):
 
     id_of_user = current_user.id
 
-    portfolio = Portfolio.query.options(joinedload(Portfolio.transactions_portfolio)).filter(Portfolio.id == portfolio_id).first()
+    portfolio = Portfolio.query.options(joinedload(Portfolio.transactions_portfolio).options(joinedload(Transaction.coin))).filter(Portfolio.id == portfolio_id).first()
 
     if(not portfolio):
         return {"errors": "Portfolio (account) not found"}, 404
@@ -64,6 +64,13 @@ def get_one_portfolio(portfolio_id):
             "avg_price": transaction.avg_price,
             "status": transaction.status,
             "created_at": transaction.created_at,
+            "action": transaction.action,
+            "Coin": {
+                "id": transaction.coin.id,
+                "name": transaction.coin.name,
+                "symbol": transaction.coin.symbol,
+                "description": transaction.coin.description
+            }
         }
 
 
@@ -151,16 +158,77 @@ def delete_portfolio(portfolio_id):
     id_of_user = current_user.id
 
     if not portfolio:
-        return {"errors": "Portfolio (account) not found"}, 404
+        return {"errors": ["Portfolio (account) not found"]}, 404
 
     if not id_of_user == portfolio.user_id:
-        return {"errors": "Not authorized to delete this portfolio (account)"}
+        return {"errors": ["Not authorized to delete this portfolio (account)"]}, 401
 
     if portfolio.transactions_portfolio:
-        return {"errors": "Can not delete portfolio (account) after making purchases or having transactions"}
+        return {"errors": ["Can not delete portfolio (account) after making purchases or having transactions"]}, 403
 
 
     db.session.delete(portfolio)
     db.session.commit()
 
     return {"message": "Portfolio (account) successfully deleted"}
+
+
+@portfolio_routes.route("/<int:portfolio_id>/assets")
+@login_required
+def all_assets_of_portfolio(portfolio_id):
+    """
+    Get aggregate assets in a portfolio
+    """
+
+    id_of_user = current_user.id
+    portfolio = Portfolio.query.options(joinedload(Portfolio.transactions_portfolio).options(joinedload(Transaction.coin))).filter(Portfolio.id == portfolio_id).first()
+
+    if(not portfolio):
+        return {"errors": "Portfolio (account) not found"}, 404
+
+    if not id_of_user == portfolio.user_id:
+        return {"errors": "Not authorized to view this portfolio (account)"}, 401
+
+    assetsDict = {}
+    for transaction in portfolio.transactions_portfolio:
+        if transaction.action == "buy" and not transaction.coin_id in assetsDict:
+            assetsDict[transaction.coin_id] = {"quantity": transaction.quantity, "avg_price": transaction.avg_price, "symbol": transaction.coin.symbol, "name": transaction.coin.name, "total_money_paid": transaction.avg_price * transaction.quantity, "total_money_received": 0, "coin_id": transaction.coin_id}
+        elif transaction.action == "buy" and transaction.coin_id in assetsDict:
+            existingAsset = assetsDict[transaction.coin_id]
+            # existingAsset["avg_price"] = ((existingAsset["avg_price"] * existingAsset["quantity"] + (transaction.avg_price * transaction.quantity)) / (transaction.quantity + existingAsset["quantity"]))
+            existingAsset["total_money_paid"] += (transaction.avg_price * transaction.quantity)
+            existingAsset["avg_price"] = (existingAsset["total_money_paid"] - existingAsset["total_money_received"]) / (existingAsset["quantity"] + transaction.quantity)
+            existingAsset["quantity"] += transaction.quantity
+        elif transaction.action == "sell" and not transaction.coin_id in assetsDict:
+            assetsDict[transaction.coin_id] = {"quantity": transaction.quantity * -1, "avg_price": transaction.avg_price, "symbol": transaction.coin.symbol, "name": transaction.coin.name, "total_money_paid": 0, "total_money_received": transaction.avg_price * transaction.quantity, "coin_id": transaction.coin_id}
+        elif transaction.action == "sell" and transaction.coin_id in assetsDict:
+            existingAsset = assetsDict[transaction.coin_id]
+            existingAsset["total_money_received"] += (transaction.avg_price * transaction.quantity)
+            existingAsset["avg_price"] = (existingAsset["total_money_paid"] - existingAsset["total_money_received"]) / (existingAsset["quantity"] - transaction.quantity)
+            existingAsset["quantity"] -= transaction.quantity
+        # elif transaction.action == "buy" and any(transaction.coin_id in d for d in assetsLst):
+        #     # assetsLst[transaction.coin_id]["quantity"] += transaction.quantity
+        #     print(assetsDict.get(transaction.coin_id), 'plzzzz')
+
+    print(assetsDict.items())
+    return {"Assets": [item for item in assetsDict.values()]}
+
+
+
+# @portfolio_routes.route("/<int:portfolio_id>/transactions")
+# @login_required
+# def all_portfolio_transactions(portfolio_id):
+#     """
+#     Query for all transactions of current portfolio
+#     """
+#     portfolio = Portfolio.query.options(joinedload(Portfolio.transactions_portfolio)).filter(Portfolio.id == portfolio_id).first()
+#     id_of_user = current_user.id
+
+#     return {
+#         "id": portfolio.id,
+#         "account_type": portfolio.account_type,
+#         "buying_power": portfolio.buying_power,
+#         "name": portfolio.name,
+#         "user_id": portfolio.user_id,
+#         "Transactions": [transaction.to_dict() for transaction in ]
+#     }
