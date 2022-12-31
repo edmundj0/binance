@@ -1,9 +1,10 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
-import { getAllPaymentMethods } from "../../store/paymentMethod"
+import { deletePaymentMethod, getAllPaymentMethods } from "../../store/paymentMethod"
 import { getAllPortfolios } from "../../store/portfolio"
 import CreatePaymentMethodModal from "../PaymentMethods/CreatePaymentMethodModal"
+import EditPaymentMethodModal from "../PaymentMethods/EditPaymentMethodModal"
 import CreatePortfolioModal from "../Portfolio/CreatePortfolioModal"
 
 export default function Dashboard() {
@@ -43,6 +44,8 @@ export default function Dashboard() {
                         <div key={`method ${method.id}`}>
                                 <div>{method.note}</div>
                                 <div>{method.account_number}</div>
+                                <EditPaymentMethodModal method={method}/>
+                                <button onClick={() => dispatch(deletePaymentMethod(method.id))}>Delete</button>
                         </div>
                     )
                 })}

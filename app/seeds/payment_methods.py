@@ -5,21 +5,24 @@ from app.models import db, PaymentMethod, environment, SCHEMA
 def seed_paymentMethods():
     method0 = PaymentMethod(
         user_id=1,
-        type='checking',
+        type='Personal Checking',
         account_number="0000000001",
-        routing_number="00000002"
+        routing_number="00000002",
+        note="my checking"
     )
     method1 = PaymentMethod(
         user_id=1,
-        type='savings',
+        type='Personal Savings',
         account_number="500000000",
-        routing_number="500000001"
+        routing_number="500000001",
+        note="my savings"
         )
     method2 = PaymentMethod(
         user_id=2,
-        type='savings',
+        type='Personal Savings',
         account_number="500000000",
-        routing_number="500000001"
+        routing_number="500000001",
+        note="my savings"
         )
 
     db.session.add(method0)

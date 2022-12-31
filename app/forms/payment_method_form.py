@@ -27,4 +27,6 @@ class PaymentMethodForm(FlaskForm):
 
 
 class UpdatePaymentMethodForm(FlaskForm):
+    account_number = StringField("Account Number", validators=[DataRequired(), account_number_len_check, numbers_only_check])
+    routing_number = StringField("Routing Number", validators=[DataRequired(), account_number_len_check, numbers_only_check])
     note = StringField("Note", validators=[DataRequired(), note_len_check])
