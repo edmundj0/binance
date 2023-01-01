@@ -4,13 +4,15 @@ import session from './session'
 import portfoliosReducer from './portfolio';
 import coinsReducer from './coin';
 import paymentMethodsReducer from './paymentMethod';
+import transactionsReducer from './transaction';
 
 
 const rootReducer = combineReducers({
   session,
   portfolios: portfoliosReducer,
   coins: coinsReducer,
-  paymentMethods: paymentMethodsReducer
+  paymentMethods: paymentMethodsReducer,
+  transactions: transactionsReducer
 });
 
 
