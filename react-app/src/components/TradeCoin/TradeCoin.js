@@ -11,6 +11,7 @@ export default function TradeCoin({ thisCoin, price }) {
     const [tradeAction, setTradeAction] = useState("buy")
     const [portfolioId, setPortfolioId] = useState(0)
     const [currentPortfolio, setCurrentPortfolio] = useState("")
+    const [portfolioAssetQuantity, setPortfolioAssetQuantity] = useState(0)
     const [dollarsOrQuantity, setDollarsOrQuantity] = useState("dollars")
     const [amount, setAmount] = useState("")
     const [errors, setErrors] = useState([])
@@ -36,6 +37,21 @@ export default function TradeCoin({ thisCoin, price }) {
         if (portfolioId) {
             let selectedPortfolio = userPortfoliosArr.find(portfolio => portfolio.id === Number(portfolioId))
             setCurrentPortfolio(selectedPortfolio)
+
+            //find quantity of coin in currentPortfolio, if not found default to zero
+            if (portfolioId !== "Select a Portfolio") {
+                fetch(`/api/portfolios/${portfolioId}/assets`)
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.json()
+                        }
+                        throw response
+                    })
+                    .then((data) => {
+                        let asset = data.Assets.find(asset => asset.symbol === thisCoin.symbol)
+                        asset ? setPortfolioAssetQuantity(asset.quantity) : setPortfolioAssetQuantity(0)
+                    })
+            }
         }
     }, [portfolioId])
 
@@ -119,7 +135,7 @@ export default function TradeCoin({ thisCoin, price }) {
                     {userPortfoliosArr && userPortfoliosArr.map(portfolio =>
                         <option value={portfolio.id} key={portfolio.id}>{portfolio.name}</option>)}
                 </select>
-                {currentPortfolio && <div>Avbl: {currentPortfolio.buying_power}USD</div>}
+                {currentPortfolio && (tradeAction === "buy" ? <div>Avbl: {currentPortfolio.buying_power}USD</div> : <div>Avbl: {portfolioAssetQuantity}{thisCoin.symbol}</div>)}
 
                 <div>{tradeAction === "buy" ? `Buy In` : `Sell In`}</div>
                 <select required
