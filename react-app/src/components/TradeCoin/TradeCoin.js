@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getAllPortfolios } from "../../store/portfolio";
+import { editOnePortfolio, getAllPortfolios } from "../../store/portfolio";
 import { createNewTransaction } from "../../store/transaction";
 
 
@@ -39,7 +39,7 @@ export default function TradeCoin({ thisCoin, price }) {
         }
     }, [portfolioId])
 
-    const info= {
+    const info = {
         portfolio_id: portfolioId,
         coin_id: thisCoin.id,
         quantity: dollarsOrQuantity === "dollars" ? Number(amount / price).toFixed(7) : Number(amount),
@@ -47,25 +47,44 @@ export default function TradeCoin({ thisCoin, price }) {
         action: tradeAction
     }
 
+    let portfolioInfo = {} //will error out if currentPortfolio doesn't exist
+    if (currentPortfolio) {
+        portfolioInfo = {
+            account_type: currentPortfolio.account_type,
+            name: currentPortfolio.name,
+            buying_power: info.action === "buy" ? currentPortfolio.buying_power - (info.quantity * info.avg_price) : currentPortfolio.buying_power + (info.quantity * info.avg_price)
+        }
+    }
+
     const onSubmit = async (e) => {
         e.preventDefault()
         console.log(info.quantity, 'info quantity')
         console.log(info.avg_price, 'info price')
 
-        if(isNaN(price) === true){
+        if (isNaN(price) === true) {
             setErrors(["Price of coin couldn't be determined at this time. Please try again later."])
-        }else if(portfolioId === undefined || portfolioId ==="Select A Portfolio"){
+        } else if (portfolioId === undefined || portfolioId === "Select A Portfolio") {
             setErrors(["Please select a portfolio"])
-        }else if (!info.quantity || info.quantity === "" || info.quantity <= 0){
-            setErrors(["Please enter an amount"])
+        } else if (!info.quantity || info.quantity === "" || info.quantity <= 0) {
+            setErrors(["Please enter an amount or an amount greater than 0"])
+        } else if (currentPortfolio.buying_power < info.quantity * info.avg_price) {
+            setErrors(["Insufficient USD Balance"])
         }
         else {
             let newTransaction = await dispatch(createNewTransaction(info))
 
-            if(newTransaction.errors) {
-                setErrors(newTransaction.errors)
+            if (newTransaction.errors) {
+                await setErrors(newTransaction.errors)
             }
-            else{
+            else {
+                //reduce buying power of portfolio
+                let editedPortfolio = await dispatch(editOnePortfolio(portfolioInfo, portfolioId))
+
+                if (editedPortfolio.errors) {
+                    await setErrors(editedPortfolio.errors)
+                }
+
+                dispatch(getAllPortfolios()) //update buying power
 
                 history.push(`/portfolios/${portfolioId}`)
             }
