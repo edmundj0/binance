@@ -58,7 +58,7 @@ export default function TradeCoin({ thisCoin, price }) {
             setErrors(["Please select a portfolio"])
         }else if (!info.quantity || info.quantity === "" || info.quantity <= 0){
             setErrors(["Please enter an amount"])
-        }else if ()
+        }
         else {
             let newTransaction = await dispatch(createNewTransaction(info))
 
