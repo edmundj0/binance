@@ -6,3 +6,11 @@
 a {
     color: rgba(255,255,255,0.87);
 }
+
+button {
+    cursor: pointer;
+}
+
+* {
+    font-family: 'Metrophobic', sans-serif;
+}
