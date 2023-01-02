@@ -26,13 +26,14 @@ export default function TradeCoin({ thisCoin, price }) {
         // console.log('getting portfolios')
     }, [dispatch])
 
-    useEffect(() => {
-        //could cause portfolioId to be undefined
-        //sets select dropdown with default portfolio if user coming from that portfolio
-        if (userPortfolios.onePortfolio) {
-            setPortfolioId(userPortfolios.onePortfolio.id)
-        }
-    }, [userPortfolios])
+    //commenting out b/c of bug where wrong avbl coin balance is displayed, due to value of thisCoin
+    // useEffect(() => {
+    //     //could cause portfolioId to be undefined
+    //     //sets select dropdown with default portfolio if user coming from that portfolio
+    //     if (userPortfolios.onePortfolio) {
+    //         setPortfolioId(userPortfolios.onePortfolio.id)
+    //     }
+    // }, [userPortfolios])
 
     useEffect(() => {
         if (portfolioId) {
@@ -73,19 +74,21 @@ export default function TradeCoin({ thisCoin, price }) {
         }
     }
 
+    console.log(info.action, 'info action', typeof info.quantity)
+    console.log(typeof portfolioAssetQuantity, 'portfolioAssetQuantity')
     const onSubmit = async (e) => {
         e.preventDefault()
-        console.log(info.quantity, 'info quantity')
-        console.log(info.avg_price, 'info price')
 
         if (isNaN(price) === true) {
             setErrors(["Price of coin couldn't be determined at this time. Please try again later."])
-        } else if (portfolioId === undefined || portfolioId === "Select A Portfolio") {
+        } else if (portfolioId === undefined || portfolioId === "Select A Portfolio" || portfolioId === 0) {
             setErrors(["Please select a portfolio"])
         } else if (!info.quantity || info.quantity === "" || info.quantity <= 0) {
             setErrors(["Please enter an amount or an amount greater than 0"])
-        } else if (currentPortfolio.buying_power < info.quantity * info.avg_price) {
+        } else if (currentPortfolio.buying_power < info.quantity * info.avg_price && info.action === "buy") {
             setErrors(["Insufficient USD Balance"])
+        } else if (info.action === "sell" && info.quantity > portfolioAssetQuantity) {
+            setErrors([`Insufficient ${thisCoin.symbol} balance`])
         }
         else {
             let newTransaction = await dispatch(createNewTransaction(info))
