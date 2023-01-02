@@ -3,7 +3,7 @@
     justify-content: center;
 }
 
-#login-header-text {
+.login-header-text {
     text-align: center;
     font-size: 72px;
     font-weight: 600;
@@ -11,7 +11,7 @@
     margin-bottom: 20px;
 }
 
-#warning-header-text {
+.warning-header-text {
     font-size: 16px;
     margin-bottom: 80px;
 
@@ -59,4 +59,8 @@
 
 #get-started-text:hover {
     color: #F0B90B;
+}
+
+.error-text {
+    color: red;
 }

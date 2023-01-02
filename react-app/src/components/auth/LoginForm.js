@@ -39,11 +39,11 @@ const LoginForm = () => {
   return (
     <div className='login-form-container'>
       <form onSubmit={onLogin}>
-        <div id="login-header-text">Log In</div>
-        <div id="warning-header-text">Make sure you are visiting the correct URL</div>
+        <div className="login-header-text">Log In</div>
+        <div className="warning-header-text">Make sure you are visiting the correct URL</div>
         <div>
           {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
+            <div key={ind} className='error-text'>{error}</div>
           ))}
         </div>
         <div>
