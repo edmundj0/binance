@@ -3,6 +3,7 @@ const GET_ONE_PAYMENT_METHOD = "/payment-methods/GET_ONE_PAYMENT_METHOD"
 const CREATE_NEW_PAYMENT_METHOD = "/payment-methods/CREATE_NEW"
 const EDIT_PAYMENT_METHOD = "/payment-methods/EDIT_ONE"
 const DELETE_PAYMENT_METHOD = "/payment-methods/DELETE_ONE"
+const CLEAR_PAYMENT_METHODS = "/payment-methods/CLEAR"
 
 //action creators
 const loadAllPaymentMethods = (allPaymentMethods) => ({
@@ -29,6 +30,11 @@ const delPaymentMethod = (methodId) => ({
     type: DELETE_PAYMENT_METHOD,
     methodId
 })
+
+export const clearPaymentMethods = () => ({
+    type: CLEAR_PAYMENT_METHODS
+})
+
 
 //thunks
 export const getAllPaymentMethods = () => async (dispatch) => {
@@ -146,6 +152,13 @@ const paymentMethodsReducer = (state = initialState, action) => {
             }
             newState.onePaymentMethod = {}
             delete newState.allPaymentMethods[action.methodId]
+            return newState
+        case CLEAR_PAYMENT_METHODS:
+            newState = {
+                ...state,
+                onePaymentMethod: {},
+                allPaymentMethods: {}
+            }
             return newState
         default:
             return state

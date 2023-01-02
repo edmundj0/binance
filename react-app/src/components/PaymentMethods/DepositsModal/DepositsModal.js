@@ -95,7 +95,7 @@ export default function Deposits({ setShowModal }) {
 
                     <option style={{ color: "gray" }}>Select a Payment Method</option>
                     {userPaymentMethodsArr && userPaymentMethodsArr.map(method =>
-                        <option value={method.id} key={method.id}>{`${method.note} • ${method.account_type}`}</option>)}
+                        <option value={method.id} key={method.id}>{`${method.note} • ${method.type} x${method.account_number.slice(-4)}`}</option>)}
                 </select>
 
                 <div className="form-input">To (choose portfolio)</div>
