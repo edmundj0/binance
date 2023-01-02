@@ -191,6 +191,16 @@ def all_assets_of_portfolio(portfolio_id):
 
     assetsDict = {}
     for transaction in portfolio.transactions_portfolio:
+
+        #handle divide by 0 error and remove coin from assets list, in the case where user sells all
+        #potential known error: avg price may be wrong from nuking the total_money_paid and total_money_received calculation
+        if(transaction.action == "buy" and transaction.coin_id in assetsDict and (assetsDict[transaction.coin_id]["quantity"] + transaction.quantity) == 0):
+            del assetsDict[transaction.coin_id]
+            continue
+        if(transaction.action == "sell" and transaction.coin_id in assetsDict and (assetsDict[transaction.coin_id]["quantity"] - transaction.quantity) == 0):
+            del assetsDict[transaction.coin_id]
+            continue
+
         if transaction.action == "buy" and not transaction.coin_id in assetsDict:
             assetsDict[transaction.coin_id] = {"quantity": transaction.quantity, "avg_price": transaction.avg_price, "symbol": transaction.coin.symbol, "name": transaction.coin.name, "total_money_paid": transaction.avg_price * transaction.quantity, "total_money_received": 0, "coin_id": transaction.coin_id}
         elif transaction.action == "buy" and transaction.coin_id in assetsDict:

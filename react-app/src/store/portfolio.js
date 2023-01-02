@@ -3,6 +3,7 @@ const GET_ONE_PORTFOLIO = "portfolios/GET_ONE_PORTFOLIO";
 const CREATE_NEW_PORTFOLIO = "portfolios/CREATE_NEW_PORTFOLIO"
 const EDIT_ONE_PORTFOLIO = "portfolios/EDIT_ONE_PORTFOLIO"
 const DELETE_ONE_PORTFOLIO = "portfolios/DELETE_ONE_PORTFOLIO"
+const CLEAR_PORTFOLIOS = "portfolios/CLEAR"
 
 //action creators
 const loadAllPortfolios = (allPortfolios) => ({
@@ -28,6 +29,10 @@ const editPortfolio = (edited) => ({
 const delPortfolio = (portfolioId) => ({
     type: DELETE_ONE_PORTFOLIO,
     portfolioId
+})
+
+export const clearPortfolios = () => ({
+    type: CLEAR_PORTFOLIOS
 })
 
 //thunks
@@ -152,6 +157,13 @@ const portfoliosReducer = (state = initialState, action) => {
             }
             newState.onePortfolio = {}
             delete newState.allUserPortfolios[action.portfolioId]
+            return newState
+        case CLEAR_PORTFOLIOS:
+            newState = {
+                ...state,
+                onePortfolio: {},
+                allUserPortfolios: {}
+            }
             return newState
         default:
             return state

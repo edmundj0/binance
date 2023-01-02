@@ -68,7 +68,7 @@ export default function CoinDetails() {
             <h1>{thisCoin.name}</h1>
             <h3>{thisCoin.symbol}/USD</h3>
             <div>${price}</div>
-            <TradeCoin thisCoin={thisCoin} />
+            <TradeCoin thisCoin={thisCoin} price={price} />
         </div>
     )
 
