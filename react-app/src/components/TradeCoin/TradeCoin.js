@@ -28,6 +28,7 @@ export default function TradeCoin({ thisCoin, price }) {
 
     useEffect(() => {
         //could cause portfolioId to be undefined
+        //sets select dropdown with default portfolio if user coming from that portfolio
         if (userPortfolios.onePortfolio) {
             setPortfolioId(userPortfolios.onePortfolio.id)
         }
@@ -63,7 +64,7 @@ export default function TradeCoin({ thisCoin, price }) {
         action: tradeAction
     }
 
-    let portfolioInfo = {} //will error out if currentPortfolio doesn't exist
+    let portfolioInfo = {} //will error out if currentPortfolio doesn't exist, so need if statement
     if (currentPortfolio) {
         portfolioInfo = {
             account_type: currentPortfolio.account_type,
@@ -180,7 +181,7 @@ export default function TradeCoin({ thisCoin, price }) {
 
                 <div>{dollarsOrQuantity === "dollars" ? `Est. ${Number(amount / price).toFixed(7)} ${thisCoin.symbol}` : `Est. $${Number(amount * price).toFixed(2)}`}</div>
 
-                <button type="submit">Place Buy Order</button>
+                <button type="submit">{tradeAction === 'buy' ? <span>Submit Buy Order</span> : <span>Submit Sell Order</span> }</button>
 
 
 

@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom"
 import { deletePaymentMethod, getAllPaymentMethods } from "../../store/paymentMethod"
 import { getAllPortfolios } from "../../store/portfolio"
 import CreatePaymentMethodModal from "../PaymentMethods/CreatePaymentMethodModal"
+import DepositsModal from "../PaymentMethods/DepositsModal"
 import EditPaymentMethodModal from "../PaymentMethods/EditPaymentMethodModal"
 import CreatePortfolioModal from "../Portfolio/CreatePortfolioModal"
 
@@ -50,6 +51,9 @@ export default function Dashboard() {
                     )
                 })}
                 <CreatePaymentMethodModal />
+            </div>
+            <div>
+                <DepositsModal />
             </div>
 
         </div>
