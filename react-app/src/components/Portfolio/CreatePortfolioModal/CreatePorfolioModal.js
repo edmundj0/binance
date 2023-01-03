@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewPortfolio, getAllPortfolios } from "../../../store/portfolio";
+import "./CreatePortfolioModal.css"
 
 
 export default function CreatePortfolio({ setShowModal }) {

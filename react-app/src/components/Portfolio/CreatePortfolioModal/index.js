@@ -11,7 +11,7 @@ export default function CreatePortfolioModal({expense, setHasSubmitted}){
 
     return (
         <>
-        <button onClick={()=>setShowModal(true)}>Open New Portfolio (Account)</button>
+        <button id="open-portfolio-button" onClick={()=>setShowModal(true)}>Open New Portfolio</button>
         {showModal && (
             <Modal onClose={()=>setShowModal(false)}>
                 <CreatePortfolio setShowModal={setShowModal} />

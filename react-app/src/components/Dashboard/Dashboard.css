@@ -1,0 +1,80 @@
+.dashboard-entire-page {
+    display: flex;
+
+}
+
+.dashboard-left-container {
+    flex-basis: 65%;
+}
+
+.dashboard-right-container {
+    flex-basis: 35%;
+}
+
+.page-main-header {
+    font-size: 48px;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+    color: rgba(255,255,255,0.95);
+}
+
+.page-small-title {
+    font-size: 28px;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15px;
+    padding-top: 25px;
+    border-bottom: 1px darkgray solid;
+}
+
+.each-portfolio-container {
+    /* border: 1px solid darkgray; */
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.navlink-portfolio:hover {
+    color: #f0b90b;
+}
+
+#portfolio-name-text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 22px;
+    padding-bottom: 5px;
+}
+
+#buying-power-and-type-text {
+    font-weight: 700;
+}
+
+.trade-button-dashboard {
+    background-color: #f0b90b;
+    border: none;
+    font-size: 18px;
+    color: #1E2026;
+    line-height: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+}
+
+.trade-button-dashboard:hover {
+    background-color: #f0bb0ba7;
+}
+
+td {
+    padding: 15px;
+}
+
+th {
+    padding-top: 30px;
+}
+
+#coin-description-text {
+    color: rgba(186, 186, 186, 0.857);
+    font-size: 14px;
+}
