@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getOneCoin } from "../../store/coin";
 import TradeCoin from "../TradeCoin/TradeCoin";
+import CoinChart from "./CoinChart";
 
 
 export default function CoinDetails() {
@@ -64,10 +65,11 @@ export default function CoinDetails() {
 
 
     return (
-        <div>
-            <h1>{thisCoin.name}</h1>
-            <h3>{thisCoin.symbol}/USD</h3>
+        <div className="coin-details-entire-page">
+            <div className="page-main-header">{thisCoin.name}</div>
+            <div className="page-small-title">{thisCoin.symbol}/USD ${price}</div>
             <div>${price}</div>
+            <CoinChart thisCoin={thisCoin}price={price}/>
             <TradeCoin thisCoin={thisCoin} price={price} />
         </div>
     )

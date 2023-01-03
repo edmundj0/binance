@@ -141,7 +141,7 @@ export default function OnePortfolio() {
                                     <td className="table-td-portfolio-transaction">Market</td>
                                     <td className="table-td-portfolio-transaction">{transaction.action}</td>
                                     <td className="table-td-portfolio-transaction">${transaction.avg_price.toFixed(2)}</td>
-                                    <td className="table-td-portfolio-transaction">{transaction.quantity.toFixed(7)}</td>
+                                    <td className="table-td-portfolio-transaction">{transaction.quantity.toFixed(7)}{transaction.Coin.symbol}</td>
                                 </tr>
                             )
                         })}
