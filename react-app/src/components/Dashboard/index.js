@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { NavLink } from "react-router-dom"
+import { NavLink, useHistory } from "react-router-dom"
 import { getAllCoins } from "../../store/coin"
 import { deletePaymentMethod, getAllPaymentMethods } from "../../store/paymentMethod"
 import { getAllPortfolios } from "../../store/portfolio"
@@ -12,6 +12,7 @@ import "./Dashboard.css"
 
 export default function Dashboard() {
     const dispatch = useDispatch()
+    const history = useHistory()
 
     let allPortfolios = useSelector(state => state.portfolios.allUserPortfolios)
     console.log(allPortfolios, 'allPortfolios')
@@ -31,6 +32,10 @@ export default function Dashboard() {
     useEffect(() => {
         dispatch(getAllCoins())
     }, [dispatch])
+
+    const tradeRouteChange = (coin) => {
+        history.push(`/coins/${coin.id}`)
+    }
 
     return (
         <div className="dashboard-entire-page">
@@ -52,20 +57,25 @@ export default function Dashboard() {
 
                 <div className="page-small-title">Market Information</div>
                 <table>
-                    <th>Coin Name</th>
-                    <th>Coin Symbol</th>
-                    <th>Coin Description</th>
-                {Object.values(allCoins).map((coin) => {
-
-                    return (
+                    <thead>
                         <tr>
-                            <td>{coin.name}</td>
-                            <td>{coin.symbol}</td>
-                            <td id="coin-description-text">{coin.description}</td>
-                            <td><button className="trade-button-dashboard">Trade</button></td>
+                            <th>Coin Name</th>
+                            <th>Coin Symbol</th>
+                            <th>Coin Description</th>
                         </tr>
-                    )
-                })}
+                    </thead>
+                    <tbody>
+                        {Object.values(allCoins).map((coin) => {
+                            return (
+                                <tr key={`coin ${coin.id}`}>
+                                    <td>{coin.name}</td>
+                                    <td>{coin.symbol}</td>
+                                    <td id="coin-description-text">{coin.description}</td>
+                                    <td><button className="trade-button-dashboard" onClick={() => tradeRouteChange(coin)}>Trade</button></td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
                 </table>
 
 

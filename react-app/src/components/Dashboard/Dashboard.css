@@ -27,6 +27,7 @@
     padding-bottom: 15px;
     padding-top: 25px;
     border-bottom: 1px darkgray solid;
+    margin-bottom: 15px;
 }
 
 .each-portfolio-container {
@@ -70,7 +71,7 @@ td {
     padding: 15px;
 }
 
-th {
+table {
     padding-top: 30px;
 }
 

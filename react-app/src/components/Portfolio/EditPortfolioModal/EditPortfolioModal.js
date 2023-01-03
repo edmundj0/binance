@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { editOnePortfolio } from "../../../store/portfolio";
+import { editOnePortfolio, getOnePortfolio } from "../../../store/portfolio";
 
 
 export default function EditPortfolio({ setShowModal }) {
@@ -42,6 +42,9 @@ export default function EditPortfolio({ setShowModal }) {
             }
             else {
                 setShowModal(false)
+                //fire this dispatch or else Transactions in onePortfolio component won't load,
+                //because editPortfolio API return doesn't include Transactions for that portfolio
+                dispatch(getOnePortfolio(thisPortfolio.id))
             }
         }
 
@@ -51,7 +54,7 @@ export default function EditPortfolio({ setShowModal }) {
 
     return (
         <div className="modal-expense-entire">
-            <div className="modal-expense-header">Create New Portfolio</div>
+            <div className="modal-expense-header">Edit Portfolio</div>
             <div>
                 {errors && (
                     <ul>
