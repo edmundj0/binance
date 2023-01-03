@@ -1,0 +1,21 @@
+.coin-detailed-data-container {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 14px;
+}
+
+.detail-inner-container {
+    margin-right: 30px;
+}
+
+.detail-title {
+    color: rgba(128, 128, 128, 0.563);
+}
+
+.price-change-positive {
+    color: #02C076;
+}
+
+.price-change-negative {
+    color: #F84960;
+}

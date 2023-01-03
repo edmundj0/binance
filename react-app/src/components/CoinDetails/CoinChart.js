@@ -42,12 +42,12 @@ export default function CoinChart({ price, thisCoin }) {
             });
 
             let candleSeries = chart.addCandlestickSeries({
-                upColor: 'rgba(255, 144, 0, 1)',
-                downColor: '#000',
-                borderDownColor: 'rgba(255, 144, 0, 1)',
-                borderUpColor: 'rgba(255, 144, 0, 1)',
-                wickDownColor: 'rgba(255, 144, 0, 1)',
-                wickUpColor: 'rgba(255, 144, 0, 1)',
+                upColor: '#02C076', //rgba(255, 144, 0, 1) defaults
+                downColor: '#F84960', //#000
+                borderDownColor: '#F84960', //rgba(255, 144, 0, 1)
+                borderUpColor: '#02C076', //rgba(255, 144, 0, 1)
+                wickDownColor: '#F84960', //rgba(255, 144, 0, 1)
+                wickUpColor: '#02C076', //rgba(255, 144, 0, 1)
             });
 
             //load historical candlestick data from bitstamp api

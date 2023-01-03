@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getOneCoin } from "../../store/coin";
 import TradeCoin from "../TradeCoin/TradeCoin";
 import CoinChart from "./CoinChart";
+import "./CoinDetails.css"
 
 
 export default function CoinDetails() {
@@ -11,8 +12,16 @@ export default function CoinDetails() {
     const { coinId } = useParams()
 
     const [price, setPrice] = useState('Connecting...') //price is string
+    const [priceChangePercent, setPriceChangePercent] = useState("")
+    const [highPrice, setHighPrice] = useState("")
+    const [lowPrice, setLowPrice] = useState("")
+    const [volume, setVolume] = useState("")
+    const [askPrice, setAskPrice] = useState("")
+    const [bidPrice, setBidPrice] = useState("")
+
     const [errors, setErrors] = useState([])
     const binanceSocket = useRef(null)
+    const isMounted = useRef(false)
 
     const thisCoin = useSelector(state => state.coins.oneCoin)
 
@@ -20,21 +29,51 @@ export default function CoinDetails() {
         dispatch(getOneCoin(coinId))
     }, [dispatch, coinId])
 
+    //get coin price data
     useEffect(() => {
+
         fetch(`https://api.binance.us/api/v3/ticker/price?symbol=${thisCoin?.symbol}USD`)
-        .then((response) => {
-            if (response.ok){
-                return response.json()
-            }
-            throw response
-        })
-        .then((data) => {
-            setPrice(data?.price)
-        })
-        .catch((error) => {
-            console.log("Error fetching initial data: ", error)
-            setErrors(error)
-        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json()
+                }
+                throw response
+            })
+            .then((data) => {
+                setPrice(data?.price)
+            })
+            .catch((error) => {
+                console.log("Error fetching initial data: ", error)
+                setErrors(error)
+            })
+    }, [thisCoin])
+
+    //get coin detailed data
+    useEffect(() => {
+        if (isMounted.current) {
+            fetch(`https://api.binance.us/api/v3/ticker/24hr?symbol=${thisCoin?.symbol}USD`)
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    throw response
+                })
+                .then((data) => {
+                    setPriceChangePercent(data?.priceChangePercent)
+                    setHighPrice(data.highPrice)
+                    setLowPrice(data.lowPrice)
+                    setVolume(data.volume)
+                    setBidPrice(data.bidPrice)
+                    setAskPrice(data.askPrice)
+                })
+                .catch((error) => {
+                    console.log("Error fetching detailed coin data: ", error)
+                    setErrors(error)
+                })
+
+        } else {
+            isMounted.current = true
+        }
     }, [thisCoin])
 
     useEffect(() => {
@@ -59,7 +98,7 @@ export default function CoinDetails() {
 
 
 
-    if(!thisCoin){
+    if (!thisCoin) {
         return null
     }
 
@@ -68,9 +107,17 @@ export default function CoinDetails() {
         <div className="coin-details-entire-page">
             <div className="page-main-header">{thisCoin.name}</div>
             <div className="page-small-title">{thisCoin.symbol}/USD ${price}</div>
-            <div>${price}</div>
-            <CoinChart thisCoin={thisCoin}price={price}/>
+            <div className="coin-detailed-data-container">
+                <div className="detail-inner-container"><div className="detail-title">Price</div><div>${price}</div></div>
+                <div className="detail-inner-container"><div className="detail-title">24h Change</div><div className={priceChangePercent >= 0 ? "price-change-positive" : "price-change-negative"}>{priceChangePercent}%</div></div>
+                <div className="detail-inner-container"><div className="detail-title">24h High</div><div>{highPrice}</div></div>
+                <div className="detail-inner-container"><div className="detail-title">24h Low</div><div>{lowPrice}</div></div>
+                <div className="detail-inner-container"><div className="detail-title">24h Volume</div><div>{volume}</div></div>
+            </div>
+            <CoinChart thisCoin={thisCoin} price={price} />
             <TradeCoin thisCoin={thisCoin} price={price} />
+            <div className="page-small-title">Key Statistics</div>
+
         </div>
     )
 

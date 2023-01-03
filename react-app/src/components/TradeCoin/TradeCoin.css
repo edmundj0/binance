@@ -1,0 +1,39 @@
+.trade-coin-header-text {
+    padding-top: 20px;
+}
+
+.buy-button-active {
+    background-color: #02C076;
+    color: white;
+}
+
+.buy-button-not-active {
+    background-color: #121212;
+    color: #929AA5;
+}
+
+.buysell-button {
+    border: 1px gray solid;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.sell-button-active {
+    background-color: #F84960;
+    color: white;
+}
+
+.sell-button-not-active {
+    background-color: #121212;
+    color: #929AA5;
+}
+
+.select-trade-coin {
+    background-color: #121212;
+    color: white;
+    width: 200px;
+
+    padding: 10px;
+}
