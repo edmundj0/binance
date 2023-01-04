@@ -121,33 +121,35 @@ export default function OnePortfolio() {
             </div>
             <div className="transactions-container">
                 <div className="page-small-title">Transactions</div>
-                <table className="transactions-table my-table">
-                    <thead>
-                        <tr>
-                            <th className="table-th-portfolio-transaction">Time</th>
-                            <th className="table-th-portfolio-transaction">Symbol</th>
-                            <th className="table-th-portfolio-transaction">Type</th>
-                            <th className="table-th-portfolio-transaction">Side</th>
-                            <th className="table-th-portfolio-transaction">Price</th>
-                            <th className="table-th-portfolio-transaction">Amount</th>
+                {portfolioTransactions.length ?
+                    <table className="transactions-table my-table">
+                        <thead>
+                            <tr>
+                                <th className="table-th-portfolio-transaction">Time</th>
+                                <th className="table-th-portfolio-transaction">Symbol</th>
+                                <th className="table-th-portfolio-transaction">Type</th>
+                                <th className="table-th-portfolio-transaction">Side</th>
+                                <th className="table-th-portfolio-transaction">Price</th>
+                                <th className="table-th-portfolio-transaction">Amount</th>
+                            </tr>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {portfolioTransactions && Object.values(portfolioTransactions).reverse().map((transaction) => {
-                            return (
-                                <tr key={`/transactions/${transaction.id}`}>
-                                    <td className="table-td-portfolio-transaction">{transaction.created_at.slice(5)}</td>
-                                    <td className="table-td-portfolio-transaction"><NavLink to={`/coins/${transaction.Coin.id}`}>{transaction.Coin.symbol}</NavLink>/USD</td>
-                                    <td className="table-td-portfolio-transaction">Market</td>
-                                    <td className="table-td-portfolio-transaction">{transaction.action}</td>
-                                    <td className="table-td-portfolio-transaction">${transaction.avg_price.toFixed(2)}</td>
-                                    <td className="table-td-portfolio-transaction">{transaction.quantity.toFixed(7)}{transaction.Coin.symbol}</td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {portfolioTransactions && Object.values(portfolioTransactions).reverse().map((transaction) => {
+                                return (
+                                    <tr key={`/transactions/${transaction.id}`}>
+                                        <td className="table-td-portfolio-transaction">{transaction.created_at.slice(5)}</td>
+                                        <td className="table-td-portfolio-transaction"><NavLink to={`/coins/${transaction.Coin.id}`}>{transaction.Coin.symbol}</NavLink>/USD</td>
+                                        <td className="table-td-portfolio-transaction">Market</td>
+                                        <td className="table-td-portfolio-transaction">{transaction.action}</td>
+                                        <td className="table-td-portfolio-transaction">${transaction.avg_price.toFixed(2)}</td>
+                                        <td className="table-td-portfolio-transaction">{transaction.quantity.toFixed(7)}{transaction.Coin.symbol}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                    : <div>Make a transaction and they will appear here!</div>}
             </div>
             <OnePortfolioChart thisPortfolio={thisPortfolio} />
         </div>
