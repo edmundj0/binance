@@ -87,7 +87,7 @@ export default function OnePortfolio() {
             </div>
             <div className="account-holdings-container">
                 <div className="page-small-title">Account Holdings</div>
-                <table>
+                <table className="my-table">
                     <thead>
                         <tr>
                             <th className="table-th-portfolio-asset">Asset Name</th>
@@ -98,20 +98,20 @@ export default function OnePortfolio() {
                     </thead>
                     <tbody>
                         <tr className="table-tr-portfolio-asset">
-                            <td>United States Dollar</td>
-                            <td>USD</td>
-                            <td>{thisPortfolio?.buying_power.toFixed(2)}</td>
-                            <td>N/A</td>
+                            <td className="my-table-td">United States Dollar</td>
+                            <td className="my-table-td">USD</td>
+                            <td className="my-table-td">{thisPortfolio?.buying_power.toFixed(2)}</td>
+                            <td className="my-table-td">N/A</td>
                         </tr>
                         {assets && Object.values(assets).map((asset) => {
                             return (
                                 <tr className="table-tr-portfolio-asset" key={`/assets/${asset.name}`}>
                                     {/* <div>{asset.name} ({asset.symbol})</div>
                                     <div>Quantity: {asset.quantity} Avg Cost:{asset.avg_price}</div> */}
-                                    <td>{asset.name}</td>
-                                    <td>{asset.symbol}</td>
-                                    <td>{asset.quantity.toFixed(7)}</td>
-                                    <td>${asset.avg_price.toFixed(2)}</td>
+                                    <td className="my-table-td">{asset.name}</td>
+                                    <td className="my-table-td">{asset.symbol}</td>
+                                    <td className="my-table-td">{asset.quantity.toFixed(7)}</td>
+                                    <td className="my-table-td">${asset.avg_price.toFixed(2)}</td>
                                 </tr>
                             )
                         })}
@@ -120,7 +120,7 @@ export default function OnePortfolio() {
             </div>
             <div className="transactions-container">
                 <div className="page-small-title">Transactions</div>
-                <table className="transactions-table">
+                <table className="transactions-table my-table">
                     <thead>
                         <tr>
                             <th className="table-th-portfolio-transaction">Time</th>

@@ -88,7 +88,6 @@ export default function CoinChart({ price, thisCoin }) {
 
                 const msgObj = JSON.parse(event.data)
                 const candleStick = msgObj.k
-
                 //update chart with updated data
                 candleSeries.update({
                     time: candleStick.t / 1000,

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getOneCoin } from "../../store/coin";
+import BtcChart from "../ChartTest";
 import TradeCoin from "../TradeCoin/TradeCoin";
 import CoinChart from "./CoinChart";
 import "./CoinDetails.css"
@@ -117,7 +118,6 @@ export default function CoinDetails() {
             <CoinChart thisCoin={thisCoin} price={price} />
             <TradeCoin thisCoin={thisCoin} price={price} />
             <div className="page-small-title">Key Statistics</div>
-
         </div>
     )
 

@@ -67,11 +67,11 @@
     background-color: #f0bb0ba7;
 }
 
-td {
+.my-table-td {
     padding: 15px;
 }
 
-table {
+.my-table {
     padding-top: 30px;
 }
 

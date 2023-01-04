@@ -56,7 +56,7 @@ export default function Dashboard() {
                 })}
 
                 <div className="page-small-title">Market Information</div>
-                <table>
+                <table className="my-table">
                     <thead>
                         <tr>
                             <th>Coin Name</th>
@@ -68,10 +68,10 @@ export default function Dashboard() {
                         {Object.values(allCoins).map((coin) => {
                             return (
                                 <tr key={`coin ${coin.id}`}>
-                                    <td>{coin.name}</td>
-                                    <td>{coin.symbol}</td>
-                                    <td id="coin-description-text">{coin.description}</td>
-                                    <td><button className="trade-button-dashboard" onClick={() => tradeRouteChange(coin)}>Trade</button></td>
+                                    <td className="my-table-td">{coin.name}</td>
+                                    <td className="my-table-td">{coin.symbol}</td>
+                                    <td className="my-table-td" id="coin-description-text">{coin.description}</td>
+                                    <td className="my-table-td"><button className="trade-button-dashboard" onClick={() => tradeRouteChange(coin)}>Trade</button></td>
                                 </tr>
                             )
                         })}
