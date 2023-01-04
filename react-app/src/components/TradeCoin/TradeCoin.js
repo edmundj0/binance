@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { editOnePortfolio, getAllPortfolios } from "../../store/portfolio";
 import { createNewTransaction } from "../../store/transaction";
+import "./TradeCoin.css"
 
 
 export default function TradeCoin({ thisCoin, price }) {
@@ -81,7 +82,7 @@ export default function TradeCoin({ thisCoin, price }) {
 
         if (isNaN(price) === true) {
             setErrors(["Price of coin couldn't be determined at this time. Please try again later."])
-        } else if (portfolioId === undefined || portfolioId === "Select A Portfolio" || portfolioId === 0) {
+        } else if (portfolioId === undefined || portfolioId === "Select a Portfolio" || portfolioId === 0) {
             setErrors(["Please select a portfolio"])
         } else if (!info.quantity || info.quantity === "" || info.quantity <= 0) {
             setErrors(["Please enter an amount or an amount greater than 0"])
@@ -113,50 +114,53 @@ export default function TradeCoin({ thisCoin, price }) {
     }
 
     return (
-        <div>
-            <div>TRADE {thisCoin.symbol}</div>
+        <div className="trade-coin-entire-container">
+            <div className="place-order-text">Place Order {thisCoin.symbol}</div>
 
             <div>
                 {errors && (
-                    <ul>
+                    <ul className="error-text">
                         {Object.values(errors).map((error, idx) => <li key={idx}>{error}</li>)}
                     </ul>
                 )}
             </div>
 
-            <button onClick={() => setTradeAction("buy")}>BUY</button>
-            <button onClick={() => setTradeAction("sell")}>SELL</button>
+            <button onClick={() => setTradeAction("buy")} className={tradeAction === "buy" ? 'buy-button-active buysell-button' : 'buy-button-not-active buysell-button'}>BUY</button>
+            <button onClick={() => setTradeAction("sell")} className={tradeAction === "buy" ? 'sell-button-not-active buysell-button' : 'sell-button-active buysell-button'}>SELL</button>
             <form onSubmit={onSubmit}>
 
-                <div>Choose Portfolio</div>
-                <select required
-                    name="portfolio"
-                    type="text"
-                    onChange={(e) => setPortfolioId(e.target.value)}
-                    value={portfolioId}>
+                <div className="trade-coin-header-text">Choose Portfolio</div>
+                    <select required
+                        name="portfolio"
+                        type="text"
+                        onChange={(e) => setPortfolioId(e.target.value)}
+                        value={portfolioId}
+                        className="select-trade-coin">
 
-                    <option style={{ color: "gray" }}>Select a Portfolio</option>
-                    {userPortfoliosArr && userPortfoliosArr.map(portfolio =>
-                        <option value={portfolio.id} key={portfolio.id}>{portfolio.name}</option>)}
-                </select>
-                {currentPortfolio && (tradeAction === "buy" ? <div>Avbl: {currentPortfolio.buying_power}USD</div> : <div>Avbl: {portfolioAssetQuantity}{thisCoin.symbol}</div>)}
+                        <option style={{ color: "gray" }}>Select a Portfolio</option>
+                        {userPortfoliosArr && userPortfoliosArr.map(portfolio =>
+                            <option value={portfolio.id} key={portfolio.id}>{portfolio.name}</option>)}
+                    </select>
+                {currentPortfolio && (tradeAction === "buy" ? <div className="avbl-text-choosePortfolio">Avbl: {currentPortfolio.buying_power}USD</div> : <div className="avbl-text-choosePortfolio">Avbl: {portfolioAssetQuantity}{thisCoin.symbol}</div>)}
 
-                <div>{tradeAction === "buy" ? `Buy In` : `Sell In`}</div>
+                <div className="trade-coin-header-text">{tradeAction === "buy" ? `Buy In` : `Sell In`}</div>
                 <select required
                     name="dollarsOrAmount"
                     type="text"
                     onChange={(e) => setDollarsOrQuantity(e.target.value)}
-                    value={dollarsOrQuantity}>
+                    value={dollarsOrQuantity}
+                    className="select-trade-coin">
 
                     <option value="dollars">Dollars</option>
                     <option value="quantity">Quantity</option>
                 </select>
 
-                <div>Amount</div>
+                <div className="trade-coin-header-text">Amount</div>
                 <input required
                     type="text"
                     value={dollarsOrQuantity === "dollars" ? `$${amount}` : `${amount}`}
                     placeholder={`0${thisCoin.symbol}`}
+                    className="input-trade-coin"
                     onChange={(e) => {
                         if (dollarsOrQuantity === "dollars" && isNaN(e.target.value.slice(1)) === false) { //only set amount if user inputs number
                             //if user inputs a number with > 2 decimal places, truncate anything after 3rd decimal place
@@ -182,9 +186,9 @@ export default function TradeCoin({ thisCoin, price }) {
                     }}
                 ></input>
 
-                <div>{dollarsOrQuantity === "dollars" ? `Est. ${Number(amount / price).toFixed(7)} ${thisCoin.symbol}` : `Est. $${Number(amount * price).toFixed(2)}`}</div>
+                <div className="estimated-text-amount">{dollarsOrQuantity === "dollars" ? `Est. ${Number(amount / price).toFixed(7)} ${thisCoin.symbol}` : `Est. $${Number(amount * price).toFixed(2)}`}</div>
 
-                <button type="submit">{tradeAction === 'buy' ? <span>Submit Buy Order</span> : <span>Submit Sell Order</span> }</button>
+                <button type="submit" className={tradeAction === 'buy' ? 'submit-buy-button trade-submit-button' : 'submit-sell-button trade-submit-button'}>{tradeAction === 'buy' ? <span>Submit Buy Order</span> : <span>Submit Sell Order</span>}</button>
 
 
 

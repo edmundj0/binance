@@ -1,0 +1,72 @@
+.portfolio-settings-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.edit-portfolio-button {
+    background-color: lightgray;
+    color: #1e2026;
+    border: 1px solid gray;
+    border-radius: 5px;
+
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+
+}
+
+.edit-payment-method-button {
+    background-color: lightgray;
+    color: #1e2026;
+    border: 1px solid gray;
+    border-radius: 5px;
+
+}
+
+.edit-portfolio-button:hover, .edit-payment-method-button:hover {
+    border: 1px solid #f0b90b;
+}
+
+.delete-portfolio-button {
+    background-color: rgb(226, 88, 88);
+    border-radius: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-right: 6px;
+    padding-left: 6px;
+}
+
+.delete-portfolio-button:hover, .delete-payment-method-button:hover {
+    background-color: #CF6679;
+}
+
+.delete-payment-method-button {
+    background-color: #cf6679bd;
+    border-radius: 5px;
+}
+
+#delete-warning-text {
+    font-size: 14px;
+    margin: 0;
+}
+
+.table-th-portfolio-asset {
+    background-color: gray;
+    text-align: center;
+}
+
+/* .table-tr-portfolio-asset:nth-child(even) {
+    background-color: #eee;
+    color: black;
+} */
+
+.transactions-table {
+    width: 100%;
+}
+
+.table-td-portfolio-transaction {
+    padding: 3px;
+    text-align: center;
+}

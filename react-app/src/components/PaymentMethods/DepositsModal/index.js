@@ -9,7 +9,7 @@ export default function DepositsModal(){
 
     return (
         <>
-        <button onClick={()=>setShowModal(true)}>Deposit</button>
+        <button onClick={()=>setShowModal(true)} className="deposit-button">Deposit Now</button>
         {showModal && (
             <Modal onClose={()=>setShowModal(false)}>
                 <Deposits setShowModal={setShowModal} />

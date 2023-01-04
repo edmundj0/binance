@@ -11,7 +11,7 @@ export default function EditPortfolioModal({expense, setHasSubmitted}){
 
     return (
         <>
-        <button onClick={()=>setShowModal(true)}>Edit Portfolio Settings</button>
+        <button onClick={()=>setShowModal(true)} className="edit-portfolio-button">Edit Portfolio Settings</button>
         {showModal && (
             <Modal onClose={()=>setShowModal(false)}>
                 <EditPortfolio setShowModal={setShowModal} />

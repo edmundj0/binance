@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { editOnePortfolio } from "../../../store/portfolio";
+import { editOnePortfolio, getOnePortfolio } from "../../../store/portfolio";
 
 
 export default function EditPortfolio({ setShowModal }) {
@@ -42,6 +42,9 @@ export default function EditPortfolio({ setShowModal }) {
             }
             else {
                 setShowModal(false)
+                //fire this dispatch or else Transactions in onePortfolio component won't load,
+                //because editPortfolio API return doesn't include Transactions for that portfolio
+                dispatch(getOnePortfolio(thisPortfolio.id))
             }
         }
 
@@ -50,29 +53,31 @@ export default function EditPortfolio({ setShowModal }) {
 
 
     return (
-        <div className="modal-expense-entire">
-            <div className="modal-expense-header">Create New Portfolio</div>
+        <div className="modal-entire-container">
+            <div className="modal-header-text">Edit Portfolio</div>
             <div>
                 {errors && (
-                    <ul>
+                    <ul className="error-text">
                         {/* {errors} */}
                         {Object.values(errors).map((error, idx) => <li key={idx} className="newexpense-error-list">{error}</li>)}
                     </ul>
                 )}
             </div>
-            <form onSubmit={onSubmit} className="expense-form">
+            <form onSubmit={onSubmit} className="modal-form-entire">
 
-                <div className="form-input">Name</div>
+                <div className="form-input-text">Name</div>
                 <input required
                     type="text"
+                    className="form-input"
                     onChange={(e) => setName(e.target.value)}
                     value={name}
                     placeholder="Name of Portfolio"></input>
 
-                <div className="form-input">Account Type</div>
+                <div className="form-input-text">Account Type</div>
                 <select required
                     name="accountType"
                     type="text"
+                    className="form-input"
                     onChange={(e) => setAccountType(e.target.value)}
                     value={accountType}>
 
