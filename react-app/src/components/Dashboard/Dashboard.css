@@ -4,11 +4,13 @@
 }
 
 .dashboard-left-container {
-    flex-basis: 65%;
+    flex-basis: 70%;
 }
 
 .dashboard-right-container {
-    flex-basis: 35%;
+    flex-basis: 30%;
+
+    text-align: center;
 }
 
 .page-main-header {
@@ -46,6 +48,13 @@
     padding-bottom: 5px;
 }
 
+#payment-method-text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    padding-bottom: 5px;
+    margin-right: 20px;
+}
+
 #buying-power-and-type-text {
     font-weight: 700;
 }
@@ -78,4 +87,50 @@
 #coin-description-text {
     color: rgba(186, 186, 186, 0.857);
     font-size: 14px;
+}
+
+.each-payment-method-container {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    display: flex;
+}
+
+.deposits-entire-container {
+    margin-top: 220px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+
+    border: 2px solid darkgray;
+    background-color: black;
+}
+
+.deposit-button {
+    background-color: #5841D8;
+    color: white;
+    font-weight: 600;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+
+}
+
+.deposit-button:hover {
+    border: 1px #f0b90b solid;
+    color: #f0b90b;
+}
+
+.deposits-header-text {
+    margin-bottom: 20px;
+    border-bottom: 1px solid darkgray;
+    font-size: 20px;
+    color: lightgray;
+}
+
+.deposits-description-text {
+    color: lightgray;
+    font-size: 12px;
+    margin-bottom: 20px;
 }

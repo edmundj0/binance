@@ -78,25 +78,35 @@ export default function Dashboard() {
                     </tbody>
                 </table>
 
-
-                <div>Your Payment Methods
-                    {Object.values(allPaymentMethods).map((method) => {
-                        return (
-                            <div key={`method ${method.id}`}>
-                                <div>{method.note}</div>
-                                <div>{method.account_number}</div>
-                                <EditPaymentMethodModal method={method} />
-                                <button onClick={() => dispatch(deletePaymentMethod(method.id))}>Delete</button>
-                            </div>
-                        )
-                    })}
+                <div className="page-small-title"><span>Your Payment Methods</span>
                     <CreatePaymentMethodModal />
                 </div>
                 <div>
-                    <DepositsModal />
+                    {Object.values(allPaymentMethods).map((method) => {
+                        return (
+                            <div key={`method ${method.id}`} className="each-payment-method-container">
+                                <div id="payment-method-text">{method.note} • {method?.type?.toUpperCase()} *{method?.account_number?.slice(-4)}
+                                </div>
+                                <div className="payment-method-buttons-container">
+                                    <EditPaymentMethodModal method={method} />
+                                    <button onClick={() => dispatch(deletePaymentMethod(method.id))} className="delete-payment-method-button">Delete</button>
+                                </div>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
-            <div className="dashboard-right-container">Test</div>
+            <div className="dashboard-right-container">
+                <div className="deposits-entire-container">
+                    <div className="deposits-header-text">Deposits</div>
+                    <p className="deposits-description-text">
+                        Our Instant Deposits give you immediate access to your money after you initiate a deposit. That means if you see an opportunity in the market, you can use your money right away instead of waiting for your funds to settle.
+                    </p>
+                    <div>
+                        <DepositsModal />
+                    </div>
+                </div>
+            </div>
 
         </div>
     )

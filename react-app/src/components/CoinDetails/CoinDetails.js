@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { getOneCoin } from "../../store/coin";
 import BtcChart from "../ChartTest";
 import TradeCoin from "../TradeCoin/TradeCoin";
@@ -25,6 +25,7 @@ export default function CoinDetails() {
     const isMounted = useRef(false)
 
     const thisCoin = useSelector(state => state.coins.oneCoin)
+    const user = useSelector(state => state.session.user)
 
     useEffect(() => {
         dispatch(getOneCoin(coinId))
@@ -116,7 +117,7 @@ export default function CoinDetails() {
                 <div className="detail-inner-container"><div className="detail-title">24h Volume</div><div>{volume}</div></div>
             </div>
             <CoinChart thisCoin={thisCoin} price={price} />
-            <TradeCoin thisCoin={thisCoin} price={price} />
+            {user ? <TradeCoin thisCoin={thisCoin} price={price} /> : <NavLink to="/login" exact={true}>Login to Trade</NavLink>}
             <div className="page-small-title">Key Statistics</div>
         </div>
     )

@@ -17,7 +17,15 @@
 
 }
 
-.edit-portfolio-button:hover {
+.edit-payment-method-button {
+    background-color: lightgray;
+    color: #1e2026;
+    border: 1px solid gray;
+    border-radius: 5px;
+
+}
+
+.edit-portfolio-button:hover, .edit-payment-method-button:hover {
     border: 1px solid #f0b90b;
 }
 
@@ -30,8 +38,13 @@
     padding-left: 6px;
 }
 
-.delete-portfolio-button:hover {
+.delete-portfolio-button:hover, .delete-payment-method-button:hover {
     background-color: rgb(238, 66, 66);
+}
+
+.delete-payment-method-button {
+    background-color: rgb(226, 88, 88);
+    border-radius: 5px;
 }
 
 #delete-warning-text {
