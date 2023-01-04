@@ -79,17 +79,18 @@ export default function Deposits({ setShowModal }) {
     }
 
     return (
-        <div>
-            <div>Deposit</div>
-            <ul>
+        <div className="modal-entire-container">
+            <div className="modal-header-text">Deposit</div>
+            <ul className="error-text">
                 {Object.values(errors).map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} className="modal-form-entire">
 
-                <div className="form-input">From (choose payment method)</div>
+                <div className="form-input-text">From (choose payment method)</div>
                 <select required
                     name="payment method"
                     type="text"
+                    className="form-input"
                     onChange={(e) => setPaymentMethodId(e.target.value)}
                     value={paymentMethodId}>
 
@@ -98,10 +99,11 @@ export default function Deposits({ setShowModal }) {
                         <option value={method.id} key={method.id}>{`${method.note} • ${method.type} x${method.account_number.slice(-4)}`}</option>)}
                 </select>
 
-                <div className="form-input">To (choose portfolio)</div>
+                <div className="form-input-text">To (choose portfolio)</div>
                 <select required
                     name="portfolio"
                     type="text"
+                    className="form-input"
                     onChange={(e) => setPortfolioId(e.target.value)}
                     value={portfolioId}>
 
@@ -110,7 +112,7 @@ export default function Deposits({ setShowModal }) {
                         <option value={portfolio.id} key={portfolio.id}>{portfolio.name}</option>)}
                 </select>
 
-                <div className="form-input">Transfer Amount (USD)</div>
+                <div className="form-input-text">Transfer Amount (USD)</div>
                 <input required
                     type="number" min="1" max="1000000" step="1"
                     onChange={(e) => setUsdAmount(e.target.value)}

@@ -47,28 +47,30 @@ export default function EditPaymentMethod({ setShowModal, method}) {
     }
 
     return (
-        <div>
-            <div>Update Your Payment Method</div>
-            <ul>
+        <div className="modal-entire-container">
+            <div className="modal-header-text">Update Your Payment Method</div>
+            <ul className="error-text">
                 {Object.values(errors).map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} className="modal-form-entire">
 
-                <div className="form-input">Account Number</div>
+                <div className="form-input-text">Account Number</div>
                 <input required
                     type="text"
+                    className="form-input"
                     onChange={(e) => setAccountNumber(e.target.value)}
                     value={accountNumber}
                     placeholder="Account Number"></input>
 
-                <div className="form-input">Routing Number</div>
+                <div className="form-input-text">Routing Number</div>
                 <input required
                     type="text"
+                    className="form-input"
                     onChange={(e) => setRoutingNumber(e.target.value)}
                     value={routingNumber}
                     placeholder="Routing Number"></input>
 
-                <div className="form-input">Note</div>
+                <div className="form-input-text">Note</div>
                 <input required
                     type="text"
                     onChange={(e) => setNote(e.target.value)}

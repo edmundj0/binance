@@ -44,21 +44,22 @@ export default function CreatePaymentMethod({ setShowModal }) {
 
 
     return (
-        <div>
-            <div>Add New Payment Method</div>
+        <div className="modal-entire-container">
+            <div className="modal-header-text">Add New Payment Method</div>
             <div>
                 {errors && (
-                    <ul>
+                    <ul className="error-text">
                         {/* {errors} */}
                         {Object.values(errors).map((error, idx) => <li key={idx} className="newexpense-error-list">{error}</li>)}
                     </ul>
                 )}
             </div>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} className="modal-form-entire">
 
-                <div className="form-input">Choose a payment type</div>
+                <div className="form-input-text">Choose a payment type</div>
                 <select required
                     type="text"
+                    className="form-input"
                     onChange={(e) => setType(e.target.value)}
                     value={type}
                     placeholder="Payment Type">
@@ -68,23 +69,26 @@ export default function CreatePaymentMethod({ setShowModal }) {
                     <option>Personal Savings</option>
                 </select>
 
-                <div className="form-input">Account Number</div>
+                <div className="form-input-text">Account Number</div>
                 <input required
                     type="text"
+                    className="form-input"
                     onChange={(e) => setAccountNumber(e.target.value)}
                     value={accountNumber}
                     placeholder="Account Number"></input>
 
-                <div className="form-input">Routing Number</div>
+                <div className="form-input-text">Routing Number</div>
                 <input required
                     type="text"
+                    className="form-input"
                     onChange={(e) => setRoutingNumber(e.target.value)}
                     value={routingNumber}
                     placeholder="Routing Number"></input>
 
-                <div className="form-input">Note</div>
+                <div className="form-input-text">Note</div>
                 <input required
                     type="textarea"
+                    className="form-input"
                     onChange={(e) => setNote(e.target.value)}
                     value={note}
                     placeholder="Note"></input>

@@ -39,11 +39,11 @@
 }
 
 .delete-portfolio-button:hover, .delete-payment-method-button:hover {
-    background-color: rgb(238, 66, 66);
+    background-color: #CF6679;
 }
 
 .delete-payment-method-button {
-    background-color: rgb(226, 88, 88);
+    background-color: #cf6679bd;
     border-radius: 5px;
 }
 

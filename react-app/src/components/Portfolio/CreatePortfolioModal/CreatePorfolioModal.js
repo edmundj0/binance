@@ -43,28 +43,30 @@ export default function CreatePortfolio({ setShowModal }) {
 
 
     return (
-        <div className="modal-expense-entire">
-            <div className="modal-expense-header">Create New Portfolio</div>
+        <div className="modal-entire-container">
+            <div className="modal-header-text">Create New Portfolio</div>
             <div>
                 {errors && (
-                    <ul>
+                    <ul className="error-text">
                         {/* {errors} */}
                         {Object.values(errors).map((error, idx) => <li key={idx} className="newexpense-error-list">{error}</li>)}
                     </ul>
                 )}
             </div>
-            <form onSubmit={onSubmit} className="expense-form">
+            <form onSubmit={onSubmit} className="modal-form-entire">
 
-                <div className="form-input">Name</div>
+                <div className="form-input-text">Name</div>
                 <input required
                     type="text"
+                    className="form-input"
                     onChange={(e) => setName(e.target.value)}
                     value={name}
                     placeholder="Name of Portfolio"></input>
 
-                <div className="form-input">Account Type</div>
+                <div className="form-input-text">Account Type</div>
                 <select required
                     type="text"
+                    className="form-input"
                     onChange={(e) => setAccountType(e.target.value)}
                     value={accountType}>
 
