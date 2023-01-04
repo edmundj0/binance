@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory, useParams } from "react-router-dom";
 import { deletePortfolio, getOnePortfolio } from "../../../store/portfolio";
 import EditPortfolioModal from "../EditPortfolioModal";
+import OnePortfolioChart from "../OnePortfolioChart/OnePortfolioChart";
 import "./OnePortfolio.css"
 
 export default function OnePortfolio() {
@@ -52,7 +53,7 @@ export default function OnePortfolio() {
 
     const portfolioTransactions = thisPortfolio.Transactions
 
-    console.log(assets, 'asset')
+
 
     const deleteThisPortfolio = async (e) => {
         let deletingPortfolio = await dispatch(deletePortfolio(portfolioId))
@@ -148,6 +149,7 @@ export default function OnePortfolio() {
                     </tbody>
                 </table>
             </div>
+            <OnePortfolioChart thisPortfolio={thisPortfolio} />
         </div>
 
     )
