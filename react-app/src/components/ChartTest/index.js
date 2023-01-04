@@ -5,26 +5,26 @@ import { createChart, CrosshairMode } from 'lightweight-charts'
 
 export default function BtcChart() {
     const [price, setPrice] = useState('Connecting...')
-    const chartContainerRef = useRef()
+    const chartContainerReff = useRef()
+
+    // useEffect(() => {
+    //     const binanceSocket = new WebSocket("wss://stream.binance.us:9443/ws/btcusd@trade")
+    //     binanceSocket.onmessage = function (event) {
+    //         console.log(event.data)
+
+    //         const msgObj = JSON.parse(event.data)
+
+    //         setPrice(msgObj.p)
+    //     }
+
+    //     return () => binanceSocket.close();
+    // }, [])
+
+
 
     useEffect(() => {
-        const binanceSocket = new WebSocket("wss://stream.binance.us:9443/ws/btcusd@trade")
-        binanceSocket.onmessage = function (event) {
-            console.log(event.data)
 
-            const msgObj = JSON.parse(event.data)
-
-            setPrice(msgObj.p)
-        }
-
-        return () => binanceSocket.close();
-    }, [])
-
-
-
-    useEffect(() => {
-
-        const chart = createChart(chartContainerRef.current, {
+        const chart = createChart(chartContainerReff.current, {
             width: 800,
             height: 600,
             layout: {
@@ -42,17 +42,17 @@ export default function BtcChart() {
             crosshair: {
                 mode: CrosshairMode.Normal
             },
-            rightPriceScale: {
-                borderColor: 'rgba(197, 203, 206, 0.8)',
-            },
+            // rightPriceScale: {
+            //     borderColor: 'rgba(197, 203, 206, 0.8)',
+            // },
             timeScale: {
                 borderColor: 'rgba(197, 203, 206, 0.8)',
-                timeVisible: true,
-                fixRightEdge: true,
-                fixLeftEdge: true
+                // timeVisible: true,
+                // fixRightEdge: true,
+                // fixLeftEdge: true
             },
-            // handleScroll: false,
-            // handleScale: false,
+            handleScroll: false,
+            handleScale: false,
         });
 
         let candleSeries = chart.addCandlestickSeries({
@@ -82,6 +82,15 @@ export default function BtcChart() {
 
                     candleSeries.setData(
                         processedCandles
+                        // [{
+                        //     close: "16649",
+                        //     high: "16650",
+                        //     low: "16648",
+                        //     open: "16650",
+                        //     // time: '1672784460',
+                        //     time: '2018-10-19',
+                        //     volume: "0.98647413"
+                        // }]
                     )
 
                     return data
@@ -91,9 +100,9 @@ export default function BtcChart() {
 
         getCandles()
 
-        // candleSeries.setData(
-        //     [{ time: '2018-10-19', open: 180.34, high: 180.99, low: 178.57, close: 179.85 }]
-        // );
+        candleSeries.setData(
+            [{ time: '2018-10-19', open: 180.34, high: 180.99, low: 178.57, close: 179.85 }]
+        );
 
         const binanceSocket = new WebSocket("wss://stream.binance.us:9443/ws/btcusd@kline_3m")
         binanceSocket.onmessage = function (event) {
@@ -118,7 +127,7 @@ export default function BtcChart() {
     return (
         <>Test
             <div>{price}</div>
-            <div ref={chartContainerRef}>testtttt</div>
+            <div ref={chartContainerReff}>testtttt</div>
             <h3>Settings</h3>
             <div>
                 <input type="checkbox" />RSI

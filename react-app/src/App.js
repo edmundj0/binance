@@ -45,7 +45,6 @@ function App() {
           <User />
         </ProtectedRoute>
         <ProtectedRoute path='/dashboard' exact={true} >
-          <h1>My Dashboard</h1>
           <Dashboard />
           {/* <BtcChart /> */}
         </ProtectedRoute>

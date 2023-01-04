@@ -1,20 +1,18 @@
 import React, { useState } from "react"
 import { Modal } from "../../../context/Modal"
-import EditPortfolio from "./EditPortfolioModal"
+import Deposits from "./DepositsModal"
 
 
-
-
-export default function EditPortfolioModal({expense, setHasSubmitted}){
+export default function DepositsModal(){
     const [ showModal, setShowModal ] = useState(false)
 
 
     return (
         <>
-        <button onClick={()=>setShowModal(true)} className="edit-portfolio-button">Edit Portfolio Settings</button>
+        <button onClick={()=>setShowModal(true)} className="deposit-button">Deposit Now</button>
         {showModal && (
             <Modal onClose={()=>setShowModal(false)}>
-                <EditPortfolio setShowModal={setShowModal} />
+                <Deposits setShowModal={setShowModal} />
             </Modal>
         )}
         </>

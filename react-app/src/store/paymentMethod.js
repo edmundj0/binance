@@ -3,6 +3,7 @@ const GET_ONE_PAYMENT_METHOD = "/payment-methods/GET_ONE_PAYMENT_METHOD"
 const CREATE_NEW_PAYMENT_METHOD = "/payment-methods/CREATE_NEW"
 const EDIT_PAYMENT_METHOD = "/payment-methods/EDIT_ONE"
 const DELETE_PAYMENT_METHOD = "/payment-methods/DELETE_ONE"
+const CLEAR_PAYMENT_METHODS = "/payment-methods/CLEAR"
 
 //action creators
 const loadAllPaymentMethods = (allPaymentMethods) => ({
@@ -30,6 +31,11 @@ const delPaymentMethod = (methodId) => ({
     methodId
 })
 
+export const clearPaymentMethods = () => ({
+    type: CLEAR_PAYMENT_METHODS
+})
+
+
 //thunks
 export const getAllPaymentMethods = () => async (dispatch) => {
     const response = await fetch('/api/payment-methods/current')
@@ -50,18 +56,18 @@ export const getOnePaymentMethod = (methodId) => async (dispatch) => {
 export const createNewPaymentMethod = (info) => async (dispatch) => {
     const response = await fetch('/api/payment-methods', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(info)
     })
 
-    if(response.ok) {
+    if (response.ok) {
         const newPaymentMethod = await response.json()
         dispatch(postPaymentMethod(newPaymentMethod))
         return newPaymentMethod
     }
     else {
         const data = await response.json()
-        if(data.errors){
+        if (data.errors) {
             return data
         }
     }
@@ -70,7 +76,7 @@ export const createNewPaymentMethod = (info) => async (dispatch) => {
 export const editOnePaymentMethod = (info, methodId) => async (dispatch) => {
     const response = await fetch(`/api/payment-methods/${methodId}`, {
         method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(info)
     })
     if (response.ok) {
@@ -80,26 +86,26 @@ export const editOnePaymentMethod = (info, methodId) => async (dispatch) => {
     }
     else {
         const data = await response.json()
-        if (data.errors){
+        if (data.errors) {
             return data
         }
-        else{
+        else {
             return data
         }
     }
 }
 
-export const deletePaymentMethod = (methodId) => async (dispatch) =>{
+export const deletePaymentMethod = (methodId) => async (dispatch) => {
     const response = await fetch(`/api/payment-methods/${methodId}`, {
         method: 'DELETE'
     })
-    if(response.ok){
+    if (response.ok) {
         dispatch(delPaymentMethod(methodId))
     }
 }
 
 //reducer
-const initialState = {onePaymentMethod: {}, allPaymentMethods: {}}
+const initialState = { onePaymentMethod: {}, allPaymentMethods: {} }
 
 const paymentMethodsReducer = (state = initialState, action) => {
     let newState;
@@ -107,16 +113,16 @@ const paymentMethodsReducer = (state = initialState, action) => {
         case CREATE_NEW_PAYMENT_METHOD:
             newState = {
                 ...state,
-                onePaymentMethod: {...state.onePaymentMethod},
-                allPaymentMethods: {...state.allPaymentMethods}
+                onePaymentMethod: { ...state.onePaymentMethod },
+                allPaymentMethods: { ...state.allPaymentMethods }
             }
             newState.onePaymentMethod = action.newPaymentMethod
             return newState
         case GET_ALL_PAYMENT_METHODS:
             newState = {
                 ...state,
-                onePaymentMethod: {...state.onePaymentMethod},
-                allPaymentMethods: {...state.allPaymentMethods}
+                onePaymentMethod: { ...state.onePaymentMethod },
+                allPaymentMethods: { ...state.allPaymentMethods }
             }
             action.allPaymentMethods["Payment Methods"].forEach(method => {
                 newState.allPaymentMethods[method.id] = method
@@ -125,27 +131,34 @@ const paymentMethodsReducer = (state = initialState, action) => {
         case GET_ONE_PAYMENT_METHOD:
             newState = {
                 ...state,
-                onePaymentMethod: {...state.onePaymentMethod},
-                allPaymentMethods: {...state.allPaymentMethods}
+                onePaymentMethod: { ...state.onePaymentMethod },
+                allPaymentMethods: { ...state.allPaymentMethods }
             }
             newState.onePaymentMethod = action.onePaymentMethod
             return newState
         case EDIT_PAYMENT_METHOD:
             newState = {
                 ...state,
-                onePaymentMethod: {...state.onePaymentMethod},
-                allPaymentMethods: {...state.allPaymentMethods}
+                onePaymentMethod: { ...state.onePaymentMethod },
+                allPaymentMethods: { ...state.allPaymentMethods }
             }
             newState.onePaymentMethod = action.edited
             return newState
         case DELETE_PAYMENT_METHOD:
             newState = {
                 ...state,
-                onePaymentMethod: {...state.onePaymentMethod},
-                allPaymentMethods: {...state.allPaymentMethods}
+                onePaymentMethod: { ...state.onePaymentMethod },
+                allPaymentMethods: { ...state.allPaymentMethods }
             }
             newState.onePaymentMethod = {}
             delete newState.allPaymentMethods[action.methodId]
+            return newState
+        case CLEAR_PAYMENT_METHODS:
+            newState = {
+                ...state,
+                onePaymentMethod: {},
+                allPaymentMethods: {}
+            }
             return newState
         default:
             return state

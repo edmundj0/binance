@@ -1,0 +1,35 @@
+#open-portfolio-button {
+    border: none;
+    background-color: #F0B90B;
+    font-size: 14px;
+    color: #1E2026;
+    line-height: 20px;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+}
+
+#open-portfolio-button:hover {
+    background-color: #f0bb0ba7;
+}
+
+#new-payment-method-button {
+    border: none;
+    background-color: #F0B90B;
+    font-size: 14px;
+    color: #1E2026;
+    line-height: 20px;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+}
+
+#new-payment-method-button:hover {
+    background-color: #f0bb0ba7;
+}

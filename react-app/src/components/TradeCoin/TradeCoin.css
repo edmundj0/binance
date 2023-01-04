@@ -1,0 +1,86 @@
+.trade-coin-entire-container {
+    text-align: center;
+}
+
+.trade-coin-header-text {
+    padding-top: 20px;
+    padding-bottom: 5px;
+}
+
+.buy-button-active {
+    background-color: #02C076;
+    color: white;
+}
+
+.buy-button-not-active {
+    background-color: #121212;
+    color: #929AA5;
+}
+
+.buysell-button {
+    border: 1px gray solid;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.sell-button-active {
+    background-color: #F84960;
+    color: white;
+}
+
+.sell-button-not-active {
+    background-color: #121212;
+    color: #929AA5;
+}
+
+.select-trade-coin {
+    background-color: #121212;
+    color: whitesmoke;
+    width: 200px;
+
+    padding: 10px;
+}
+
+.input-trade-coin {
+    background-color: #121212;
+    border: 1px gray solid;
+    color: white;
+    width: 200px;
+
+    padding: 5px;
+}
+
+.avbl-text-choosePortfolio {
+    font-size: 14px;
+    color: #929AA5;
+}
+
+.estimated-text-amount {
+    font-size: 14px;
+    color: #929AA5;
+    margin-bottom: 20px;
+}
+
+.submit-buy-button {
+    background-color: #02C076;
+    color: white;
+}
+
+.submit-sell-button {
+    background-color: #F84960;
+    color: #FFFFFF;
+
+}
+
+.trade-submit-button {
+    width: 210px;
+    border: none;
+    font-weight: 600;
+    padding: 10px;
+}
+
+.place-order-text {
+    font-size: 28px;
+}

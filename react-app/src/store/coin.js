@@ -43,7 +43,7 @@ const coinsReducer = (state = initialState, action) => {
                 oneCoin: {...state.oneCoin},
                 allCoins: {...state.allCoins}
             }
-            action.allCoins.forEach(coin => {
+            action.allCoins["Coins"].forEach(coin => {
                 newState.allCoins[coin.id] = coin
             })
             return newState
