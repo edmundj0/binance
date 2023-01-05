@@ -78,15 +78,17 @@ export default function CoinDetails() {
         }
     }, [thisCoin])
 
+    //constant update price and % change
     useEffect(() => {
-        binanceSocket.current = new WebSocket(`wss://stream.binance.us:9443/ws/${thisCoin?.symbol?.toLowerCase()}usd@trade`)
+        binanceSocket.current = new WebSocket(`wss://stream.binance.us:9443/ws/${thisCoin?.symbol?.toLowerCase()}usd@ticker`)
         console.log(binanceSocket)
         binanceSocket.current.onmessage = function (event) {
             console.log(event.data, binanceSocket)
 
             const msgObj = JSON.parse(event.data)
 
-            setPrice(msgObj.p)
+            setPrice(msgObj.c)
+            setPriceChangePercent(msgObj.P)
         }
 
         binanceSocket.current.addEventListener('error', (event) => {
@@ -118,7 +120,7 @@ export default function CoinDetails() {
             </div>
             <CoinChart thisCoin={thisCoin} price={price} />
             {user ? <TradeCoin thisCoin={thisCoin} price={price} /> : <NavLink to="/login" exact={true}>Login to Trade</NavLink>}
-            <div className="page-small-title">Key Statistics</div>
+            {/* <div className="page-small-title">Key Statistics</div> */}
         </div>
     )
 

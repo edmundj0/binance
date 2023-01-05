@@ -1,11 +1,13 @@
 import { createChart } from "lightweight-charts";
 import { useEffect, useRef, useState } from "react";
+import './OnePortfolioChart.css'
 
 
-export default function OnePortfolioChart({thisPortfolio}) {
+export default function OnePortfolioChart({ thisPortfolio }) {
     // const dispatch = useDispatch()
     // const [assets, setAssets] = useState([])
     const portfolioChartContainerRef = useRef(null)
+    const [portfolioValue, setPortfolioValue] = useState(0)
     // const isMounted = useRef(false)
 
     // const thisPortfolio = useSelector(state => state.portfolios.onePortfolio)
@@ -28,106 +30,121 @@ export default function OnePortfolioChart({thisPortfolio}) {
 
                     // if (isMounted.current) {
 
-                        //useEffect can run 3 times on load - remove multiple charts if it exists
-                        if(portfolioChartContainerRef.current.children[0]){
-                            portfolioChartContainerRef.current.removeChild(portfolioChartContainerRef.current.children[0])
-                        }
+                    //useEffect can run 3 times on load - remove multiple charts if it exists
+                    if (portfolioChartContainerRef.current.children[0]) {
+                        portfolioChartContainerRef.current.removeChild(portfolioChartContainerRef.current.children[0])
+                    }
 
-                        const chart = createChart(portfolioChartContainerRef.current, {
-                            width: 800,
-                            height: 600,
-                            rightPriceScale: {
-                                scaleMargins: {
-                                    top: 0.2,
-                                    bottom: 0.2,
-                                },
-                                borderVisible: true,
-                                borderColor: 'rgba(197, 203, 206, 0.8)'
+                    const chart = createChart(portfolioChartContainerRef.current, {
+                        width: 800,
+                        height: 600,
+                        rightPriceScale: {
+                            scaleMargins: {
+                                top: 0.2,
+                                bottom: 0.2,
                             },
-                            timeScale: {
-                                borderVisible: true,
-                                fixRightEdge: true,
-                                fixLeftEdge: true,
-                                borderColor: 'rgba(197, 203, 206, 0.8)'
+                            borderVisible: true,
+                            borderColor: 'rgba(197, 203, 206, 0.8)'
+                        },
+                        timeScale: {
+                            borderVisible: true,
+                            fixRightEdge: true,
+                            fixLeftEdge: true,
+                            borderColor: 'rgba(197, 203, 206, 0.8)'
+                        },
+                        layout: {
+                            backgroundColor: '#000000',
+                            textColor: 'rgba(255,255,255,0.9)'
+                        },
+                        grid: {
+                            horzLines: {
+                                color: '#eee',
+                                visible: false
                             },
-                            layout: {
-                                backgroundColor: '#000000',
-                                textColor: 'rgba(255,255,255,0.9)'
+                            vertLines: {
+                                color: '#ffffff',
+                                visible: false
                             },
-                            grid: {
-                                horzLines: {
-                                    color: '#eee',
-                                    visible: false
-                                },
-                                vertLines: {
-                                    color: '#ffffff',
-                                    visible: false
-                                },
+                        },
+                        crosshair: {
+                            vertLine: {
+                                labelVisible: true,
                             },
-                            crosshair: {
-                                vertLine: {
-                                    labelVisible: true,
-                                },
-                            },
-                            gridLineOptions: false
-                        })
+                        },
+                        gridLineOptions: false
+                    })
 
-                        let series = chart.addAreaSeries({
-                            topColor: 'rgba(0, 150, 136, 0.56)',
-                            bottomColor: 'rgba(0, 150, 136, 0.04)',
-                            lineColor: 'rgba(0, 150, 136, 1)',
-                            lineWidth: 2,
-                        })
+                    let series = chart.addAreaSeries({
+                        topColor: 'rgba(0, 150, 136, 0.56)',
+                        bottomColor: 'rgba(0, 150, 136, 0.04)',
+                        lineColor: 'rgba(0, 150, 136, 1)',
+                        lineWidth: 2,
+                    })
 
-                        const getCandles = () => {
+                    const getCandles = () => {
 
-                            if(!assets.length){
-                                series.setData([
+                        //hard code 5 days of just buying power as USD
+                        if (!assets.length) {
+                            let todayTime = Math.floor(new Date().getTime() / 1000)
+                            series.setData([
                                 {
                                     value: thisPortfolio?.buying_power,
-                                    time: Math.floor(new Date().getTime() / 1000)
+                                    time: todayTime - 86400 * 4
                                 },
                                 {
                                     value: thisPortfolio?.buying_power,
-                                    time: Math.floor(new Date().getTime() / 1000)
+                                    time: todayTime - 86400 * 3
+                                },
+                                {
+                                    value: thisPortfolio?.buying_power,
+                                    time: todayTime - 86400 * 2
+                                },
+                                {
+                                    value: thisPortfolio?.buying_power,
+                                    time: todayTime - 86400
+                                },
+                                {
+                                    value: thisPortfolio?.buying_power,
+                                    time: todayTime
                                 }
 
                             ])
-                            }
-                            for (let asset of assets) {
-                                let sumData = []
-                                return fetch(`https://www.bitstamp.net/api/v2/ohlc/${asset.symbol.toLowerCase()}usd?step=14400&limit=300`)
-                                    .then((response) => { if (response.ok) return response.json() })
-                                    .then((data) => {
-                                        const relevantData = data.data.ohlc
-                                        for (let candle of relevantData) {
+                            return
+                        }
+                        for (let asset of assets) {
+                            let sumData = []
+                            return fetch(`https://www.bitstamp.net/api/v2/ohlc/${asset.symbol.toLowerCase()}usd?step=14400&limit=300`)
+                                .then((response) => { if (response.ok) return response.json() })
+                                .then((data) => {
+                                    const relevantData = data.data.ohlc
+                                    for (let candle of relevantData) {
 
-                                            if (sumData.some(ele => ele.time === parseFloat(candle.timestamp))) { //check if that time exists as a value already in sumData.time
-                                                sumData[parseFloat(candle.timestamp)]["value"] = sumData["value"] + (asset.quantity * candle.open) //set value to new value
-                                            }
-                                            else { //if timestamp doesn't already exist
-                                                sumData.push({
-                                                    time: parseFloat(candle.timestamp),
-                                                    value: candle.open * asset.quantity + thisPortfolio?.buying_power //js type coercion //add usd value of portfolio
-                                                })
-                                            }
-
-                                            // processedCandles.push({
-                                            //     time: parseFloat(candle.timestamp),
-                                            //     value: candle.open
-                                            // })
+                                        if (sumData.some(ele => ele.time === parseFloat(candle.timestamp))) { //check if that time exists as a value already in sumData.time
+                                            sumData[parseFloat(candle.timestamp)]["value"] = sumData["value"] + (asset.quantity * candle.open) //set value to new value
+                                        }
+                                        else { //if timestamp doesn't already exist
+                                            sumData.push({
+                                                time: parseFloat(candle.timestamp),
+                                                value: candle.open * asset.quantity + thisPortfolio?.buying_power //js type coercion //add usd value of portfolio
+                                            })
                                         }
 
-                                        series.setData(sumData)
+                                        // processedCandles.push({
+                                        //     time: parseFloat(candle.timestamp),
+                                        //     value: candle.open
+                                        // })
+                                    }
+
+                                    series.setData(sumData)
 
 
-                                        return data
-                                    })
-                            }
+                                    return data
+                                })
                         }
+                    }
 
 
-                        getCandles()
+                    getCandles()
 
                     // } else {
                     //     isMounted.current = true;
@@ -252,8 +269,8 @@ export default function OnePortfolioChart({thisPortfolio}) {
 
 
     return (
-        <div>
-            <div ref={portfolioChartContainerRef}>
+        <div className="portfolio-chart-container">
+            <div ref={portfolioChartContainerRef} className="portfolio-chart-chart">
 
             </div>
 

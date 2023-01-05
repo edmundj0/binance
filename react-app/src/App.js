@@ -12,6 +12,7 @@ import BtcChart from './components/ChartTest';
 import Dashboard from './components/Dashboard';
 import OnePortfolio from './components/Portfolio/OnePortfolio/OnePortfolio';
 import CoinDetails from './components/CoinDetails/CoinDetails';
+import HomePage from './components/HomePage/HomePage';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -53,6 +54,9 @@ function App() {
         </ProtectedRoute>
         <Route path="/coins/:coinId" exact={true}>
             <CoinDetails />
+        </Route>
+        <Route path="/" exact={true}>
+          <HomePage />
         </Route>
       </Switch>
     </BrowserRouter>

@@ -1,6 +1,7 @@
 .coin-detailed-data-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
+    margin-bottom: 20px;
     font-size: 14px;
 }
 
@@ -18,4 +19,13 @@
 
 .price-change-negative {
     color: #F84960;
+}
+
+.coin-details-chart-container {
+    display: flex;
+    justify-content: center;
+}
+
+.coin-details-chart-chart {
+    width: 80%;
 }
