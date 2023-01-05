@@ -83,7 +83,7 @@ export default function CoinChart({ price, thisCoin }) {
             // );
 
             //WebSocket fetches current coin prices
-            const binanceSocket = new WebSocket(`wss://stream.binance.us:9443/ws/${thisCoin?.symbol?.toLowerCase()}usd@kline_3m`)
+            const binanceSocket = new WebSocket(`wss://stream.binance.us:9443/ws/${thisCoin?.symbol?.toLowerCase()}usd@kline_30m`)
             binanceSocket.onmessage = function (event) {
 
                 const msgObj = JSON.parse(event.data)
