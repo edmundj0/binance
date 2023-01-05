@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import LogoutButton from './auth/LogoutButton';
 import './NavBar.css'
+import binanceLogo from '../assets/binanceLogo.png'
 
 
 const NavBar = () => {
@@ -37,15 +38,14 @@ const NavBar = () => {
   if (!user) {
     content = (
       <div className='logged-out-nav-container'>
-        <NavLink style={{ textDecoration: 'none' }} to='/' exact={true} activeClassName='active'>
+        <NavLink style={{ textDecoration: 'none' }} to='/' exact={true} activeClassName='active' className="logo-navlink">
           <div className='logo-section'>
-            <div>*insert logo img</div>
-            <h1>binance.me</h1>
+            <img id="logo-img" src={binanceLogo} alt='logo-image'></img>
           </div>
         </NavLink>
         <div className='navbar-right-side'>
 
-            <NavLink style={{ textDecoration: 'none' }} to='/login' exact={true} activeClassName='active'><span id='login-span'>Login</span></NavLink>
+          <NavLink style={{ textDecoration: 'none' }} to='/login' exact={true} activeClassName='active'><span id='login-span'>Login</span></NavLink>
 
           <NavLink to="/sign-up" exact={true} activeClassName='active'>
             <button id="get-started-button">Get Started</button>
@@ -58,10 +58,9 @@ const NavBar = () => {
   else {
     content = (
       <div className='logged-in-nav-container'>
-        <NavLink style={{ textDecoration: 'none' }} to='/dashboard' exact={true} activeClassName='active'>
+        <NavLink style={{ textDecoration: 'none' }} to='/dashboard' exact={true} activeClassName='active' className="logo-navlink">
           <div className='logo-section'>
-            <div>*insert logo img</div>
-            <h1>BINANCE.ME</h1>
+            <img id="logo-img" src={binanceLogo} alt='logo-image'></img>
           </div>
         </NavLink>
         <div className='loggedin-navbar-right'>

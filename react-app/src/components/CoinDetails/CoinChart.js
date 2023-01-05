@@ -11,7 +11,7 @@ export default function CoinChart({ price, thisCoin }) {
         //chart only created after the first render(thisCoin is undefined, creating 2 charts with one error chart)
         if (isMounted.current) {
             const chart = createChart(chartContainerRef.current, {
-                width: 800,
+                width: chartContainerRef.offsetWidth,
                 height: 600,
                 layout: {
                     backgroundColor: '#000000',
@@ -52,7 +52,7 @@ export default function CoinChart({ price, thisCoin }) {
 
             //load historical candlestick data from bitstamp api
             const getCandles = () => {
-                return fetch(`https://www.bitstamp.net/api/v2/ohlc/${thisCoin?.symbol?.toLowerCase()}usd?step=180&limit=1000`)
+                return fetch(`https://www.bitstamp.net/api/v2/ohlc/${thisCoin?.symbol?.toLowerCase()}usd?step=1800&limit=1000`)
                     .then((response) => response.json())
                     .then((data) => {
                         const processedData = data.data.ohlc
@@ -83,7 +83,7 @@ export default function CoinChart({ price, thisCoin }) {
             // );
 
             //WebSocket fetches current coin prices
-            const binanceSocket = new WebSocket(`wss://stream.binance.us:9443/ws/${thisCoin?.symbol?.toLowerCase()}usd@kline_3m`)
+            const binanceSocket = new WebSocket(`wss://stream.binance.us:9443/ws/${thisCoin?.symbol?.toLowerCase()}usd@kline_30m`)
             binanceSocket.onmessage = function (event) {
 
                 const msgObj = JSON.parse(event.data)
@@ -106,8 +106,8 @@ export default function CoinChart({ price, thisCoin }) {
     }, [thisCoin])
 
     return (
-        <div>
-            <div ref={chartContainerRef}></div>
+        <div className="coin-details-chart-container">
+            <div ref={chartContainerRef} className='coin-details-chart-chart'></div>
         </div>
     )
 }

@@ -1,0 +1,8 @@
+.portfolio-chart-container {
+    display: flex;
+    justify-content: center;
+}
+
+.portfolio-chart-chart {
+    z-index: -1;
+}

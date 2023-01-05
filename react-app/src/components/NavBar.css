@@ -1,6 +1,6 @@
-.logged-in-nav-container {
+.logged-in-nav-container, .logged-out-nav-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     background-color: black;
     left: 0;
@@ -62,13 +62,13 @@ ul {
 
 
 /* logged out */
-.logged-out-nav-container {
+/* .logged-out-nav-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
     background-color: black;
     height: 50px;
-}
+} */
 
 #get-started-button {
     color: #1E2026;
@@ -90,4 +90,20 @@ ul {
 
 #login-span:hover{
     color: #F0B90B;
+}
+
+#logo-img {
+    height: 70px;
+}
+
+.loggedin-navbar-right {
+    margin-right: 10%;
+}
+
+.logo-navlink {
+    margin-left: 10%;
+}
+
+.navbar-right-side {
+    margin-right: 10%;
 }
