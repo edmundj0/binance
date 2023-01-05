@@ -29,3 +29,17 @@
 .coin-details-chart-chart {
     width: 80%;
 }
+
+.view-coin-button {
+    background-color: #F0B90B;
+    border: none;
+    color: #1E2026;
+    font-weight: 600;
+
+    border-radius: 5px;
+    padding: 3px 6px;
+}
+
+.view-coin-button:hover {
+    background-color: #f0bb0bbb;
+}
