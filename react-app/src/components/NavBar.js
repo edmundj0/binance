@@ -43,6 +43,9 @@ const NavBar = () => {
             <img id="logo-img" src={binanceLogo} alt='logo-image'></img>
           </div>
         </NavLink>
+        <div>
+          <NavLink to="/markets" exact={true} style={{textDecoration: 'none'}} className="live-markets-nav-bar">View Live Markets</NavLink>
+        </div>
         <div className='navbar-right-side'>
 
           <NavLink style={{ textDecoration: 'none' }} to='/login' exact={true} activeClassName='active'><span id='login-span'>Login</span></NavLink>
@@ -63,6 +66,9 @@ const NavBar = () => {
             <img id="logo-img" src={binanceLogo} alt='logo-image'></img>
           </div>
         </NavLink>
+        <div>
+          <NavLink to="/markets" exact={true} style={{textDecoration: 'none'}} className="live-markets-nav-bar">View Live Markets</NavLink>
+        </div>
         <div className='loggedin-navbar-right'>
           <button id='navbar-user-button' onClick={openMenu}>
             <p>{user.email}</p>

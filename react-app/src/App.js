@@ -13,6 +13,7 @@ import Dashboard from './components/Dashboard';
 import OnePortfolio from './components/Portfolio/OnePortfolio/OnePortfolio';
 import CoinDetails from './components/CoinDetails/CoinDetails';
 import HomePage from './components/HomePage/HomePage';
+import AllMarketData from './components/AllMarketData/AllMarketData';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -54,6 +55,9 @@ function App() {
         </ProtectedRoute>
         <Route path="/coins/:coinId" exact={true}>
             <CoinDetails />
+        </Route>
+        <Route path="/markets" exact={true}>
+          <AllMarketData />
         </Route>
         <Route path="/" exact={true}>
           <HomePage />

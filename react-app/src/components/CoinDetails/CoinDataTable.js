@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import { NavLink, useHistory } from "react-router-dom"
 
 
 
@@ -8,6 +9,8 @@ export default function CoinDataTable({ coin }) {
     const [priceChangePercent, setPriceChangePercent] = useState(0)
     const [errors, setErrors] = useState([])
     const binanceSocket = useRef(null)
+
+    const history = useHistory()
 
     //get initial coin data
     useEffect(() => {
@@ -47,12 +50,16 @@ export default function CoinDataTable({ coin }) {
 
     }, [coin])
 
+    const tradeRouteChange = (coin) => {
+        history.push(`/coins/${coin?.id}`)
+    }
 
     return (
         <>
-            <td className="table-homepage-td"><span id="homepage-table-coin-symbol">{coin.symbol} </span> {coin.name}</td>
+            <td className="table-homepage-td"><span id="homepage-table-coin-symbol">{coin.symbol}</span> {coin.name}</td>
             <td className="table-homepage-td">${price}</td>
             <td className={priceChangePercent >= 0 ? 'homepage-price-change-positive table-homepage-td' : 'homepage-price-change-negative table-homepage-td'}>{priceChangePercent}%</td>
+            <td className="table-homepage-td"><button onClick={()=>tradeRouteChange(coin)} className='view-coin-button'>View</button></td>
         </>
     )
 }
