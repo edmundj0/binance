@@ -127,7 +127,7 @@ const SignUpForm = () => {
       <div>
         <div className='login-input-text'>Email</div>
         <input
-          type='text'
+          type='email'
           name='email'
           onChange={updateEmail}
           value={email}
