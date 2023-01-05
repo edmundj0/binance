@@ -14,7 +14,7 @@ export default function CoinDataTable({ coin }) {
 
     //get initial coin data
     useEffect(() => {
-        fetch(`https://api.binance.us/api/v3/ticker/price?symbol=${coin?.symbol}USD`)
+        fetch(`https://api.binance.us/api/v3/ticker/24hr?symbol=${coin?.symbol}USD`)
             .then((response) => {
                 if (response.ok) {
                     return response.json()
@@ -22,7 +22,8 @@ export default function CoinDataTable({ coin }) {
                 throw response
             })
             .then((data) => {
-                setPrice(data?.price)
+                setPrice(data?.lastPrice)
+                setPriceChangePercent(data?.priceChangePercent)
             })
             .catch((error) => {
                 console.log("Error fetching initial data: ", error)
