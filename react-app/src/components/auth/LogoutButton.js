@@ -12,7 +12,7 @@ const LogoutButton = () => {
     await dispatch(clearPortfolios());
   };
 
-  return <button onClick={onLogout}>Logout</button>;
+  return <button onClick={onLogout} className="logout-button-main">Logout</button>;
 };
 
 export default LogoutButton;

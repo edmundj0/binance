@@ -118,7 +118,7 @@ export default function CoinDetails() {
             </div>
             <CoinChart thisCoin={thisCoin} price={price} />
             {user ? <TradeCoin thisCoin={thisCoin} price={price} /> : <NavLink to="/login" exact={true}>Login to Trade</NavLink>}
-            <div className="page-small-title">Key Statistics</div>
+            {/* <div className="page-small-title">Key Statistics</div> */}
         </div>
     )
 

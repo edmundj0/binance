@@ -1,11 +1,13 @@
 import { createChart } from "lightweight-charts";
 import { useEffect, useRef, useState } from "react";
+import './OnePortfolioChart.css'
 
 
 export default function OnePortfolioChart({ thisPortfolio }) {
     // const dispatch = useDispatch()
     // const [assets, setAssets] = useState([])
     const portfolioChartContainerRef = useRef(null)
+    const [portfolioValue, setPortfolioValue] = useState(0)
     // const isMounted = useRef(false)
 
     // const thisPortfolio = useSelector(state => state.portfolios.onePortfolio)
@@ -81,9 +83,18 @@ export default function OnePortfolioChart({ thisPortfolio }) {
 
                     const getCandles = () => {
 
+                        //hard code 5 days of just buying power as USD
                         if (!assets.length) {
                             let todayTime = Math.floor(new Date().getTime() / 1000)
                             series.setData([
+                                {
+                                    value: thisPortfolio?.buying_power,
+                                    time: todayTime - 86400 * 4
+                                },
+                                {
+                                    value: thisPortfolio?.buying_power,
+                                    time: todayTime - 86400 * 3
+                                },
                                 {
                                     value: thisPortfolio?.buying_power,
                                     time: todayTime - 86400 * 2
@@ -258,8 +269,8 @@ export default function OnePortfolioChart({ thisPortfolio }) {
 
 
     return (
-        <div>
-            <div ref={portfolioChartContainerRef}>
+        <div className="portfolio-chart-container">
+            <div ref={portfolioChartContainerRef} className="portfolio-chart-chart">
 
             </div>
 

@@ -70,3 +70,17 @@
     padding: 3px;
     text-align: center;
 }
+
+.transaction-text-buy {
+    color: #02c076;
+}
+
+.transaction-text-sell {
+    color: #f84960;
+}
+
+#portfolio-chart-warning-text {
+    color: #848e9c;
+    font-size: 12px;
+    text-align: center;
+}
