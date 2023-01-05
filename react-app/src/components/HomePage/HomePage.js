@@ -1,10 +1,20 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import binanceBackgroundImg from '../../assets/binanceBackgroundImg.png'
 import githubIcon from '../../assets/githubLogo.png'
 import linkedInLogo from '../../assets/linkedinLogo.png'
+import { getAllCoins } from '../../store/coin'
+import CoinDataTable from '../CoinDetails/CoinDataTable'
 import './HomePage.css'
 
 export default function HomePage() {
+    const dispatch = useDispatch()
+    let allCoins = useSelector(state => state.coins.allCoins)
+
+    useEffect(() => {
+        dispatch(getAllCoins())
+    }, [dispatch])
 
 
     return (
@@ -19,7 +29,7 @@ export default function HomePage() {
                 </NavLink>
             </div>
             <div className='second-center-homepage-container'>
-                <div>Your new favorite application for Cyrptocurrency Trading</div>
+                <div>Your new favorite application for Cryptocurrency Trading</div>
                 <div>
                     Developed By: Edmund Ju
                     <a href="https://github.com/edmundj0"><img src={githubIcon} className="developer-logo-img" alt='githubLogo'></img></a>
@@ -27,8 +37,25 @@ export default function HomePage() {
                 </div>
                 <div className="warning-text-homepage">This site was developed for educational purposes and is not binance.us or binance.com. Please do not provide any real personal information to this cloned site.</div>
             </div>
-            <div className=''>
-
+            <div className='all-coins-market-container'>
+                <table className='home-page-table'>
+                    <thead>
+                        <tr className='table-homepage-tr'>
+                            <th className='table-homepage-th'>Cryptocurrency</th>
+                            <th className='table-homepage-th'>Price</th>
+                            <th className='table-homepage-th'>24h % Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {allCoins && Object.values(allCoins).map((coin) => {
+                        return (
+                            <tr key={`coins ${coin.id}`} className='table-homepage-tr'>
+                                <CoinDataTable coin={coin} />
+                            </tr>
+                        )
+                    })}
+                    </tbody>
+                </table>
             </div>
         </div>
     )

@@ -1,5 +1,4 @@
 .homepage-entire-container {
-    border: 1px red solid;
     width: 100%;
     background-size: cover;
     /* background-image: url('../../assets/binanceBackgroundImg.png'); */
@@ -44,7 +43,7 @@
     font-size: 20px;
 }
 
-#homepage-signup-button:hover{
+#homepage-signup-button:hover {
     background-color: #cda830;
 }
 
@@ -71,4 +70,69 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 15px;
+}
+
+
+.all-coins-market-container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 80%;
+    background-color: #fafafa;
+    color: black;
+
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 10px;
+    border-radius: 20px;
+}
+
+.home-page-table {
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+    /* need this line for border */
+    border-collapse: collapse;
+    padding-top: auto;
+    padding-bottom: auto;
+}
+
+
+.table-homepage-th {
+    padding-bottom: 10px;
+    font-size: 12px;
+    color: #848e9c;
+    font-weight: 400;
+}
+
+.table-homepage-td {
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.table-homepage-tr {
+    border: solid 1px lightgray;
+    border-left: none;
+    border-right: none;
+}
+
+tr:first-child {
+    border-top: none;
+}
+
+tr:last-child {
+    border-bottom: none;
+}
+
+#homepage-table-coin-symbol {
+    font-weight: 700;
+}
+
+.homepage-price-change-positive {
+    color: #02c076;
+}
+
+.homepage-price-change-negative {
+    color: #f84960
 }
