@@ -9,10 +9,20 @@ def seed_coins():
         name='Ethereum', symbol='ETH', description='Ethereum is a next-generation smart contract and decentralized application platform. Ethereum is a decentralized network (often referred to as “the world computer”), created by Vitalik Buterin in 2013.')
     ada = Coin(
         name='Cardano', symbol='ADA', description='Cardano (ADA) is an open-source public blockchain to support smart contracts.')
+    sol = Coin(
+        name='Solana', symbol='SOL', description='Solana is a next-generation blockchain focused on speed and specifically designed to host scalable decentralized applications (dApps). SOL is the native cryptocurrency of the Solana blockchain and network.')
+    doge = Coin(
+        name='Dogecoin', symbol='DOGE', description='Dogecoin (DOGE) is an open-source peer-to-peer cryptocurrency reported to be favored by all Shiba inus worldwide.')
+    ltc = Coin(
+        name='Litecoin', symbol='LTC', description='Litecoin is both an open-source blockchain and the native cryptocurrency (LTC) that operates on it as a peer-to-peer payment system. The Litecoin blockchain forked from the Bitcoin protocol in 2011 — two years after Bitcoin was introduced.')
 
     db.session.add(btc)
     db.session.add(eth)
     db.session.add(ada)
+    db.session.add(sol)
+    db.session.add(doge)
+    db.session.add(ltc)
+
     db.session.commit()
 
 

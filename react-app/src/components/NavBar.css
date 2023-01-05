@@ -107,3 +107,13 @@ ul {
 .navbar-right-side {
     margin-right: 10%;
 }
+
+.live-markets-nav-bar {
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.live-markets-nav-bar:hover {
+    color: #F0B90B;
+}
