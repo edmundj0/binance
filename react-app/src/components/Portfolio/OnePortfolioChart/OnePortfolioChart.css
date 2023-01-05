@@ -3,3 +3,6 @@
     justify-content: center;
 }
 
+.portfolio-chart-chart {
+    z-index: -1;
+}

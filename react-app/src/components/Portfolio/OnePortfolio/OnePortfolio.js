@@ -128,7 +128,7 @@ export default function OnePortfolio() {
             </div>
             <div className="transactions-container">
                 <div className="page-small-title">Transactions</div>
-                {portfolioTransactions.length ?
+                {portfolioTransactions && (portfolioTransactions.length ?
                     <table className="transactions-table my-table">
                         <thead>
                             <tr>
@@ -156,7 +156,7 @@ export default function OnePortfolio() {
                             })}
                         </tbody>
                     </table>
-                    : <div>Make a transaction and they will appear here!</div>}
+                    : <div>Make a transaction and they will appear here!</div>)}
             </div>
 
         </div>
