@@ -4,6 +4,7 @@ import { NavLink, useHistory } from "react-router-dom"
 import { getAllCoins } from "../../store/coin"
 import { deletePaymentMethod, getAllPaymentMethods } from "../../store/paymentMethod"
 import { getAllPortfolios } from "../../store/portfolio"
+import { getAllWatchlists } from "../../store/watchlist"
 import CreatePaymentMethodModal from "../PaymentMethods/CreatePaymentMethodModal"
 import DepositsModal from "../PaymentMethods/DepositsModal"
 import EditPaymentMethodModal from "../PaymentMethods/EditPaymentMethodModal"
@@ -19,6 +20,7 @@ export default function Dashboard() {
     let allPaymentMethods = useSelector(state => state.paymentMethods.allPaymentMethods)
 
     let allCoins = useSelector(state => state.coins.allCoins)
+    let allWatchlists = useSelector(state => state.watchlists.allUserWatchlists)
 
 
     useEffect(() => {
@@ -31,6 +33,10 @@ export default function Dashboard() {
 
     useEffect(() => {
         dispatch(getAllCoins())
+    }, [dispatch])
+
+    useEffect(() => {
+        dispatch(getAllWatchlists())
     }, [dispatch])
 
     const tradeRouteChange = (coin) => {
@@ -92,6 +98,15 @@ export default function Dashboard() {
                                     <button onClick={() => dispatch(deletePaymentMethod(method.id))} className="delete-payment-method-button">Delete</button>
                                 </div>
                             </div>
+                        )
+                    })}
+                </div>
+
+                <div className="page-small-title">Your Watchlists</div>
+                <div>
+                    {Object.values(allWatchlists).map((watchlist) => {
+                        return (
+                            <div key={`watchlist ${watchlist.id}`}>{watchlist.name}</div>
                         )
                     })}
                 </div>
