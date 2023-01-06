@@ -5,6 +5,7 @@ import portfoliosReducer from './portfolio';
 import coinsReducer from './coin';
 import paymentMethodsReducer from './paymentMethod';
 import transactionsReducer from './transaction';
+import watchlistsReducer from './watchlist';
 
 
 const rootReducer = combineReducers({
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   portfolios: portfoliosReducer,
   coins: coinsReducer,
   paymentMethods: paymentMethodsReducer,
-  transactions: transactionsReducer
+  transactions: transactionsReducer,
+  watchlists: watchlistsReducer
 });
 
 
