@@ -1,6 +1,10 @@
-# Flask React Project
+# ₿inance.me
 
-This is the starter for the Flask React project.
+## About This Project
+
+PROJECT LIVE SITE: https://binance-me.onrender.com/
+
+Binance.me is a simulated cryptocurrency trading, full stack web application that empowers users to buy and sell crypto with real time price data. This platform helps investors make trades without risking any real money. The project has a theme based off of popular crytocurrency exchange, https://www.binance.us/. 
 
 ## Getting started
 1. Clone this repository (only this branch)
@@ -41,108 +45,38 @@ This is the starter for the Flask React project.
 
 7. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
 
+## Technologies Used
+Frontend:
+- React.js
+- Redux
+- JavaScript
 
-## Deployment through Render.com
+Backend:
+- Flask 
+- SQLALchemy
+- Python
 
-First, refer to your Render.com deployment articles for more detailed
-instructions about getting started with [Render.com], creating a production
-database, and deployment debugging tips.
+Database: 
+- SQLite (development)
+- PostgreSQL (live site)
 
-From the [Dashboard], click on the "New +" button in the navigation bar, and
-click on "Web Service" to create the application that will be deployed.
+Other Technologies: 
+- [Bitstamp API](https://www.bitstamp.net/api/)
+- [Binance.us API and Websocket Streams](https://docs.binance.us/#introduction)
+- [Lightweight Financial Charting Library](https://www.tradingview.com/lightweight-charts/)
 
-Look for the name of the application you want to deploy, and click the "Connect"
-button to the right of the name.
+## Project Sections
 
-Now, fill out the form to configure the build and start commands, as well as add
-the environment variables to properly deploy the application.
+### Splash Page (Homepage)
+![image](https://user-images.githubusercontent.com/102005831/211088361-b671d504-6c24-4f08-85c9-bd2eb5c8491c.png)
 
-### Part A: Configure the Start and Build Commands
+### Login and SignUp
+![image](https://user-images.githubusercontent.com/102005831/211088572-35a0bc69-5ce1-40d4-bbd8-f9ef68c8ed2f.png)
 
-Start by giving your application a name.
+### Dashboard
+updating...
+### Live Market Data
+![image](https://user-images.githubusercontent.com/102005831/211088696-b06764c5-74df-4613-979b-56db0f74c947.png)
 
-Leave the root directory field blank. By default, Render will run commands from
-the root directory.
-
-Make sure the Environment field is set set to "Python 3", the Region is set to
-the location closest to you, and the Branch is set to "main".
-
-Next, add your Build command. This is a script that should include everything
-that needs to happen _before_ starting the server.
-
-For your Flask project, enter the following command into the Build field, all in
-one line:
-
-```shell
-# build command - enter all in one line
-npm install --prefix react-app &&
-npm run build --prefix react-app &&
-pip install -r requirements.txt &&
-pip install psycopg2 &&
-flask db upgrade &&
-flask seed all
-```
-
-This script will install dependencies for the frontend, and run the build
-command in the __package.json__ file for the frontend, which builds the React
-application. Then, it will install the dependencies needed for the Python
-backend, and run the migration and seed files.
-
-Now, add your start command in the Start field:
-
-```shell
-# start script
-gunicorn app:app
-```
-
-_If you are using websockets, use the following start command instead for increased performance:_
-
-`gunicorn --worker-class eventlet -w 1 app:app`
-
-### Part B: Add the Environment Variables
-
-Click on the "Advanced" button at the bottom of the form to configure the
-environment variables your application needs to access to run properly. In the
-development environment, you have been securing these variables in the __.env__
-file, which has been removed from source control. In this step, you will need to
-input the keys and values for the environment variables you need for production
-into the Render GUI.
-
-Click on "Add Environment Variable" to start adding all of the variables you
-need for the production environment.
-
-Add the following keys and values in the Render GUI form:
-
-- SECRET_KEY (click "Generate" to generate a secure secret for production)
-- FLASK_ENV production
-- FLASK_APP app
-- SCHEMA (your unique schema name, in snake_case)
-- REACT_APP_BASE_URL (use render.com url, located at top of page, similar to
-  https://this-application-name.onrender.com)
-
-In a new tab, navigate to your dashboard and click on your Postgres database
-instance.
-
-Add the following keys and values:
-
-- DATABASE_URL (copy value from Internal Database URL field)
-
-_Note: Add any other keys and values that may be present in your local __.env__
-file. As you work to further develop your project, you may need to add more
-environment variables to your local __.env__ file. Make sure you add these
-environment variables to the Render GUI as well for the next deployment._
-
-Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your
-application every time you push to main.
-
-Now, you are finally ready to deploy! Click "Create Web Service" to deploy your
-project. The deployment process will likely take about 10-15 minutes if
-everything works as expected. You can monitor the logs to see your build and
-start commands being executed, and see any errors in the build process.
-
-When deployment is complete, open your deployed site and check to see if you
-successfully deployed your Flask application to Render! You can find the URL for
-your site just below the name of the Web Service at the top of the page.
-
-[Render.com]: https://render.com/
-[Dashboard]: https://dashboard.render.com/
+### Coin Trading Page
+updating...
