@@ -1,6 +1,7 @@
 const GET_ALL_WATCHLISTS = "watchlists/GET_ALL_WATCHLISTS";
 const GET_ONE_WATCHLIST = "watchlists/GET_ONE_WATCHLIST";
 const CREATE_NEW_WATCHLIST = "watchlists/CREATE_NEW_WATCHLIST"
+const EDIT_ONE_WATCHLIST = "watchlists/EDIT_ONE_WATCHLIST"
 
 //action creators
 const loadAllWatchlists = (allWatchlists) => ({
@@ -16,6 +17,11 @@ const loadOneWatchlist = (oneWatchlist) => ({
 const postWatchlist = (newWatchlist) => ({
     type: CREATE_NEW_WATCHLIST,
     newWatchlist
+})
+
+const editWatchlist = (edited) => ({
+    type: EDIT_ONE_WATCHLIST,
+    edited
 })
 
 
@@ -57,6 +63,24 @@ export const createNewWatchlist = (info) => async (dispatch) => {
     }
 }
 
+export const editOneWatchlist = (info, watchlistId) => async (dispatch) => {
+    const response = await fetch(`/api/watchlists/${watchlistId}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(info)
+    })
+    if(response.ok) {
+        const edited = await response.json()
+        dispatch(editWatchlist(edited))
+        return edited
+    }else {
+        const data = await response.json()
+        if(data.errors){
+            return data
+        }
+    }
+}
+
 //reducer
 const initialState = {oneWatchlist: {}, allUserWatchlists: {}}
 
@@ -89,6 +113,15 @@ const watchlistsReducer = (state = initialState, action) => {
             }
             newState.oneWatchlist = action.newWatchlist
             newState.allUserWatchlists[action.newWatchlist.id] = action.newWatchlist
+            return newState
+        case EDIT_ONE_WATCHLIST:
+            newState = {
+                ...state,
+                oneWatchlist: {...state.oneWatchlist},
+                allUserWatchlists: {...state.allUserWatchlists}
+            }
+            newState.oneWatchlist = action.edited
+            newState.allUserWatchlists[action.edited.id] = action.edited
             return newState
         default:
             return state

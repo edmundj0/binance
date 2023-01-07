@@ -9,6 +9,8 @@ import CreatePaymentMethodModal from "../PaymentMethods/CreatePaymentMethodModal
 import DepositsModal from "../PaymentMethods/DepositsModal"
 import EditPaymentMethodModal from "../PaymentMethods/EditPaymentMethodModal"
 import CreatePortfolioModal from "../Portfolio/CreatePortfolioModal"
+import CreateWatchlistModal from "../Watchlists/CreateWatchlistModal"
+import EditWatchlistModal from "../Watchlists/EditWatchlistModal"
 import "./Dashboard.css"
 
 export default function Dashboard() {
@@ -22,7 +24,7 @@ export default function Dashboard() {
     let allCoins = useSelector(state => state.coins.allCoins)
     let allWatchlists = useSelector(state => state.watchlists.allUserWatchlists)
 
-
+    //throw all of these into one useEffect
     useEffect(() => {
         dispatch(getAllPortfolios())
     }, [dispatch])
@@ -102,11 +104,15 @@ export default function Dashboard() {
                     })}
                 </div>
 
-                <div className="page-small-title">Your Watchlists</div>
+                <div className="page-small-title">Your Watchlists
+                    <CreateWatchlistModal />
+                </div>
                 <div>
                     {Object.values(allWatchlists).map((watchlist) => {
                         return (
-                            <div key={`watchlist ${watchlist.id}`}>{watchlist.name}</div>
+                            <div key={`watchlist ${watchlist.id}`}><NavLink to={`/watchlists/${watchlist.id}`}>{watchlist.name}</NavLink>
+                            <EditWatchlistModal watchlist={watchlist} />
+                            </div>
                         )
                     })}
                 </div>

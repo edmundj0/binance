@@ -1,15 +1,35 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createNewWatchlist, getAllWatchlists } from "../../../store/watchlist";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { editOnePortfolio, getOnePortfolio } from "../../../store/portfolio";
+import { editOneWatchlist, getOneWatchlist } from "../../../store/watchlist";
 
 
-export default function CreateWatchlist({ setShowModal }) {
+export default function EditWatchlist({ setShowModal, watchlist }) {
     const dispatch = useDispatch()
     const [watchlistName, setWatchlistName] = useState("")
     const [description, setDescription] = useState("")
     const [errors, setErrors] = useState([])
 
+    // const thisWatchlist = useSelector(state => state.watchlists.oneWatchlist)
 
+    useEffect(() => {
+        dispatch(getOneWatchlist(watchlist.id))
+    }, [watchlist])
+
+    // useEffect(() => {
+    //     if (thisWatchlist) {
+    //         setWatchlistName(thisWatchlist.name)
+    //         setDescription(thisWatchlist.description)
+    //     }
+    // }, [thisWatchlist])
+
+    useEffect(() => {
+        if(watchlist) {
+            setWatchlistName(watchlist.name)
+            setDescription(watchlist.description)
+        }
+    }, [watchlist])
 
     const info = {
         name: watchlistName,
@@ -19,30 +39,22 @@ export default function CreateWatchlist({ setShowModal }) {
     const onSubmit = async (e) => {
         e.preventDefault()
 
-        if(watchlistName?.length > 30) {
-            setErrors(["Name must be less than 30 characters"])
-        }
+        let editedWatchlist = await dispatch(editOneWatchlist(info, watchlist.id))
 
+        if (editedWatchlist.errors) {
+            await setErrors(editedWatchlist.errors)
+        }
         else {
-
-            let newWatchlist = await dispatch(createNewWatchlist(info))
-
-            if (newWatchlist.errors) {
-                await setErrors(newWatchlist.errors)
-            }
-            else {
-                setShowModal(false)
-            }
+            setShowModal(false)
+            // dispatch(getOneWatchlist(thisWatchlist.id))
         }
-
-        //dispatch(getAllWatchlists())
     }
 
 
 
     return (
         <div className="modal-entire-container">
-            <div className="modal-header-text">Create New Watchlist</div>
+            <div className="modal-header-text">Edit Watchlist</div>
             <div>
                 {errors && (
                     <ul className="error-text">
@@ -59,8 +71,7 @@ export default function CreateWatchlist({ setShowModal }) {
                     className="form-input"
                     onChange={(e) => setWatchlistName(e.target.value)}
                     value={watchlistName}
-                    placeholder="Watchlist Name">
-                </input>
+                    placeholder="Watchlist Name"></input>
 
                 <div className="form-input-text">Description</div>
                 <input required
@@ -70,7 +81,8 @@ export default function CreateWatchlist({ setShowModal }) {
                     value={description}
                     placeholder="Description"></input>
 
-                <button type="submit" className="form-submit-button">Create Watchlist</button>
+                <div></div>
+                <button type="submit" className="form-submit-button">Save Changes</button>
             </form>
         </div>
     )
