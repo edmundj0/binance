@@ -3,6 +3,7 @@ const GET_ONE_WATCHLIST = "watchlists/GET_ONE_WATCHLIST";
 const CREATE_NEW_WATCHLIST = "watchlists/CREATE_NEW_WATCHLIST"
 const EDIT_ONE_WATCHLIST = "watchlists/EDIT_ONE_WATCHLIST"
 const DELETE_ONE_WATCHLIST = "watchlists/DELETE_ONE_WATCHLIST"
+const LOAD_WATCHLIST_COINS = "watchlists/LOAD_COINS"
 const CLEAR_WATCHLISTS = "watchlists/CLEAR_WATCHLISTS"
 
 //action creators
@@ -29,6 +30,11 @@ const editWatchlist = (edited) => ({
 const delWatchlist = (watchlistId) => ({
     type: DELETE_ONE_WATCHLIST,
     watchlistId
+})
+
+const loadWatchlistCoins = (data) => ({
+    type: LOAD_WATCHLIST_COINS,
+    data
 })
 
 
@@ -108,6 +114,20 @@ export const deleteWatchlist = (watchlistId) => async (dispatch) => {
     }
 }
 
+export const getWatchlistCoins = (watchlistId) => async (dispatch) => {
+    const response = await fetch(`/api/watchlists/${watchlistId}`)
+    if(response.ok){
+        const coinsData = await response.json()
+        dispatch(loadWatchlistCoins(coinsData))
+        return coinsData
+    }else {
+        const data = await response.json()
+        if(data.errors){
+            return data
+        }
+    }
+}
+
 //reducer
 const initialState = {oneWatchlist: {}, allUserWatchlists: {}}
 
@@ -158,6 +178,14 @@ const watchlistsReducer = (state = initialState, action) => {
             }
             newState.oneWatchlist = {}
             delete newState.allUserWatchlists[action.watchlistId]
+            return newState
+        case LOAD_WATCHLIST_COINS:
+            newState = {
+                ...state,
+                oneWatchlist: {...state.oneWatchlist},
+                allUserWatchlists: {...state.allUserWatchlists}
+            }
+            newState.oneWatchlist = action.data
             return newState
         case CLEAR_WATCHLISTS:
             newState = {

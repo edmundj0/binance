@@ -4,13 +4,14 @@ import { NavLink, useHistory } from "react-router-dom"
 import { getAllCoins } from "../../store/coin"
 import { deletePaymentMethod, getAllPaymentMethods } from "../../store/paymentMethod"
 import { getAllPortfolios } from "../../store/portfolio"
-import { getAllWatchlists, deleteWatchlist } from "../../store/watchlist"
+import { getAllWatchlists, deleteWatchlist, getWatchlistCoins } from "../../store/watchlist"
 import CreatePaymentMethodModal from "../PaymentMethods/CreatePaymentMethodModal"
 import DepositsModal from "../PaymentMethods/DepositsModal"
 import EditPaymentMethodModal from "../PaymentMethods/EditPaymentMethodModal"
 import CreatePortfolioModal from "../Portfolio/CreatePortfolioModal"
 import CreateWatchlistModal from "../Watchlists/CreateWatchlistModal"
 import EditWatchlistModal from "../Watchlists/EditWatchlistModal"
+import WatchlistCoinsList from "../Watchlists/OneWatchlist/WatchlistCoinsList"
 import "./Dashboard.css"
 
 export default function Dashboard() {
@@ -113,6 +114,8 @@ export default function Dashboard() {
                             <div key={`watchlist ${watchlist.id}`}><NavLink to={`/watchlists/${watchlist.id}`}>{watchlist.name}</NavLink>
                             <EditWatchlistModal watchlist={watchlist} />
                             <button onClick={()=> dispatch(deleteWatchlist(watchlist.id))}>Delete</button>
+                            <button onClick={() => dispatch(getWatchlistCoins(watchlist.id))}>test</button>
+                            <WatchlistCoinsList watchlist={watchlist} />
                             </div>
                         )
                     })}
