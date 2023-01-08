@@ -15,7 +15,7 @@ export default function EditWatchlist({ setShowModal, watchlist }) {
 
     useEffect(() => {
         dispatch(getOneWatchlist(watchlist.id))
-    }, [watchlist])
+    }, [watchlist, dispatch])
 
     // useEffect(() => {
     //     if (thisWatchlist) {
