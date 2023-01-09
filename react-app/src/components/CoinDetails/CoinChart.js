@@ -1,7 +1,7 @@
 import { createChart, CrosshairMode } from "lightweight-charts"
 import { useEffect, useLayoutEffect, useRef } from "react";
 
-export default function CoinChart({ price, thisCoin }) {
+export default function CoinChart({ price, thisCoin, showModal }) { //pass in showModal to set chart z index to -1 when true
     const chartContainerRef = useRef()
     const isMounted = useRef(false)
 
@@ -107,7 +107,7 @@ export default function CoinChart({ price, thisCoin }) {
 
     return (
         <div className="coin-details-chart-container">
-            <div ref={chartContainerRef} className='coin-details-chart-chart'></div>
+            <div ref={chartContainerRef} className={showModal ? 'coin-details-chart-chart-modal-true' : 'coin-details-chart-chart'}></div>
         </div>
     )
 }

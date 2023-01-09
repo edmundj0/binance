@@ -30,6 +30,10 @@
     width: 80%;
 }
 
+.coin-details-chart-chart-modal-true {
+    z-index: -1;
+}
+
 .view-coin-button {
     background-color: #F0B90B;
     border: none;

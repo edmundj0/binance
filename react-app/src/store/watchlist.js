@@ -128,6 +128,24 @@ export const getWatchlistCoins = (watchlistId) => async (dispatch) => {
     }
 }
 
+export const addCoinToWatchlist = (info, watchlistId) => async (dispatch) => {
+    const response = await fetch(`/api/watchlists/${watchlistId}/coins`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(info)
+    })
+    if(response.ok){ //nothing directly to reducer // have to return something or frontend on submit error
+        const message = await response.json()
+        dispatch(getWatchlistCoins(watchlistId))
+        return message
+    }else {
+        const data = await response.json()
+        if(data.errors){
+            return data
+        }
+    }
+}
+
 //reducer
 const initialState = {oneWatchlist: {}, allUserWatchlists: {}}
 

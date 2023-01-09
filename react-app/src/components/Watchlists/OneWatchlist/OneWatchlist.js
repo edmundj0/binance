@@ -19,6 +19,6 @@ export default function OneWatchlist(){
     }
 
     return (
-        <div>Testt</div>
+        <div>Under development :D</div>
     )
 }
