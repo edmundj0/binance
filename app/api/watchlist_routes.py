@@ -225,13 +225,13 @@ def remove_coin_from_watchlist(watchlist_id):
         coin = Coin.query.filter(Coin.symbol == symbol).first()
 
         if not coin:
-            return {"errors": "Sorry, that coin is not supported on our exchange at this time."}, 404
+            return {"errors": ["Sorry, that coin is not supported on our exchange at this time."]}, 404
 
 
         row_to_delete = WatchlistCoin.query.filter((WatchlistCoin.watchlist_id == watchlist.id), (WatchlistCoin.coin_id == coin.id)).first()
 
         if not row_to_delete:
-            return {"errors": "Sorry that coin is not found in this watchlist. If you believe this is an error, please try again later."}, 404
+            return {"errors": ["Sorry that coin is not found in this watchlist. If you believe this is an error, please try again later."]}, 404
 
         db.session.delete(row_to_delete)
         db.session.commit()

@@ -1,36 +1,56 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getWatchlistCoins } from "../../../store/watchlist";
+import { getWatchlistCoins, removeCoinFromWatchlist } from "../../../store/watchlist";
 
 export default function WatchlistCoinsList({ watchlist }) {
     const dispatch = useDispatch()
     const [showWatchlistCoins, setShowWatchlistCoins] = useState(false)
     const [coinPrices, setCoinPrices] = useState({})
     const [errors, setErrors] = useState([])
+    const watchlistContainer = useRef([])
     // const [isMounted, setIsMounted] = useState(false)
     const thisWatchlist = useSelector(state => state.watchlists.oneWatchlist)
     const watchlistCoinsArr = thisWatchlist.Coins //watchlistCoinsArr can be undefined if thisWatchlist is {}
     const allCoins = useSelector(state => state.coins.allCoins)
     const allCoinsArr = Object.values(allCoins)
 
+    // useEffect(() => {
+    //     watchlistContainer.current = watchlistContainer.current.slice(0, watchlistCoinsArr?.length)
+    // }, [watchlistCoinsArr])
 
-    console.log(watchlistCoinsArr, 'watchlistcoinsarr')
-
-
-    //hide watchlist coins on click
+    //hide watchlist coins on click, except for the container with the watchlist info
     useEffect(() => {
+
         if (!showWatchlistCoins) {
             return
         }
 
-        const closeWatchlistCoins = () => {
-            setShowWatchlistCoins(false);
+        console.log(watchlistContainer.current, 'watchlist container')
+
+
+        const closeWatchlistCoins = (e) => {
+            if(!watchlistContainer || !watchlistContainer.current.contains(e.target)) setShowWatchlistCoins(false)
         }
+
+        // const doNotCloseWatchlistCoins = (e) => {
+        //     e.stopPropagation() //prevent close when click is in watchlist container
+        // }
+
 
         document.addEventListener('click', closeWatchlistCoins)
 
-        return () => document.removeEventListener('click', closeWatchlistCoins);
-    }, [showWatchlistCoins])
+        // if (watchlistContainer && watchlistContainer.current) {
+        //     const watchlistListener = watchlistContainer.current.addEventListener('click', doNotCloseWatchlistCoins)
+        // }
+
+        return () => {
+            document.removeEventListener('click', closeWatchlistCoins)
+            // if (watchlistContainer && watchlistContainer.current) {
+            //     watchlistContainer.current.removeEventListener('click', doNotCloseWatchlistCoins)
+            // }
+            return
+        };
+    }, [showWatchlistCoins, watchlistContainer.current])
 
 
     //load coin prices into coinPrices state
@@ -56,6 +76,37 @@ export default function WatchlistCoinsList({ watchlist }) {
             }))
     }, [])
 
+    return (
+        <>
+            <button onClick={() => {
+                dispatch(getWatchlistCoins(watchlist.id))
+                setShowWatchlistCoins(!showWatchlistCoins)
+                return
+            }}>show details</button>
+            {showWatchlistCoins && (
+                <div ref={watchlistContainer} className='watchlist-coins-container'>
+                    {watchlistCoinsArr && Object.values(watchlistCoinsArr).map((coin, i) => {
+                        return (<div key={`watchlistcoin ${coin.id}`}>
+                            {coin.name} {coinPrices[`${coin.symbol}USD`]}
+                            {/*prices are saved as (coin.symbol)USD  */}
+                            <button onClick={() => {
+                                dispatch(removeCoinFromWatchlist())
+                                return setShowWatchlistCoins(true)
+                            }}>x</button>
+                        </div>)
+                    })}
+                </div>
+            )}
+        </>
+    )
+}
+
+
+
+
+
+
+
     //this would cause too many fetches
     // for (let coin of allCoinsArr) {
     //     console.log('forloop ran')
@@ -78,28 +129,3 @@ export default function WatchlistCoinsList({ watchlist }) {
     //             })
     //     }
     // }
-    
-
-
-
-
-    return (
-        <>
-            <button onClick={() => {
-                dispatch(getWatchlistCoins(watchlist.id))
-                setShowWatchlistCoins(!showWatchlistCoins)
-                return
-            }}>show details</button>
-            {showWatchlistCoins && (
-                <div>
-                    {watchlistCoinsArr && Object.values(watchlistCoinsArr).map(coin => {
-                        return (<div key={`watchlistcoin ${coin.id}`}>
-                            {coin.name} {coinPrices[`${coin.symbol}USD`]}
-                            {/*prices are saved as (coin.symbol)USD  */}
-                        </div>)
-                    })}
-                </div>
-            )}
-        </>
-    )
-}
