@@ -5,17 +5,17 @@ import { editOnePortfolio, getOnePortfolio } from "../../../store/portfolio";
 import { editOneWatchlist, getOneWatchlist } from "../../../store/watchlist";
 
 
-export default function EditWatchlist({ setShowModal, watchlist }) {
+export default function EditWatchlist({ setShowModal }) {
     const dispatch = useDispatch()
     const [watchlistName, setWatchlistName] = useState("")
     const [description, setDescription] = useState("")
     const [errors, setErrors] = useState([])
 
-    // const thisWatchlist = useSelector(state => state.watchlists.oneWatchlist)
+    const thisWatchlist = useSelector(state => state.watchlists.oneWatchlist)
 
     useEffect(() => {
-        dispatch(getOneWatchlist(watchlist.id))
-    }, [watchlist, dispatch])
+        dispatch(getOneWatchlist(thisWatchlist.id))
+    }, [dispatch])
 
     // useEffect(() => {
     //     if (thisWatchlist) {
@@ -25,11 +25,11 @@ export default function EditWatchlist({ setShowModal, watchlist }) {
     // }, [thisWatchlist])
 
     useEffect(() => {
-        if(watchlist) {
-            setWatchlistName(watchlist.name)
-            setDescription(watchlist.description)
+        if(thisWatchlist) {
+            setWatchlistName(thisWatchlist.name)
+            setDescription(thisWatchlist.description)
         }
-    }, [watchlist])
+    }, [thisWatchlist])
 
     const info = {
         name: watchlistName,
@@ -39,7 +39,7 @@ export default function EditWatchlist({ setShowModal, watchlist }) {
     const onSubmit = async (e) => {
         e.preventDefault()
 
-        let editedWatchlist = await dispatch(editOneWatchlist(info, watchlist.id))
+        let editedWatchlist = await dispatch(editOneWatchlist(info, thisWatchlist.id))
 
         if (editedWatchlist.errors) {
             await setErrors(editedWatchlist.errors)

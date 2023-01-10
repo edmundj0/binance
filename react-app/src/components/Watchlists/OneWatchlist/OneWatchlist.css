@@ -1,0 +1,41 @@
+.remove-from-watchlist-button {
+    background-color: #d9534f;
+    padding: 3px 6px;
+    border: none;
+    color: #fff;
+}
+
+.watchlist-settings-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.edit-watchlist-button {
+    background-color: lightgray;
+    color: #1e2026;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-right: 6px;
+    padding-left: 6px;
+
+}
+
+.edit-watchlist-button:hover {
+    border: 1px solid #f0b90b;
+}
+
+.delete-watchlist-button {
+    background-color: rgb(226, 88, 88);
+    border-radius: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-right: 6px;
+    padding-left: 6px;
+}
+
+.delete-watchlist-button:hover {
+    background-color: #CF6679;
+}

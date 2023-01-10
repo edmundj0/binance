@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWatchlistCoins, removeCoinFromWatchlist } from "../../../store/watchlist";
+import "./OneWatchlist.css"
 
 export default function WatchlistCoinsList({ watchlist }) {
     const dispatch = useDispatch()
@@ -19,7 +20,7 @@ export default function WatchlistCoinsList({ watchlist }) {
     //     watchlistContainer.current = watchlistContainer.current.slice(0, watchlistCoinsArr.length)
     // }, [watchlistCoinsArr.length])
 
-    
+
 
     //hide watchlist coins on click, except for the container with the watchlist info
     useEffect(() => {
@@ -32,7 +33,7 @@ export default function WatchlistCoinsList({ watchlist }) {
 
 
         const closeWatchlistCoins = (e) => {
-            if(!watchlistContainer || !watchlistContainer.current.contains(e.target)) setShowWatchlistCoins(false)
+            if(!watchlistContainer || !watchlistContainer.current || !watchlistContainer.current.contains(e.target)) setShowWatchlistCoins(false)
         }
 
         // const doNotCloseWatchlistCoins = (e) => {
@@ -94,7 +95,7 @@ export default function WatchlistCoinsList({ watchlist }) {
                         return (<div key={`watchlistcoin ${coin.id}`}>
                             {coin.name} {coinPrices[`${coin.symbol}USD`]}
                             {/*prices are saved as (coin.symbol)USD  */}
-                            <button onClick={() => dispatch(removeCoinFromWatchlist({symbol: coin.symbol}, watchlist.id))}>x</button>
+                            <button onClick={() => dispatch(removeCoinFromWatchlist({symbol: coin.symbol}, watchlist.id))} className='remove-from-watchlist-button'>x</button>
                         </div>)
                     })}
                 </div>

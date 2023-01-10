@@ -105,20 +105,7 @@ export default function Dashboard() {
                     })}
                 </div>
 
-                <div className="page-small-title">Your Watchlists
-                    <CreateWatchlistModal />
-                </div>
-                <div>
-                    {Object.values(allWatchlists).map((watchlist) => {
-                        return (
-                            <div key={`watchlist ${watchlist.id}`}><NavLink to={`/watchlists/${watchlist.id}`}>{watchlist.name}</NavLink>
-                            <EditWatchlistModal watchlist={watchlist} />
-                            <button onClick={()=> dispatch(deleteWatchlist(watchlist.id))}>Delete</button>
-                            <WatchlistCoinsList watchlist={watchlist} />
-                            </div>
-                        )
-                    })}
-                </div>
+
             </div>
             <div className="dashboard-right-container">
                 <div className="deposits-entire-container">
@@ -128,6 +115,23 @@ export default function Dashboard() {
                     </p>
                     <div>
                         <DepositsModal />
+                    </div>
+                </div>
+
+                <div className="watchlists-entire-container">
+                    <div className="watchlists-header-text">Your Watchlists
+                        <CreateWatchlistModal />
+                    </div>
+                    <div>
+                        {Object.values(allWatchlists).map((watchlist) => {
+                            return (
+                                <div key={`watchlist ${watchlist.id}`} className='each-watchlist-container'><NavLink to={`/watchlists/${watchlist.id}`}>{watchlist.name}</NavLink>
+                                    {/* <EditWatchlistModal watchlist={watchlist} /> */}
+                                    {/* <button onClick={() => dispatch(deleteWatchlist(watchlist.id))}>Delete</button> */}
+                                    <WatchlistCoinsList watchlist={watchlist} />
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>
