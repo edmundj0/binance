@@ -14,14 +14,17 @@ export default function WatchlistCoinsList({ watchlist }) {
     const allCoins = useSelector(state => state.coins.allCoins)
     const allCoinsArr = Object.values(allCoins)
 
+
     // useEffect(() => {
-    //     watchlistContainer.current = watchlistContainer.current.slice(0, watchlistCoinsArr?.length)
-    // }, [watchlistCoinsArr])
+    //     watchlistContainer.current = watchlistContainer.current.slice(0, watchlistCoinsArr.length)
+    // }, [watchlistCoinsArr.length])
+
+    
 
     //hide watchlist coins on click, except for the container with the watchlist info
     useEffect(() => {
 
-        if (!showWatchlistCoins) {
+        if (!showWatchlistCoins) { //only run logic in useEffect if showWatchlistCoins is true
             return
         }
 
@@ -33,7 +36,7 @@ export default function WatchlistCoinsList({ watchlist }) {
         }
 
         // const doNotCloseWatchlistCoins = (e) => {
-        //     e.stopPropagation() //prevent close when click is in watchlist container
+        //     e.stopPropagation() //prevent close when click is in watchlist container; however, button onClick won't fire
         // }
 
 
@@ -42,6 +45,7 @@ export default function WatchlistCoinsList({ watchlist }) {
         // if (watchlistContainer && watchlistContainer.current) {
         //     const watchlistListener = watchlistContainer.current.addEventListener('click', doNotCloseWatchlistCoins)
         // }
+
 
         return () => {
             document.removeEventListener('click', closeWatchlistCoins)
@@ -85,14 +89,12 @@ export default function WatchlistCoinsList({ watchlist }) {
             }}>show details</button>
             {showWatchlistCoins && (
                 <div ref={watchlistContainer} className='watchlist-coins-container'>
-                    {watchlistCoinsArr && Object.values(watchlistCoinsArr).map((coin, i) => {
+                    {watchlistCoinsArr && watchlistCoinsArr.length ? null : <div>Empty Watchlist</div>}
+                    {watchlistCoinsArr && Object.values(watchlistCoinsArr).map(coin => {
                         return (<div key={`watchlistcoin ${coin.id}`}>
                             {coin.name} {coinPrices[`${coin.symbol}USD`]}
                             {/*prices are saved as (coin.symbol)USD  */}
-                            <button onClick={() => {
-                                dispatch(removeCoinFromWatchlist())
-                                return setShowWatchlistCoins(true)
-                            }}>x</button>
+                            <button onClick={() => dispatch(removeCoinFromWatchlist({symbol: coin.symbol}, watchlist.id))}>x</button>
                         </div>)
                     })}
                 </div>
