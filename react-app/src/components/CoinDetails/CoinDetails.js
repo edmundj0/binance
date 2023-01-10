@@ -4,6 +4,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { getOneCoin } from "../../store/coin";
 import BtcChart from "../ChartTest";
 import TradeCoin from "../TradeCoin/TradeCoin";
+import AddCoinToWatchlistModal from "../Watchlists/AddCoinToWatchlistModal";
 import CoinChart from "./CoinChart";
 import "./CoinDetails.css"
 
@@ -19,6 +20,8 @@ export default function CoinDetails() {
     const [volume, setVolume] = useState("")
     const [askPrice, setAskPrice] = useState("")
     const [bidPrice, setBidPrice] = useState("")
+
+    const [showModal, setShowModal] = useState(false) //for add coin to watchlist
 
     const [errors, setErrors] = useState([])
     const binanceSocket = useRef(null)
@@ -109,8 +112,11 @@ export default function CoinDetails() {
 
     return (
         <div className="coin-details-entire-page">
-            <div className="page-main-header">{thisCoin.name}</div>
-            <div className="page-small-title">{thisCoin.symbol}/USD ${price}</div>
+            <div className="page-main-header">{thisCoin.name}
+            </div>
+            <div className="page-small-title">{thisCoin.symbol}/USD ${price}
+                <div><AddCoinToWatchlistModal thisCoin={thisCoin} showModal={showModal} setShowModal={setShowModal} /></div>
+            </div>
             <div className="coin-detailed-data-container">
                 <div className="detail-inner-container"><div className="detail-title">Price</div><div>${price}</div></div>
                 <div className="detail-inner-container"><div className="detail-title">24h Change</div><div className={priceChangePercent >= 0 ? "price-change-positive" : "price-change-negative"}>{priceChangePercent}%</div></div>
@@ -118,7 +124,7 @@ export default function CoinDetails() {
                 <div className="detail-inner-container"><div className="detail-title">24h Low</div><div>{lowPrice}</div></div>
                 <div className="detail-inner-container"><div className="detail-title">24h Volume</div><div>{volume}</div></div>
             </div>
-            <CoinChart thisCoin={thisCoin} price={price} />
+            <CoinChart thisCoin={thisCoin} price={price} showModal={showModal} />
             {user ? <TradeCoin thisCoin={thisCoin} price={price} /> : <NavLink to="/login" exact={true}>Login to Trade</NavLink>}
             {/* <div className="page-small-title">Key Statistics</div> */}
         </div>

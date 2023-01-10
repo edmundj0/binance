@@ -4,10 +4,14 @@ import { NavLink, useHistory } from "react-router-dom"
 import { getAllCoins } from "../../store/coin"
 import { deletePaymentMethod, getAllPaymentMethods } from "../../store/paymentMethod"
 import { getAllPortfolios } from "../../store/portfolio"
+import { getAllWatchlists, deleteWatchlist } from "../../store/watchlist"
 import CreatePaymentMethodModal from "../PaymentMethods/CreatePaymentMethodModal"
 import DepositsModal from "../PaymentMethods/DepositsModal"
 import EditPaymentMethodModal from "../PaymentMethods/EditPaymentMethodModal"
 import CreatePortfolioModal from "../Portfolio/CreatePortfolioModal"
+import CreateWatchlistModal from "../Watchlists/CreateWatchlistModal"
+import EditWatchlistModal from "../Watchlists/EditWatchlistModal"
+import WatchlistCoinsList from "../Watchlists/OneWatchlist/WatchlistCoinsList"
 import "./Dashboard.css"
 
 export default function Dashboard() {
@@ -19,8 +23,9 @@ export default function Dashboard() {
     let allPaymentMethods = useSelector(state => state.paymentMethods.allPaymentMethods)
 
     let allCoins = useSelector(state => state.coins.allCoins)
+    let allWatchlists = useSelector(state => state.watchlists.allUserWatchlists)
 
-
+    //throw all of these into one useEffect
     useEffect(() => {
         dispatch(getAllPortfolios())
     }, [dispatch])
@@ -31,6 +36,10 @@ export default function Dashboard() {
 
     useEffect(() => {
         dispatch(getAllCoins())
+    }, [dispatch])
+
+    useEffect(() => {
+        dispatch(getAllWatchlists())
     }, [dispatch])
 
     const tradeRouteChange = (coin) => {
@@ -91,6 +100,21 @@ export default function Dashboard() {
                                     <EditPaymentMethodModal method={method} />
                                     <button onClick={() => dispatch(deletePaymentMethod(method.id))} className="delete-payment-method-button">Delete</button>
                                 </div>
+                            </div>
+                        )
+                    })}
+                </div>
+
+                <div className="page-small-title">Your Watchlists
+                    <CreateWatchlistModal />
+                </div>
+                <div>
+                    {Object.values(allWatchlists).map((watchlist) => {
+                        return (
+                            <div key={`watchlist ${watchlist.id}`}><NavLink to={`/watchlists/${watchlist.id}`}>{watchlist.name}</NavLink>
+                            <EditWatchlistModal watchlist={watchlist} />
+                            <button onClick={()=> dispatch(deleteWatchlist(watchlist.id))}>Delete</button>
+                            <WatchlistCoinsList watchlist={watchlist} />
                             </div>
                         )
                     })}
