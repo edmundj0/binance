@@ -1,10 +1,10 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { NavLink, useHistory } from "react-router-dom"
 import { getAllCoins } from "../../store/coin"
 import { deletePaymentMethod, getAllPaymentMethods } from "../../store/paymentMethod"
 import { getAllPortfolios } from "../../store/portfolio"
-import { getAllWatchlists, deleteWatchlist } from "../../store/watchlist"
+import { getAllWatchlists, deleteWatchlist, getWatchlistCoins } from "../../store/watchlist"
 import CreatePaymentMethodModal from "../PaymentMethods/CreatePaymentMethodModal"
 import DepositsModal from "../PaymentMethods/DepositsModal"
 import EditPaymentMethodModal from "../PaymentMethods/EditPaymentMethodModal"
@@ -105,20 +105,7 @@ export default function Dashboard() {
                     })}
                 </div>
 
-                <div className="page-small-title">Your Watchlists
-                    <CreateWatchlistModal />
-                </div>
-                <div>
-                    {Object.values(allWatchlists).map((watchlist) => {
-                        return (
-                            <div key={`watchlist ${watchlist.id}`}><NavLink to={`/watchlists/${watchlist.id}`}>{watchlist.name}</NavLink>
-                            <EditWatchlistModal watchlist={watchlist} />
-                            <button onClick={()=> dispatch(deleteWatchlist(watchlist.id))}>Delete</button>
-                            <WatchlistCoinsList watchlist={watchlist} />
-                            </div>
-                        )
-                    })}
-                </div>
+
             </div>
             <div className="dashboard-right-container">
                 <div className="deposits-entire-container">
@@ -128,6 +115,26 @@ export default function Dashboard() {
                     </p>
                     <div>
                         <DepositsModal />
+                    </div>
+                </div>
+
+                <div className="watchlists-entire-container">
+                    <div className="watchlists-header-text">Your Watchlists
+                        <CreateWatchlistModal />
+                    </div>
+                    <div>
+                        {Object.values(allWatchlists).map((watchlist) => {
+                            return (
+                                <div key={`watchlist ${watchlist.id}`} className="watchlist-row">
+                                    <div className='each-watchlist-name'>
+                                        <NavLink to={`/watchlists/${watchlist.id}`} style={{ textDecoration: 'none' }} className="watchlist-navlink">{watchlist.name}</NavLink>
+                                        {/* <EditWatchlistModal watchlist={watchlist} /> */}
+                                        {/* <button onClick={() => dispatch(deleteWatchlist(watchlist.id))}>Delete</button> */}
+                                    </div>
+                                    <WatchlistCoinsList watchlist={watchlist} />
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>

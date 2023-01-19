@@ -19,7 +19,7 @@
     margin-top: 30px;
     margin-bottom: 30px;
     text-align: center;
-    color: rgba(255,255,255,0.95);
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .page-small-title {
@@ -124,13 +124,13 @@
 
 .deposits-header-text {
     margin-bottom: 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.87);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.87);
     font-size: 20px;
     color: lightgray;
 }
 
 .deposits-description-text {
-    color: rgba(255,255,255,0.60);
+    color: rgba(255, 255, 255, 0.60);
     font-size: 12px;
     margin-bottom: 20px;
 }
@@ -148,7 +148,7 @@
 }
 
 .modal-header-text {
-    background-color: rgba(0,0,0,0.95);
+    background-color: rgba(0, 0, 0, 0.95);
     color: white;
     padding-top: 25px;
     padding-bottom: 25px;
@@ -185,4 +185,55 @@
 
 .form-submit-button:hover {
     background-color: #f0bb0ba7;
+}
+
+
+.watchlists-entire-container {
+    margin-top: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    border: 2px solid darkgray;
+    background-color: black;
+
+}
+
+.each-watchlist-name {
+    padding: 10px 5px;
+    /* display: flex; */
+    display: inline;
+    justify-content: space-around;
+    font-size: 18px;
+
+}
+
+.watchlist-navlink:hover {
+    color: #f0b90b;
+}
+
+.watchlists-header-text {
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.87);
+    font-size: 20px;
+    color: lightgray;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.watchlist-row {
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid gray;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.watchlist-row:last-child {
+    border-bottom: none;
 }
