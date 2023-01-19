@@ -60,8 +60,29 @@
     margin-bottom: 10px;
 }
 
-.watchlist-each-coin {
+.watchlist-each-coin-container {
     margin-top: 10px;
     margin-bottom: 10px;
     font-size: 14px;
+
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.watchlist-coin-name-price {
+    color: lightgray;
+}
+
+
+.watchlist-coins-table-container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 80%;
+
+    margin-top: 20px;
+    margin-bottom: 80px;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 10px;
+    border-radius: 20px;
 }

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { deleteWatchlist, getOneWatchlist } from "../../../store/watchlist";
 import EditWatchlistModal from "../EditWatchlistModal";
+import CoinDataTable from "../../CoinDetails/CoinDataTable";
 
 export default function OneWatchlist({ watchlist }) {
     const dispatch = useDispatch()
@@ -11,6 +12,9 @@ export default function OneWatchlist({ watchlist }) {
     const { watchlistId } = useParams()
 
     const thisWatchlist = useSelector(state => state.watchlists.oneWatchlist)
+
+    const thisWatchlistCoinsArr = thisWatchlist?.Coins //need "?" because thisWatchlist can be undefined first render
+    console.log(thisWatchlistCoinsArr)
 
     const deleteThisWatchlist = async (e) => {
         let deletingWatchlist = await dispatch(deleteWatchlist(watchlistId))
@@ -40,7 +44,29 @@ export default function OneWatchlist({ watchlist }) {
                     <button onClick={() => dispatch(deleteThisWatchlist)} className="delete-watchlist-button">Delete</button>
                 </div>
             </div>
-            Under development :D
+            <div className="watchlist-coins-table-container">
+            <table className="home-page-table">
+                <thead>
+                    <tr className="table-homepage-tr">
+                    <th className='table-homepage-th'>Cryptocurrency</th>
+                    <th className='table-homepage-th'>Price</th>
+                    <th className='table-homepage-th'>24h % Change</th>
+                    </tr>
+                </thead>
+                {thisWatchlistCoinsArr && thisWatchlistCoinsArr.map((coin) => {
+                    return (
+                        <tr key={`watchlistcoin ${coin.id}`} className='table-homepage-tr'>
+                            <CoinDataTable coin={coin} />
+                        </tr>
+                    )
+                })}
+
+            </table>
+            {/* {thisWatchlist && (thisWatchlist.Coins.length ?
+                <>
+                </>
+            )} */}
+            </div>
         </div>
     )
 }

@@ -88,8 +88,8 @@ export default function WatchlistCoinsList({ watchlist }) {
                     dispatch(getWatchlistCoins(watchlist.id))
                     setShowWatchlistCoins(!showWatchlistCoins)
                     return
-                    }} className="show-details-button">{showWatchlistCoins ? <i class="fa-solid fa-angle-up"></i> : <i class="fa-solid fa-angle-down"></i>}
-                    </button>
+                }} className="show-details-button">{showWatchlistCoins ? <i className="fa-solid fa-angle-up"></i> : <i className="fa-solid fa-angle-down"></i>}
+                </button>
             </div>
             <div>
 
@@ -98,10 +98,11 @@ export default function WatchlistCoinsList({ watchlist }) {
                         {watchlistCoinsArr && watchlistCoinsArr.length ? null : <div>Empty Watchlist</div>}
                         {watchlistCoinsArr && Object.values(watchlistCoinsArr).map(coin => {
                             return (
-                                <div key={`watchlistcoin ${coin.id}`} className="watchlist-each-coin">
-                                    {coin.name} {coinPrices[`${coin.symbol}USD`]}
+                                <div key={`watchlistcoin ${coin.id}`} className="watchlist-each-coin-container">
+                                    <div className="watchlist-coin-name-price">{coin.name} {coinPrices[`${coin.symbol}USD`]}</div>
                                     {/*prices are saved as (coin.symbol)USD  */}
                                     <button onClick={() => dispatch(removeCoinFromWatchlist({ symbol: coin.symbol }, watchlist.id))} className='remove-from-watchlist-button'>x</button>
+
                                 </div>
                             )
                         })}
