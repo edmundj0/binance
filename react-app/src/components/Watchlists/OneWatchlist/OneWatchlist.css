@@ -39,3 +39,29 @@
 .delete-watchlist-button:hover {
     background-color: #CF6679;
 }
+
+.show-details-button-container {
+    display: inline;
+
+}
+
+.show-details-button {
+    padding: 2px 20%;
+    background-color: black;
+    color: white;
+}
+
+.show-details-button:hover {
+    color: #f0b90b;
+}
+
+.watchlist-coins-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.watchlist-each-coin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}

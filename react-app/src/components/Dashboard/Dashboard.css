@@ -199,8 +199,17 @@
 
 }
 
-.each-watchlist-container {
+.each-watchlist-name {
     padding: 10px 5px;
+    /* display: flex; */
+    display: inline;
+    justify-content: space-around;
+    font-size: 18px;
+
+}
+
+.watchlist-navlink:hover {
+    color: #f0b90b;
 }
 
 .watchlists-header-text {
@@ -212,5 +221,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+}
+
+.watchlist-row {
+    margin-top: 20px;
+    margin-bottom: 20px;
 
 }
