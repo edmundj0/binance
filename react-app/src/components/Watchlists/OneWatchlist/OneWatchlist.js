@@ -45,24 +45,25 @@ export default function OneWatchlist({ watchlist }) {
                 </div>
             </div>
             <div className="watchlist-coins-table-container">
-            <table className="home-page-table">
-                <thead>
-                    <tr className="table-homepage-tr">
-                    <th className='table-homepage-th'>Cryptocurrency</th>
-                    <th className='table-homepage-th'>Price</th>
-                    <th className='table-homepage-th'>24h % Change</th>
-                    </tr>
-                </thead>
-                {thisWatchlistCoinsArr && thisWatchlistCoinsArr.map((coin) => {
-                    return (
-                        <tr key={`watchlistcoin ${coin.id}`} className='table-homepage-tr'>
-                            <CoinDataTable coin={coin} />
+                <table className="home-page-table">
+                    <thead>
+                        <tr className="table-homepage-tr">
+                            <th className='table-homepage-th'>Cryptocurrency</th>
+                            <th className='table-homepage-th'>Price</th>
+                            <th className='table-homepage-th'>24h % Change</th>
                         </tr>
-                    )
-                })}
-
-            </table>
-            {/* {thisWatchlist && (thisWatchlist.Coins.length ?
+                    </thead>
+                    <tbody>
+                        {thisWatchlistCoinsArr && thisWatchlistCoinsArr.map((coin) => {
+                            return (
+                                <tr key={`watchlistcoin ${coin.id}`} className='table-homepage-tr'>
+                                    <CoinDataTable coin={coin} />
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+                {/* {thisWatchlist && (thisWatchlist.Coins.length ?
                 <>
                 </>
             )} */}
