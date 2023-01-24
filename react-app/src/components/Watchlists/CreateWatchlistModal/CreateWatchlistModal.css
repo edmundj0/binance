@@ -1,0 +1,20 @@
+#new-watchlist-button {
+    border: none;
+    background-color: #F0B90B;
+    font-size: 14px;
+    color: #1E2026;
+    line-height: 20px;
+
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-radius: 5px;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#new-watchlist-button:hover {
+    background-color: #f0bb0ba7;
+}

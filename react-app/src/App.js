@@ -14,6 +14,7 @@ import OnePortfolio from './components/Portfolio/OnePortfolio/OnePortfolio';
 import CoinDetails from './components/CoinDetails/CoinDetails';
 import HomePage from './components/HomePage/HomePage';
 import AllMarketData from './components/AllMarketData/AllMarketData';
+import OneWatchlist from './components/Watchlists/OneWatchlist/OneWatchlist';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -52,6 +53,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path="/portfolios/:portfolioId" exact={true}>
           <OnePortfolio />
+        </ProtectedRoute>
+        <ProtectedRoute path="/watchlists/:watchlistId" exact={true}>
+          <OneWatchlist />
         </ProtectedRoute>
         <Route path="/coins/:coinId" exact={true}>
             <CoinDetails />
