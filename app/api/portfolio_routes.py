@@ -220,7 +220,7 @@ def all_assets_of_portfolio(portfolio_id):
         #     # assetsLst[transaction.coin_id]["quantity"] += transaction.quantity
         #     print(assetsDict.get(transaction.coin_id), 'plzzzz')
 
-    print(assetsDict.items())
+    # print(assetsDict.items())
     return {"Assets": [item for item in assetsDict.values()]}
 
 

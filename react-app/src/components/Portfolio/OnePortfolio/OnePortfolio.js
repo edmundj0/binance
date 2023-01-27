@@ -16,7 +16,6 @@ export default function OnePortfolio() {
     // const [portfolioTransactions, setPortfolioTransactions] = useState("")
 
     const thisPortfolio = useSelector(state => state.portfolios.onePortfolio)
-    console.log(thisPortfolio, 'thisportfolio')
 
 
 
