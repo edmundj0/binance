@@ -14,7 +14,7 @@ export default function OneWatchlist({ watchlist }) {
     const thisWatchlist = useSelector(state => state.watchlists.oneWatchlist)
 
     const thisWatchlistCoinsArr = thisWatchlist?.Coins //need "?" because thisWatchlist can be undefined first render
-    console.log(thisWatchlistCoinsArr)
+
 
     const deleteThisWatchlist = async (e) => {
         let deletingWatchlist = await dispatch(deleteWatchlist(watchlistId))

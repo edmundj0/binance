@@ -26,7 +26,7 @@ export default function OnePortfolioChart({ thisPortfolio }) {
                 .then((data) => {
                     // setAssets(data.Assets)
                     let assets = data.Assets
-                    console.log(Math.floor(new Date().getTime() / 1000), 'date', new Date().getTime())
+                    // console.log(Math.floor(new Date().getTime() / 1000), 'date', new Date().getTime())
 
                     // if (isMounted.current) {
 

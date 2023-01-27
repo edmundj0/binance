@@ -29,7 +29,6 @@ export default function WatchlistCoinsList({ watchlist }) {
             return
         }
 
-        console.log(watchlistContainer.current, 'watchlist container')
 
 
         const closeWatchlistCoins = (e) => {
@@ -61,7 +60,7 @@ export default function WatchlistCoinsList({ watchlist }) {
     //load coin prices into coinPrices state
     //minimize fetches but nested for loop complexity
     useEffect(() => {
-        console.log('fetchingggggggggggg')
+
         fetch(`https://api.binance.us/api/v3/ticker/price`)
             .then((response) => {
                 if (response.ok) {
@@ -74,7 +73,7 @@ export default function WatchlistCoinsList({ watchlist }) {
                     if (!(`${coin.symbol}USD` in coinPrices)) {
                         const obj = dataArr.find(objInDataArr => objInDataArr.symbol === `${coin.symbol}USD`)
                         coinPrices[obj.symbol] = obj.price
-                        console.log(coinPrices, 'inside the loop')
+                        // console.log(coinPrices, 'inside the loop')
                         setCoinPrices(coinPrices)
                     }
                 }

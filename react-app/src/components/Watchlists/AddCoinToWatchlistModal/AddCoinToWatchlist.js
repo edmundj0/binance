@@ -29,7 +29,7 @@ export default function AddCoinToWatchlist({ setShowModal, thisCoin }) {
         let addedCoin = await dispatch(addCoinToWatchlist(info, watchlistId))
 
         if (addedCoin.errors) {
-            console.log('ADDED COIN ERROR')
+            // console.log('ADDED COIN ERROR')
             await setErrors(addedCoin.errors)
         }
         else {

@@ -84,7 +84,7 @@ export default function CoinDetails() {
     //constant update price and % change
     useEffect(() => {
         binanceSocket.current = new WebSocket(`wss://stream.binance.us:9443/ws/${thisCoin?.symbol?.toLowerCase()}usd@ticker`)
-        console.log(binanceSocket)
+        // console.log(binanceSocket)
         binanceSocket.current.onmessage = function (event) {
             console.log(event.data, binanceSocket)
 

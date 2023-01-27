@@ -19,8 +19,6 @@ export default function TradeCoin({ thisCoin, price }) {
     let userPortfolios = useSelector(state => state.portfolios)
     let userPortfoliosArr = Object.values(userPortfolios?.allUserPortfolios)
 
-    console.log("portfolioId", portfolioId, 'currentPortfolio', currentPortfolio)
-    console.log(amount, 'amounttttttttttt')
 
     useEffect(() => {
         dispatch(getAllPortfolios())
@@ -75,8 +73,8 @@ export default function TradeCoin({ thisCoin, price }) {
         }
     }
 
-    console.log(info.action, 'info action', typeof info.quantity)
-    console.log(typeof portfolioAssetQuantity, 'portfolioAssetQuantity')
+    // console.log(info.action, 'info action', typeof info.quantity)
+    // console.log(typeof portfolioAssetQuantity, 'portfolioAssetQuantity')
     const onSubmit = async (e) => {
         e.preventDefault()
 

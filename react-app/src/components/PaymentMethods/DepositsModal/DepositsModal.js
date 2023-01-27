@@ -59,7 +59,6 @@ export default function Deposits({ setShowModal }) {
 
         //doesn't cause state change due to array
         await setErrors(err)
-        console.log(errors, 'errrrrrrrrrrrrrors', portfolioInfo)
 
         //guard so dispatch won't fire. errors state won't reflect errors from this cycle yet
         if (err.length) {
