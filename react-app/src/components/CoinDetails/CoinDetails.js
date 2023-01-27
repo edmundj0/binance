@@ -86,7 +86,7 @@ export default function CoinDetails() {
         binanceSocket.current = new WebSocket(`wss://stream.binance.us:9443/ws/${thisCoin?.symbol?.toLowerCase()}usd@ticker`)
         // console.log(binanceSocket)
         binanceSocket.current.onmessage = function (event) {
-            console.log(event.data, binanceSocket)
+            // console.log(event.data, binanceSocket)
 
             const msgObj = JSON.parse(event.data)
 
