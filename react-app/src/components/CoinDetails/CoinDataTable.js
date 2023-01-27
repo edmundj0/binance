@@ -34,7 +34,7 @@ export default function CoinDataTable({ coin }) {
     //update coin prices with websocket
     useEffect(() => {
         binanceSocket.current = new WebSocket(`wss://stream.binance.us:9443/ws/${coin?.symbol?.toLowerCase()}usd@ticker`)
-        console.log(binanceSocket)
+        // console.log(binanceSocket)
         binanceSocket.current.onmessage = function (event) {
 
             const msgObj = JSON.parse(event.data)

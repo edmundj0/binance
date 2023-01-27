@@ -19,7 +19,7 @@ export default function Dashboard() {
     const history = useHistory()
 
     let allPortfolios = useSelector(state => state.portfolios.allUserPortfolios)
-    console.log(allPortfolios, 'allPortfolios')
+    // console.log(allPortfolios, 'allPortfolios')
     let allPaymentMethods = useSelector(state => state.paymentMethods.allPaymentMethods)
 
     let allCoins = useSelector(state => state.coins.allCoins)

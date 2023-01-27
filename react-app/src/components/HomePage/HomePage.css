@@ -136,3 +136,8 @@ tr:last-child {
 .homepage-price-change-negative {
     color: #f84960;
 }
+
+#toast-small-text {
+    font-size: 14px;
+    font-style: italic;
+}

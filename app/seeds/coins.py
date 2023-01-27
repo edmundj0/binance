@@ -15,6 +15,8 @@ def seed_coins():
         name='Dogecoin', symbol='DOGE', description='Dogecoin (DOGE) is an open-source peer-to-peer cryptocurrency reported to be favored by all Shiba inus worldwide.')
     ltc = Coin(
         name='Litecoin', symbol='LTC', description='Litecoin is both an open-source blockchain and the native cryptocurrency (LTC) that operates on it as a peer-to-peer payment system. The Litecoin blockchain forked from the Bitcoin protocol in 2011 — two years after Bitcoin was introduced.')
+    avax = Coin(
+        name='Avalanche', symbol='AVAX', description='Avalanche is a next-generation blockchain network combining speed and scalability with smart contract compatibility. The native token of the Avalanche network is AVAX, which can be used to pay fees, transfer value, and help secure the network via staking.')
 
     db.session.add(btc)
     db.session.add(eth)
@@ -22,6 +24,7 @@ def seed_coins():
     db.session.add(sol)
     db.session.add(doge)
     db.session.add(ltc)
+    db.session.add(avax)
 
     db.session.commit()
 
