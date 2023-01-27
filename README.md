@@ -68,7 +68,7 @@ Other Technologies:
 ## Project Sections
 
 ### Splash Page (Homepage)
-![image](https://user-images.githubusercontent.com/102005831/211088361-b671d504-6c24-4f08-85c9-bd2eb5c8491c.png)
+![splashpage_gif](https://user-images.githubusercontent.com/102005831/215221376-b2f1714a-5fb9-425e-9a89-debd6229eea3.gif)
 
 ### Login and SignUp
 ![image](https://user-images.githubusercontent.com/102005831/211088572-35a0bc69-5ce1-40d4-bbd8-f9ef68c8ed2f.png)
