@@ -6,15 +6,34 @@ import githubIcon from '../../assets/githubLogo.png'
 import linkedInLogo from '../../assets/linkedinLogo.png'
 import { getAllCoins } from '../../store/coin'
 import CoinDataTable from '../CoinDetails/CoinDataTable'
+import { toast } from 'react-toastify'
 import './HomePage.css'
 
 export default function HomePage() {
     const dispatch = useDispatch()
-    let allCoins = useSelector(state => state.coins.allCoins)
+    const allCoins = useSelector(state => state.coins.allCoins)
+    const currentUser = useSelector(state => state.session.user)
 
     useEffect(() => {
         dispatch(getAllCoins())
     }, [dispatch])
+
+    useEffect(() => {
+
+        if (!currentUser) {
+            toast(<div>Welcome 👋! Please select  "Login as Demo User" to experiment with all features, without creating an account! <br /> <br></br> <span id="toast-small-text"> - ❤️ Edmund (Developer)</span></div>, {
+                position: "top-left",
+                autoClose: 10000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            })
+        }
+
+    }, [])
 
 
     return (
@@ -47,13 +66,13 @@ export default function HomePage() {
                         </tr>
                     </thead>
                     <tbody>
-                    {allCoins && Object.values(allCoins).map((coin) => {
-                        return (
-                            <tr key={`coins ${coin.id}`} className='table-homepage-tr'>
-                                <CoinDataTable coin={coin} />
-                            </tr>
-                        )
-                    })}
+                        {allCoins && Object.values(allCoins).map((coin) => {
+                            return (
+                                <tr key={`coins ${coin.id}`} className='table-homepage-tr'>
+                                    <CoinDataTable coin={coin} />
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
             </div>

@@ -15,13 +15,15 @@ import CoinDetails from './components/CoinDetails/CoinDetails';
 import HomePage from './components/HomePage/HomePage';
 import AllMarketData from './components/AllMarketData/AllMarketData';
 import OneWatchlist from './components/Watchlists/OneWatchlist/OneWatchlist';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    (async() => {
+    (async () => {
       await dispatch(authenticate());
       setLoaded(true);
     })();
@@ -33,6 +35,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ToastContainer position="top-right" />
       <NavBar />
       <Switch>
         <Route path='/login' exact={true}>
@@ -42,7 +45,7 @@ function App() {
           <SignUpForm />
         </Route>
         <ProtectedRoute path='/users' exact={true} >
-          <UsersList/>
+          <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
@@ -58,7 +61,7 @@ function App() {
           <OneWatchlist />
         </ProtectedRoute>
         <Route path="/coins/:coinId" exact={true}>
-            <CoinDetails />
+          <CoinDetails />
         </Route>
         <Route path="/markets" exact={true}>
           <AllMarketData />
