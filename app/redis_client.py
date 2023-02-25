@@ -27,6 +27,8 @@ def on_message(ws, message):
     key = f"{symbol}_{timestamp}"
     redis_client.set(key, price)
 
+    redis_client.expire(key, 5)
+
 def on_close(ws):
     print('Websocket closed')
 
