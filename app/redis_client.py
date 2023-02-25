@@ -17,9 +17,11 @@ except redis.exceptions.ConnectionError as e:
     print(f'Unable to connect to Redis: {e}')
     # raise RedisConnectionError(f'Unable to connect to Redis: {e}')
 
+ws = None
 
 def on_message(ws, message):
     message = json.loads(message)
+    print(message)
     symbol = message['s']
     price = message['c']
     timestamp = message['E']
@@ -39,7 +41,13 @@ websocket_url = "wss://stream.binance.us:9443/ws/"
 coin_symbol = "BTC"
 
 
+
 def start_websocket():
+    global ws
+
+    if ws:
+        ws.close()
+
     ws = websocket.WebSocketApp(
         websocket_url + f"{coin_symbol.lower()}usd@ticker",
         on_open = on_open,
@@ -49,5 +57,6 @@ def start_websocket():
 
     ws.run_forever()
 
-ws_thread = threading.Thread(target=start_websocket)
-ws_thread.start()
+if not ws:
+    ws_thread = threading.Thread(target=start_websocket)
+    ws_thread.start()
