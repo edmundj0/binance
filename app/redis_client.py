@@ -3,9 +3,7 @@ import redis
 import websocket
 import json
 import threading
-
-# class RedisConnectionError(Exception):
-#     pass
+from kafka import KafkaProducer, KafkaConsumer
 
 
 #Connect to Redis
@@ -15,9 +13,19 @@ try:
     response = redis_client.ping()
 except redis.exceptions.ConnectionError as e:
     print(f'Unable to connect to Redis: {e}')
-    # raise RedisConnectionError(f'Unable to connect to Redis: {e}')
 
-ws = None
+
+#Kafka producer
+producer = KafkaProducer(bootstrap_servers=['kafka:9092'])
+
+#Kafka consumer
+consumer = KafkaConsumer(
+    os.getenv('KAFKA_TOPIC'),
+    bootstrap_servers=['kafka:9092'],
+    auto_offset_reset='latest',
+    enable_auto_commit=True,
+    group_id="my-group"
+)
 
 def on_message(ws, message):
     message = json.loads(message)
@@ -43,10 +51,6 @@ coin_symbol = "BTC"
 
 
 def start_websocket():
-    global ws
-
-    if ws:
-        ws.close()
 
     ws = websocket.WebSocketApp(
         websocket_url + f"{coin_symbol.lower()}usd@ticker",
@@ -57,6 +61,6 @@ def start_websocket():
 
     ws.run_forever()
 
-if not ws:
-    ws_thread = threading.Thread(target=start_websocket)
-    ws_thread.start()
+
+ws_thread = threading.Thread(target=start_websocket)
+ws_thread.start()
