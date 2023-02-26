@@ -28,7 +28,7 @@ Mako = "==1.1.4"
 redis = "==3.5.3"
 eventlet = "==0.30.2"
 websocket-client = "==1.2.1"
-kafka-python = "==2.0.2"
+kafka-python = "*"
 
 [dev-packages]
 
