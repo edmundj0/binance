@@ -6,6 +6,8 @@ PROJECT LIVE SITE: https://binance-me.onrender.com/
 
 Binance.me is a simulated cryptocurrency trading, full stack web application that empowers users to buy and sell crypto with real time price data. This platform allows investors to make trades (buy and sell orders) without risking any real money. The project has a theme based off of popular cryptocurrency exchange, https://www.binance.us/. 
 
+![image](https://user-images.githubusercontent.com/102005831/222015038-9b47944a-5e98-4cbc-8c53-e3bc7e56d649.png)
+
 
 ## Technologies Used
 
