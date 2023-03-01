@@ -117,6 +117,11 @@ Other Technologies:
 
 
 
+
+## Database Schema
+
+![Database Schema](https://raw.githubusercontent.com/edmundj0/binance/dev/react-app/src/assets/database-schema.png)
+
 ## Test Results
 
 Loader.io - stress test performance of system under load
