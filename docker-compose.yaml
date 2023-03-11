@@ -1,0 +1,6 @@
+version: '3'
+services:
+  binance-me:
+    build: .
+    ports:
+      - "5000:5000"
