@@ -37,10 +37,9 @@ RUN npm install && \
 
 # Expose port 5000 for the Flask app
 EXPOSE 5000
-EXPOSE 3000
+# EXPOSE 3000
 
 WORKDIR /
 
 # Start the Flask app
 CMD ["flask", "run", "--host", "0.0.0.0", "--port", "5000"]
-
