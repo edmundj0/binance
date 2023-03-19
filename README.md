@@ -35,8 +35,22 @@ Other Technologies:
 
 
 
-## Getting started
-1. Clone this repository (only this branch)
+## Getting Started
+
+Clone the repo and run locally using docker compose
+
+```
+git clone https://github.com/edmundj0/binance.git && cd binance
+docker-compose up
+```
+
+----- OR -----
+
+1. Clone this repository
+
+```
+git clone https://github.com/edmundj0/binance.git && cd binance
+```
 
 2. Install dependencies
 
