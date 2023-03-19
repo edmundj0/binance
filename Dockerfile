@@ -20,7 +20,7 @@ COPY . /
 
 # Create and set environment variables
 RUN touch .env && \
-    echo "SECRET_KEY=lkasjdf09ajsdkfljalsiorj12n3490re9485309irefvn,u90818734902139489230" >> .env && \
+    echo "SECRET_KEY=placeholder" >> .env && \
     echo "DATABASE_URL=sqlite:///dev.db" >> .env && \
     echo "SCHEMA=flask_schema" >> .env
 
