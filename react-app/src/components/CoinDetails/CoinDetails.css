@@ -47,3 +47,23 @@
 .view-coin-button:hover {
     background-color: #f0bb0bbb;
 }
+
+.chart-time-intervals-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.chart-time-each-interval {
+    cursor: pointer;
+    padding: 10px 5px;
+}
+
+/* .chart-time-each-interval:hover {
+    color: #F0B90B;
+} */
+
+.chart-time-each-interval-current {
+    padding: 10px 5px;
+    background-color: #2B2f36;
+}
