@@ -123,8 +123,7 @@ export default function CoinChart({ price, thisCoin, showModal }) { //pass in sh
         <div className="coin-details-chart-container">
             <div ref={chartContainerRef} className={showModal ? 'coin-details-chart-chart-modal-true' : 'coin-details-chart-chart'}></div>
         </div>
-        <CoinChartTimeIntervals setTimeInSecs={setTimeInSecs} chartContainerRef={chartContainerRef} setTimeInterval={setTimeInterval} />
-        <div>{timeInSecs}</div>
+        <CoinChartTimeIntervals setTimeInSecs={setTimeInSecs} chartContainerRef={chartContainerRef} setTimeInterval={setTimeInterval} timeInSecs={timeInSecs}/>
         </>
     )
 }
