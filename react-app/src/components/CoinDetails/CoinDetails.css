@@ -47,3 +47,9 @@
 .view-coin-button:hover {
     background-color: #f0bb0bbb;
 }
+
+.chart-time-intervals-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}

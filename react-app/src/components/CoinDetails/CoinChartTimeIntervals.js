@@ -3,7 +3,7 @@ export default function CoinChartTimeIntervals({ setTimeInSecs, chartContainerRe
     const timeOptions = [["60", "1m"], ["300", "5m"], ["900", "15m"], ["1800", "30m"], ["3600", "1h"], ["86400", "1d"], ["259200", "3d"]]
 
     return (
-        <div>
+        <div className="chart-time-intervals-container">
             {timeOptions.map(time => {
                 return (
                     <div key={`time ${time[0]}`} onClick={() => {
