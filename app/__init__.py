@@ -12,6 +12,7 @@ from .api.watchlist_routes import watchlist_routes
 from .api.payment_method_routes import payment_method_routes
 from .api.transaction_routes import transaction_routes
 from .api.coin_routes import coin_routes
+from .api.market_data_routes import market_data_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -38,6 +39,7 @@ app.register_blueprint(watchlist_routes, url_prefix="/api/watchlists")
 app.register_blueprint(payment_method_routes, url_prefix='/api/payment-methods')
 app.register_blueprint(transaction_routes, url_prefix='/api/transactions')
 app.register_blueprint(coin_routes, url_prefix='/api/coins')
+app.register_blueprint(market_data_routes, url_prefix='/api/market-data')
 db.init_app(app)
 Migrate(app, db)
 

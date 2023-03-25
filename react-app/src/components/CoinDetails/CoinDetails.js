@@ -7,6 +7,7 @@ import TradeCoin from "../TradeCoin/TradeCoin";
 import AddCoinToWatchlistModal from "../Watchlists/AddCoinToWatchlistModal";
 import CoinChart from "./CoinChart";
 import "./CoinDetails.css"
+import CoinOptions from "./CoinOptions/CoinOptions";
 
 
 export default function CoinDetails() {
@@ -127,6 +128,8 @@ export default function CoinDetails() {
             <CoinChart thisCoin={thisCoin} price={price} showModal={showModal} />
             {user ? <TradeCoin thisCoin={thisCoin} price={price} /> : <NavLink to="/login" exact={true}>Login to Trade</NavLink>}
             {/* <div className="page-small-title">Key Statistics</div> */}
+
+            <CoinOptions thisCoin={thisCoin} />
         </div>
     )
 
