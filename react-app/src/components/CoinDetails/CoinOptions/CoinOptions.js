@@ -24,18 +24,29 @@ export default function CoinOptions({ thisCoin }) {
                     throw response
                 })
                 .then((res) => {
-                    setData(res.data)
+                    setData(res.data.reverse())
                 })
 
 
         }
     }, [thisCoin])
 
+    useEffect(() => {
+        const optionsSocket = new WebSocket(`wss://api.ledgerx.com/ws`)
+        optionsSocket.onmessage = function (event) {
+            console.log(event)
+        }
+
+        return () => optionsSocket.close();
+    })
+
+
     return (
         <>
             <div>Options Data</div>
-            <div>{data.map(contract=> {
-                return (<>{contract.date_exercise}</>)
+            <div>{data.map(contract => {
+                return (
+                    <div key={contract.id}>{contract.date_exercise} ${contract.strike_price / 100}</div>)
             })}</div>
         </>
     )
