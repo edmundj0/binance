@@ -17,7 +17,7 @@ def options_market_data(coin_id):
         return {'errors': "Coin not found or is not available at this time"}
 
     headers = {'Accept': 'application/json'}
-    response = requests.get(f'https://api.ledgerx.com/trading/contracts?asset={coin.symbol}')
+    response = requests.get(f'https://api.ledgerx.com/trading/contracts?active=true&derivative_type=options_contract&asset={coin.symbol}')
     if response.ok:
         data = response.json()
         return data
