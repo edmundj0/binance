@@ -38,13 +38,25 @@ services:
 
 
   influxdb:
-  image: influxdb
-  container_name: influxdb
-  ports:
-    - "8086:8086"
-  volumes:
-    - influxdb-data:/var/lib/influxdb
-  restart: always
+    image: influxdb
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_HOST=influxdb
+      - INFLUXDB_USER=myuser
+      - INFLUXDB_PASSWORD=mypassword
+      - INFLUXDB_DATABASE=mydatabase
+
+      # - INFLUXDB_DB=database_name
+      # - INFLUXDB_ADMIN_ENABLED=true
+      # - INFLUXDB_ADMIN_USER=admin
+      # - INFLUXDB_ADMIN_PASSWORD=admin_password
+      # - INFLUXDB_USER=your_username
+      # - INFLUXDB_USER_PASSWORD=your_password
+    # volumes:
+    #   - influxdb-data:/var/lib/influxdb
+    restart: always
 
   redis-client:
     build:
@@ -58,3 +70,6 @@ services:
       kafka:
         condition: service_healthy
       # - redis
+
+# volumes:
+#   influxdb-data:

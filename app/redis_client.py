@@ -2,11 +2,13 @@ import os
 import redis
 import websocket
 import json
-import threading
+# import threading
 # from kafka.consumer import KafkaConsumer
 # from kafka.producer import KafkaProducer
 from kafka import KafkaProducer, KafkaConsumer
-from collections import deque
+# from collections import deque
+
+from influxdb import InfluxDBClient
 
 
 #Connect to Redis
@@ -31,6 +33,18 @@ consumer = KafkaConsumer(
     # group_id="my-group"
 )
 
+#influx db client
+
+influx_client = InfluxDBClient(
+    host=os.getenv('INFLUXDB_HOST'),
+    port=8086,
+    username=os.getenv('INFLUXDB_USER'),
+    password=os.getenv('INFLUXDB_PASSWORD'),
+    database=os.getenv('INFLUXDB_DATABASE')
+)
+
+
+
 #push ws messages into kafka
 def on_message(ws, message):
     message = json.loads(message)
@@ -52,6 +66,34 @@ def on_message(ws, message):
     redis_client.set(key,price)
 
     redis_client.expire(key, 30)
+
+
+    #influxdb write data point
+    json_body = [
+        {
+        "measurement": "btc_data",
+        "tags": {"symbol": symbol},
+        "time": timestamp,
+        "fields": {
+            "price_change": message['p'],
+            "price_change_percent": message['P'],
+            "open_price": message['o'],
+            "high_price": message['h'],
+            "low_price": message['l'],
+            "last_price": message['c'],
+            "weighted_average_price": message['w'],
+            "total_traded_base_asset_volume": message['v'],
+            "total_traded_quote_asset_volume": message['q'],
+            "statistics_open_time": message['O'],
+            "statistics_close_time": message['C'],
+            "first_trade_id": message['F'],
+            "last_trade_id": message['L'],
+            "total_number_of_trades": message['n']
+        }
+        }
+    ]
+
+    influx_client.write_points(json_body)
 
 
 
