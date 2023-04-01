@@ -1,8 +1,11 @@
 import { createChart, CrosshairMode } from "lightweight-charts"
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import CoinChartTimeIntervals from "./CoinChartTimeIntervals";
 
 export default function CoinChart({ price, thisCoin, showModal }) { //pass in showModal to set chart z index to -1 when true
     const chartContainerRef = useRef()
+    const [timeInSecs, setTimeInSecs] = useState("1800")
+    const [timeInterval, setTimeInterval] = useState("30m")
     const isMounted = useRef(false)
 
 
@@ -10,7 +13,14 @@ export default function CoinChart({ price, thisCoin, showModal }) { //pass in sh
 
         //chart only created after the first render(thisCoin is undefined, creating 2 charts with one error chart)
         if (isMounted.current) {
-            const chart = createChart(chartContainerRef.current, {
+
+            //remove old chart and create new chart on timeInterval state change
+            if (chartContainerRef.current.children[0]){
+                chartContainerRef.current.removeChild(chartContainerRef.current.children[0])
+            }
+
+
+             const chart = createChart(chartContainerRef.current, {
                 width: chartContainerRef.offsetWidth,
                 height: 600,
                 layout: {
@@ -52,7 +62,7 @@ export default function CoinChart({ price, thisCoin, showModal }) { //pass in sh
 
             //load historical candlestick data from bitstamp api
             const getCandles = () => {
-                return fetch(`https://www.bitstamp.net/api/v2/ohlc/${thisCoin?.symbol?.toLowerCase()}usd?step=1800&limit=1000`)
+                return fetch(`https://www.bitstamp.net/api/v2/ohlc/${thisCoin?.symbol?.toLowerCase()}usd?step=${timeInSecs}&limit=1000`)
                     .then((response) => response.json())
                     .then((data) => {
                         const processedData = data.data.ohlc
@@ -83,7 +93,7 @@ export default function CoinChart({ price, thisCoin, showModal }) { //pass in sh
             // );
 
             //WebSocket fetches current coin prices
-            const binanceSocket = new WebSocket(`wss://stream.binance.us:9443/ws/${thisCoin?.symbol?.toLowerCase()}usd@kline_30m`)
+            const binanceSocket = new WebSocket(`wss://stream.binance.us:9443/ws/${thisCoin?.symbol?.toLowerCase()}usd@kline_${timeInterval}`)
             binanceSocket.onmessage = function (event) {
 
                 const msgObj = JSON.parse(event.data)
@@ -103,11 +113,17 @@ export default function CoinChart({ price, thisCoin, showModal }) { //pass in sh
             isMounted.current = true;
         }
 
-    }, [thisCoin])
+
+
+    }, [thisCoin, timeInSecs])
+
 
     return (
+        <>
         <div className="coin-details-chart-container">
             <div ref={chartContainerRef} className={showModal ? 'coin-details-chart-chart-modal-true' : 'coin-details-chart-chart'}></div>
         </div>
+        <CoinChartTimeIntervals setTimeInSecs={setTimeInSecs} chartContainerRef={chartContainerRef} setTimeInterval={setTimeInterval} timeInSecs={timeInSecs}/>
+        </>
     )
 }

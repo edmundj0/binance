@@ -4,7 +4,9 @@
 
 PROJECT LIVE SITE: https://binance-me.onrender.com/
 
-Binance.me is a simulated cryptocurrency trading, full stack web application that empowers users to buy and sell crypto with real time price data. This platform helps investors make trades without risking any real money. The project has a theme based off of popular cryptocurrency exchange, https://www.binance.us/. 
+Binance.me is a simulated cryptocurrency trading, full stack web application that empowers users to buy and sell crypto with real time price data. This platform allows investors to make trades (buy and sell orders) without risking any real money. The project has a theme based off of popular cryptocurrency exchange, https://www.binance.us/. 
+
+![image](https://user-images.githubusercontent.com/102005831/222015038-9b47944a-5e98-4cbc-8c53-e3bc7e56d649.png)
 
 
 ## Technologies Used
@@ -32,15 +34,23 @@ Other Technologies:
 - [React Toastify](https://www.npmjs.com/package/react-toastify)
 
 
-## Test Results
 
-Loader.io - stress test performance of system under load
-![binance_test](https://user-images.githubusercontent.com/102005831/215225831-bc7f1eac-e1bf-41d3-8de1-1b2302a6b1a4.jpg)
+## Getting Started
 
+Clone the repo and run locally using docker compose
 
+```
+git clone https://github.com/edmundj0/binance.git && cd binance
+docker-compose up
+```
 
-## Getting started
-1. Clone this repository (only this branch)
+----- OR -----
+
+1. Clone this repository
+
+```
+git clone https://github.com/edmundj0/binance.git && cd binance
+```
 
 2. Install dependencies
 
@@ -72,6 +82,66 @@ Loader.io - stress test performance of system under load
    ```
 
 6. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
+
+
+## How To Use
+
+1. **Create an Account**  
+
+      a. Click **Get Started** in the upper right and enter first name, last name, username, email, and password.  
+      WARNING: This is a site created for educational purposes and real information should not be used!  
+      b. Login to your new account, which will redirect to your dashboard  
+      
+2. **Create a Portfolio**  
+
+      a. From your dashboard, click **Open New Portfolio**, which opens a modal where you can input a portfolio name and select a portfolio type (Investing, Margin, IRA).  
+      
+3. **Enter a Payment Method**  
+
+      a. From your dashboard, click **Add New Payment Method**, where you can enter your Payment Type, Account Number, Routing Number, and Note.   
+      WARNING: DO NOT ENTER REAL BANK INFORMATION.  
+      
+4. **Deposit Currency Into Portfolio**  
+
+      a. From your dashboard, click **Deposit Now**. Select from the dropdown menu a payment method, and select a destination portfolio for the deposited funds. Input a transfer amount in USD. The Buying Power for the portfolio will be updated instantly.  
+      
+5. **Select Cryptocurrency To Trade**  
+
+      a. From the Market Information section on your dashboard, you can learn about and view information about every coin offered on the exchange.  
+      b. Select **View** to be taken to the Coin Details page.  
+      c. Login if you are not logged in already.  
+      
+6. **Making a Trade**  
+
+      a. Select **Buy** or **Sell**  
+      b. Choose a portfolio to make the trade. Validations are set so your account will not incur negative balances.  
+      c. Select a quantity (dollars or amount).  
+      d. Click **Submit**. You will be redirected to your portfolio page.  
+      
+      Please refer to the GIF below for more instructions  
+      
+7. **Viewing Portfolio Performance**  
+
+      a. Account Holdings is updated in real-time and shows the assets held by the portfolio.  
+      b. Portfolio Performance is a graphical representation of historical performance based on current account holdings.  
+      c. A list of Transactions (both buy and sell orders) are timestamped at the bottom of the page.  
+
+### Making a Trade
+
+
+![making a trade (1)-min](https://user-images.githubusercontent.com/102005831/222011956-ee04de3e-97a9-4628-93e1-921d559fb86b.gif)
+
+
+
+
+## Database Schema
+
+![Database Schema](https://raw.githubusercontent.com/edmundj0/binance/dev/react-app/src/assets/database-schema.png)
+
+## Test Results
+
+Loader.io - stress test performance of system under load
+![binance_test](https://user-images.githubusercontent.com/102005831/215225831-bc7f1eac-e1bf-41d3-8de1-1b2302a6b1a4.jpg)
 
 
 ## Project Sections
