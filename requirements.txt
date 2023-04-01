@@ -19,12 +19,15 @@ greenlet==1.1.0
 gunicorn==20.1.0
 itsdangerous==2.0.1
 jinja2==3.0.1
+kafka-python==2.0.2
 mako==1.1.4
 markupsafe==2.0.1
 python-dateutil==2.8.1
 python-dotenv==0.14.0
 python-editor==1.0.4
+redis==3.5.3
 six==1.15.0
 sqlalchemy==1.4.19
+# websocket-client==1.2.1
 werkzeug==2.0.1
 wtforms==2.3.3
