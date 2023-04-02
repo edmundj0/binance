@@ -26,7 +26,7 @@ RUN touch .env && \
     echo "SCHEMA=flask_schema" >> .env
 
 # Run the database migrations and seed the database
-RUN flask seed undo && flask db upgrade && \
+RUN flask db upgrade && \
     flask seed all
 
 # Change the working directory to /react-app
