@@ -44,9 +44,9 @@ services:
       - "8086:8086"
     environment:
       - INFLUXDB_HOST=influxdb
-      - INFLUXDB_USER=myuser
-      - INFLUXDB_PASSWORD=mypassword
-      - INFLUXDB_DATABASE=mydatabase
+      - INFLUXDB_ADMIN_USER=myuser
+      - INFLUXDB_ADMIN_PASSWORD=mypassword
+      - INFLUXDB_DB=mydatabase
 
       # - INFLUXDB_DB=database_name
       # - INFLUXDB_ADMIN_ENABLED=true
@@ -65,6 +65,10 @@ services:
     environment:
       KAFKA_TOPIC: test
       REDIS_HOST: redis
+      INFLUX_DB_HOST: influxdb
+      INFLUXDB_USER: myuser
+      INFLUXDB_PASSWORD: mypassword
+      INFLUXDB_DATABASE: mydatabase
     restart: always
     depends_on:
       kafka:
