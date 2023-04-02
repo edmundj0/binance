@@ -10,6 +10,7 @@ COPY requirements.txt /
 # Install the dependencies
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r /requirements.txt && \
+    pip install influxdb redis kafka-python websocket-client && \
     apt-get update && apt-get install -y curl && \
     curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get install -y nodejs && \
@@ -25,7 +26,7 @@ RUN touch .env && \
     echo "SCHEMA=flask_schema" >> .env
 
 # Run the database migrations and seed the database
-RUN flask db upgrade && \
+RUN flask seed undo && flask db upgrade && \
     flask seed all
 
 # Change the working directory to /react-app
