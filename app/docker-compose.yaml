@@ -38,7 +38,7 @@ services:
 
 
   influxdb:
-    image: influxdb
+    image: influxdb:2.6-alpine
     container_name: influxdb
     ports:
       - "8086:8086"
@@ -47,6 +47,8 @@ services:
       - INFLUXDB_ADMIN_USER=myuser
       - INFLUXDB_ADMIN_PASSWORD=mypassword
       - INFLUXDB_DB=mydatabase
+    volumes:
+      - influxdb_data:/var/lib/influxdb
 
       # - INFLUXDB_DB=database_name
       # - INFLUXDB_ADMIN_ENABLED=true
@@ -77,3 +79,6 @@ services:
 
 # volumes:
 #   influxdb-data:
+volumes:
+  grafana_data: {}
+  influxdb_data: {}
