@@ -9,10 +9,11 @@ print('starting')
 
 #Connect to Redis
 # redis_client = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379)
-redis_client = redis.Redis(host="localhost", port=6379)
+redis_client = redis.Redis(host="redis", port=6379)
 print('1')
 try:
     response = redis_client.ping()
+    print('connected to redis')
 except redis.exceptions.ConnectionError as e:
     print(f'Unable to connect to Redis: {e}')
     exit(1)
@@ -30,7 +31,7 @@ print('2')
 
 consumer = KafkaConsumer(
     "test",
-    bootstrap_servers=['localhost:9092'],
+    bootstrap_servers=['kafka:9092'],
     auto_offset_reset='earliest',
     enable_auto_commit=True
 )
@@ -55,6 +56,7 @@ def run_loop():
 
         oldest_msg = next(consumer)
         data = json.loads(oldest_msg.value)
+        print(data)
         symbol = data['s']
         price = data['c']
         timestamp = data['E']
@@ -71,9 +73,9 @@ def run_loop():
         bucket = "test-bucket"
 
         p = Point("my_measurement").tag(
-            "location", symbol).filed("avg", float(message['w']))
+            "location", symbol).field("avg", float(message['w']))
 
-
+        print('7')
         write_api.write(bucket=bucket, record=p)
 
         print('writing')

@@ -2,18 +2,22 @@ from kafka import KafkaProducer
 import os, json, websocket
 
 # Kafka producer
-producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
+producer = KafkaProducer(bootstrap_servers=['kafka:9092'])
+
 
 
 def on_message(ws, message):
+
     message = json.loads(message)
     print(message)
 
     # producer.send(os.getenv('KAFKA_TOPIC'), json.dumps(message).encode())
     producer.send("test", json.dumps(message).encode())
-    producer.flush()
+    producer.poll(1)
+    # producer.flush()
+    # print('DONE')
 
-    print('DONE')
+
 
 
 def on_close(ws):
