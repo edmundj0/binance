@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy the requirements file into the container at root
 COPY . /app
 
-RUN rm dev.db
+# RUN rm dev.db
 
 RUN pip install -r requirements.txt
 
@@ -18,10 +18,6 @@ RUN touch .env && \
     echo "DATABASE_URL=sqlite:///dev.db" >> .env && \
     echo "SCHEMA=flask_schema" >> .env
 
-# Run the database migrations and seed the database
-# RUN flask seed undo && \
-#     flask db upgrade && \
-#     flask seed all
 
 RUN flask db upgrade && \
     flask seed all
