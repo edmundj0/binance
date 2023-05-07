@@ -1,10 +1,16 @@
 version: '3.7'
 services:
   backend:
+    container_name: backend
     build:
       context: ./app
     ports:
       - "5000:5000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/coins/all"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
     # volumes:
     #   - data:/app/data
 
@@ -14,6 +20,12 @@ services:
       context: ./react-app
     ports:
       - "3000:3000"
+    environment:
+      - HTTP_PROXY=http://backend:5000
+      - HTTPS_PROXY=http://backend:5000
+    depends_on:
+      backend:
+        condition: service_healthy
 
   producer:
     container_name: producer
