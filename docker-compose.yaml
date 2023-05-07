@@ -9,6 +9,7 @@ services:
     #   - data:/app/data
 
   frontend:
+    container_name: frontend
     build:
       context: ./react-app
     ports:
@@ -20,16 +21,22 @@ services:
       context: ./producer
     environment:
       KAFKA_TOPIC: test
+    depends_on:
+      kafka:
+        condition: service_healthy
 
   consumer:
     container_name: consumer
     build:
       context: ./consumer
+    depends_on:
+      kafka:
+        condition: service_healthy
 
-  consumer-test:
-    image: confluentinc/cp-kafka
-    container_name: consumer_test
-    command: ["kafka-console-consumer", "--topic", "test", "--bootstrap-server", "kafka:9092"]
+  # consumer-test:
+  #   image: confluentinc/cp-kafka
+  #   container_name: consumer_test
+  #   command: ["kafka-console-consumer", "--topic", "test", "--bootstrap-server", "kafka:9092"]
 
 
   redis:
@@ -98,23 +105,6 @@ services:
     #   - influxdb-data:/var/lib/influxdb
 
     restart: always
-
-#   redis-client:
-#     build:
-#       context: .
-#     command: python redis_client.py
-#     environment:
-#       KAFKA_TOPIC: test
-#       REDIS_HOST: redis
-#       INFLUX_DB_HOST: influxdb
-#       INFLUXDB_USER: myuser
-#       INFLUXDB_PASSWORD: mypassword
-#       INFLUXDB_DATABASE: mydatabase
-#     restart: always
-#     depends_on:
-#       kafka:
-#         condition: service_healthy
-#       # - redis
 
 
 # volumes:
