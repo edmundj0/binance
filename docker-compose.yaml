@@ -11,8 +11,6 @@ services:
       interval: 10s
       timeout: 10s
       retries: 5
-    # volumes:
-    #   - data:/app/data
 
   frontend:
     container_name: frontend
@@ -45,12 +43,6 @@ services:
       kafka:
         condition: service_healthy
 
-  # consumer-test:
-  #   image: confluentinc/cp-kafka
-  #   container_name: consumer_test
-  #   command: ["kafka-console-consumer", "--topic", "test", "--bootstrap-server", "kafka:9092"]
-
-
   redis:
     image: redis:latest
     container_name: redis
@@ -70,7 +62,6 @@ services:
       - "0.0.0.0:9092:9092"
     environment:
       KAFKA_ADVERTISED_HOST_NAME: kafka
-      # KAFKA_ADVERTISED_LISTENERS: PLAINTEXT_HOST://kafka:9092
       KAFKA_CREATE_TOPICS: "test:1:1"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     depends_on:
@@ -102,22 +93,5 @@ services:
       - DOCKER_INFLUXDB_INIT_RETENTION=1w
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=randomTokenValue
 
-      # - INFLUXDB_HOST=influxdb
-      # - INFLUXDB_ADMIN_USER=myuser
-      # - INFLUXDB_ADMIN_PASSWORD=mypassword
-      # - INFLUXDB_DB=mydatabase
-
-      # - INFLUXDB_DB=database_name
-      # - INFLUXDB_ADMIN_ENABLED=true
-      # - INFLUXDB_ADMIN_USER=admin
-      # - INFLUXDB_ADMIN_PASSWORD=admin_password
-      # - INFLUXDB_USER=your_username
-      # - INFLUXDB_USER_PASSWORD=your_password
-    # volumes:
-    #   - influxdb-data:/var/lib/influxdb
-
     restart: always
 
-
-# volumes:
-#   data:
