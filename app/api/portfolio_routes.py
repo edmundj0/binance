@@ -7,9 +7,6 @@ from .auth_routes import validation_errors_to_error_messages
 
 portfolio_routes = Blueprint('portfolios', __name__)
 
-# @portfolio_routes.route('/')
-# def test():
-#     return {'test': 'test'}
 
 @portfolio_routes.route('/current')
 @login_required
@@ -192,8 +189,8 @@ def all_assets_of_portfolio(portfolio_id):
     assetsDict = {}
     for transaction in portfolio.transactions_portfolio:
 
-        #handle divide by 0 error and remove coin from assets list, in the case where user sells all
-        #potential known error: avg price may be wrong from nuking the total_money_paid and total_money_received calculation
+        # handle divide by 0 error and remove coin from assets list, in the case where user sells all
+        # TODO: fix avg price after removing the total_money_paid and total_money_received calculation
         if(transaction.action == "buy" and transaction.coin_id in assetsDict and (assetsDict[transaction.coin_id]["quantity"] + transaction.quantity) == 0):
             del assetsDict[transaction.coin_id]
             continue
@@ -205,7 +202,6 @@ def all_assets_of_portfolio(portfolio_id):
             assetsDict[transaction.coin_id] = {"quantity": transaction.quantity, "avg_price": transaction.avg_price, "symbol": transaction.coin.symbol, "name": transaction.coin.name, "total_money_paid": transaction.avg_price * transaction.quantity, "total_money_received": 0, "coin_id": transaction.coin_id}
         elif transaction.action == "buy" and transaction.coin_id in assetsDict:
             existingAsset = assetsDict[transaction.coin_id]
-            # existingAsset["avg_price"] = ((existingAsset["avg_price"] * existingAsset["quantity"] + (transaction.avg_price * transaction.quantity)) / (transaction.quantity + existingAsset["quantity"]))
             existingAsset["total_money_paid"] += (transaction.avg_price * transaction.quantity)
             existingAsset["avg_price"] = (existingAsset["total_money_paid"] - existingAsset["total_money_received"]) / (existingAsset["quantity"] + transaction.quantity)
             existingAsset["quantity"] += transaction.quantity
@@ -216,29 +212,5 @@ def all_assets_of_portfolio(portfolio_id):
             existingAsset["total_money_received"] += (transaction.avg_price * transaction.quantity)
             existingAsset["avg_price"] = (existingAsset["total_money_paid"] - existingAsset["total_money_received"]) / (existingAsset["quantity"] - transaction.quantity)
             existingAsset["quantity"] -= transaction.quantity
-        # elif transaction.action == "buy" and any(transaction.coin_id in d for d in assetsLst):
-        #     # assetsLst[transaction.coin_id]["quantity"] += transaction.quantity
-        #     print(assetsDict.get(transaction.coin_id), 'plzzzz')
 
-    # print(assetsDict.items())
     return {"Assets": [item for item in assetsDict.values()]}
-
-
-
-# @portfolio_routes.route("/<int:portfolio_id>/transactions")
-# @login_required
-# def all_portfolio_transactions(portfolio_id):
-#     """
-#     Query for all transactions of current portfolio
-#     """
-#     portfolio = Portfolio.query.options(joinedload(Portfolio.transactions_portfolio)).filter(Portfolio.id == portfolio_id).first()
-#     id_of_user = current_user.id
-
-#     return {
-#         "id": portfolio.id,
-#         "account_type": portfolio.account_type,
-#         "buying_power": portfolio.buying_power,
-#         "name": portfolio.name,
-#         "user_id": portfolio.user_id,
-#         "Transactions": [transaction.to_dict() for transaction in ]
-#     }
