@@ -37,7 +37,7 @@ export default function CoinDetails() {
     //get coin price data
     useEffect(() => {
 
-        fetch(`https://api.binance.us/api/v3/ticker/price?symbol=${thisCoin?.symbol}USD`)
+        fetch(`https://api.binance.us/api/v3/ticker/price?symbol=${thisCoin?.symbol}USDT`)
             .then((response) => {
                 if (response.ok) {
                     return response.json()
@@ -56,7 +56,7 @@ export default function CoinDetails() {
     //get coin detailed data
     useEffect(() => {
         if (isMounted.current) {
-            fetch(`https://api.binance.us/api/v3/ticker/24hr?symbol=${thisCoin?.symbol}USD`)
+            fetch(`https://api.binance.us/api/v3/ticker/24hr?symbol=${thisCoin?.symbol}USDT`)
                 .then((response) => {
                     if (response.ok) {
                         return response.json()
@@ -83,7 +83,7 @@ export default function CoinDetails() {
 
     //constant update price and % change
     useEffect(() => {
-        binanceSocket.current = new WebSocket(`wss://stream.binance.us:9443/ws/${thisCoin?.symbol?.toLowerCase()}usd@ticker`)
+        binanceSocket.current = new WebSocket(`wss://stream.binance.us:9443/ws/${thisCoin?.symbol?.toLowerCase()}usdt@ticker`)
         // console.log(binanceSocket)
         binanceSocket.current.onmessage = function (event) {
             // console.log(event.data, binanceSocket)

@@ -14,7 +14,7 @@ export default function CoinDataTable({ coin }) {
 
     //get initial coin data
     useEffect(() => {
-        fetch(`https://api.binance.us/api/v3/ticker/24hr?symbol=${coin?.symbol}USD`)
+        fetch(`https://api.binance.us/api/v3/ticker/24hr?symbol=${coin?.symbol}USDT`)
             .then((response) => {
                 if (response.ok) {
                     return response.json()
@@ -33,10 +33,10 @@ export default function CoinDataTable({ coin }) {
 
     //update coin prices with websocket
     useEffect(() => {
-        binanceSocket.current = new WebSocket(`wss://stream.binance.us:9443/ws/${coin?.symbol?.toLowerCase()}usd@ticker`)
+        binanceSocket.current = new WebSocket(`wss://stream.binance.us:9443/ws/${coin?.symbol?.toLowerCase()}usdt@ticker`)
         // console.log(binanceSocket)
         binanceSocket.current.onmessage = function (event) {
-
+            // console.log(event.data)
             const msgObj = JSON.parse(event.data)
 
             setPrice(msgObj.c)
