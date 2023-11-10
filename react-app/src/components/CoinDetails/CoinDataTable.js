@@ -58,7 +58,7 @@ export default function CoinDataTable({ coin }) {
     return (
         <>
             <td className="table-homepage-td"><span id="homepage-table-coin-symbol">{coin.symbol}</span> {coin.name}</td>
-            <td className="table-homepage-td">${price}</td>
+            <td className="table-homepage-td">${Number(price)}</td>
             <td className={priceChangePercent >= 0 ? 'homepage-price-change-positive table-homepage-td' : 'homepage-price-change-negative table-homepage-td'}>{priceChangePercent}%</td>
             <td className="table-homepage-td"><button onClick={()=>tradeRouteChange(coin)} className='view-coin-button'>View</button></td>
         </>

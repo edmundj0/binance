@@ -114,11 +114,11 @@ export default function CoinDetails() {
         <div className="coin-details-entire-page">
             <div className="page-main-header">{thisCoin.name}
             </div>
-            <div className="page-small-title">{thisCoin.symbol}/USD ${price}
+            <div className="page-small-title">{thisCoin.symbol}/USD ${Number(price).toFixed(4)}
                 <div><AddCoinToWatchlistModal thisCoin={thisCoin} showModal={showModal} setShowModal={setShowModal} /></div>
             </div>
             <div className="coin-detailed-data-container">
-                <div className="detail-inner-container"><div className="detail-title">Price</div><div>${price}</div></div>
+                <div className="detail-inner-container"><div className="detail-title">Price</div><div>${Number(price).toFixed(4)}</div></div>
                 <div className="detail-inner-container"><div className="detail-title">24h Change</div><div className={priceChangePercent >= 0 ? "price-change-positive" : "price-change-negative"}>{priceChangePercent}%</div></div>
                 <div className="detail-inner-container"><div className="detail-title">24h High</div><div>{highPrice}</div></div>
                 <div className="detail-inner-container"><div className="detail-title">24h Low</div><div>{lowPrice}</div></div>
